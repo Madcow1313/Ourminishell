@@ -1,0 +1,32 @@
+NAME = minishell
+
+SOURCE = main.c ./parser_utils/ft_strlen.c ./simple_parser/lexic_part1.c \
+		./simple_parser/lexic_part2.c \
+		./simple_parser/prepare_list.c ./parser_utils/ft_strchr.c \
+		./simple_parser/empty_built_ins.c \
+		./parser_utils/ft_strlcpy.c ./simple_parser/lexic_part3.c
+
+OBJ = $(SOURCE:.c=.o)
+
+CC = clang
+
+CFLAGS = -Wall -Wextra -Werror
+
+LFLAGS = -L/usr/include -lreadline
+
+HEADER = simple_parser/parser.h
+
+$(NAME): $(OBJ) $(HEADER)
+		$(CC) $(CFLAGS) $(LFLAGS) $(OBJ) -o $(NAME)
+		
+-fsanitize=address
+
+all: $(NAME)
+
+clean:
+		rm -rf $(OBJ)
+
+fclean:
+		rm -rf $(OBJ) $(NAME)
+
+re:		fclean $(NAME)
