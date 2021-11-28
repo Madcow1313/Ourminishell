@@ -20,6 +20,7 @@
 #define SEMICOLON 10
 #define	WORD 11
 #define COMMAND 12
+
 typedef struct s_command
 {
 	const char *word;
@@ -33,11 +34,6 @@ typedef struct s_list_commands
 	int number;
 } t_list_commands;
 
-typedef struct s_tokens
-{
-
-} t_tokens;
-
 /*some libft utils*/
 size_t ft_strlen(const char *string);
 size_t	ft_strlcpy (char *dst, const char *src, size_t size);
@@ -48,6 +44,7 @@ int	ft_strchr(const char *string, int symbol);
 t_command	*get_full_command(const char *string, t_command *command);
 t_list_commands	*start_parse(t_command *command, t_list_commands *list);
 int	handle_quotes(t_list_commands *list, t_command *command, int character, size_t *i);
+int	handle_redirects(t_list_commands *list, int character, size_t *i);
 
 
 /*structure functions*/

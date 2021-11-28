@@ -17,6 +17,7 @@ int	define_redirect(t_command *command, int i)
 	}
 }
 
+/*rignt now ENVIRONMENT_VAR == $, rename*/
 int	search_for_type(t_command *command, int i)
 {
 	if (ft_strchr("><$\'\"|;", command->word[i]) >= 0)
@@ -90,33 +91,34 @@ int	get_pipe(t_list_commands *list, int	character)
 t_list_commands	*start_parse(t_command *command, t_list_commands *list)
 {
 	size_t	i;
+	int	ret;
 
 	i = 0;
 	while (i < command->len && command->word[i] != '\0')
 	{
 		list->type[list->number] = search_for_type(command, i);
 		if (list->type[list->number] == BUILT_IN)
-		{
-			if (get_built_in_cmd(command, list, &i) == -1)
-				return (NULL);
-		}
+			ret = get_built_in_cmd(command, list, &i) == -1;
 		else if (list->type[list->number] == PIPE
 		|| list->type[list->number] == ENVIRONMENT_VAR
 		|| list->type[list->number] == SEMICOLON)
 		{
-			if (get_pipe(list, list->type[list->number]) == -1)
-				return (NULL);
+			ret = get_pipe(list, list->type[list->number]) == -1;
 			i++;
 		}
 		else if (list->type[list->number] == SINGLE_QM
 				|| list->type[list->number] == DOUBLE_QM)
 		{
-			if (handle_quotes(list, command, list->type[list->number], &i) == -1)
-				return (NULL);
+			ret = handle_quotes(list, command, list->type[list->number], &i) == -1;
 			i++;
 		}
-		if (command->word[i] == ' ')
+		else if (list->type[list->number] >= REDIRECT_RIGHT
+			&& list->type[list->number] <= REDIRECT_AND_APPEND)
+			ret = handle_redirects(list, list->type[list->number], &i) == -1;
+		while (command->word[i] == ' ')
 			i++;
 	}
+	if (ret < 0)
+		return (NULL);
 	return (list);
 }
