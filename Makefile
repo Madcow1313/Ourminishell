@@ -8,20 +8,23 @@ SOURCE = main.c ./parser_utils/ft_strlen.c ./simple_parser/lexic_part1.c \
 
 OBJ = $(SOURCE:.c=.o)
 
-CC = clang
+CC = gcc
 
 CFLAGS = -Wall -Wextra -Werror
 
 LFLAGS = -L/usr/include -lreadline
 
-HEADER = simple_parser/parser.h
+HEADER = ./simple_parser/parser.h
 
-$(NAME): $(OBJ) $(HEADER)
-		$(CC) $(CFLAGS) $(LFLAGS) $(OBJ) -o $(NAME)
-		
--fsanitize=address
+.c.o: ${HEADER}
+		${CC} ${CFLAGS} -c $< -o ${<:.c=.o}
 
 all: $(NAME)
+
+$(NAME): $(OBJ) $(HEADER)
+		$(CC) $(CFLAGS) $(OBJ) $(LFLAGS) -o $(NAME)
+		
+#-fsanitize=address
 
 clean:
 		rm -rf $(OBJ)

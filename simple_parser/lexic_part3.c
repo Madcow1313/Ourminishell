@@ -4,12 +4,12 @@ int	handle_quotes(t_list_commands *list, t_command *command, int character, size
 {
 	size_t	count;
 	size_t	start;
-	size_t	k;
+	//size_t	k;
 
 	count = 0;
 	*i += 1;
 	start = *i;
-	k = 0;
+	//k = 0;
 	if (character == SINGLE_QM)
 	{
 		while (command->word[*i] != '\'')
