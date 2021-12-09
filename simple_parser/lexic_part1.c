@@ -44,12 +44,12 @@ size_t	count_double_qm(t_command *command, size_t start, size_t end)
 
 
 /* add ft_strchr and make return int if found*/
-size_t	find_first_qm(const char *string, char comma)
+size_t	find_first_qm(const char *string)
 {
 	size_t	i;
 
 	i = 0;
-	while (string[i] != comma || string[i] != '\0')
+	while (string[i] != '\'' && string[i] != '\"' && string[i] != '\0')
 		i++;
 	return (i);
 }

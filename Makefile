@@ -4,7 +4,10 @@ SOURCE = main.c ./parser_utils/ft_strlen.c ./simple_parser/lexic_part1.c \
 		./simple_parser/lexic_part2.c \
 		./simple_parser/prepare_list.c ./parser_utils/ft_strchr.c \
 		./simple_parser/empty_built_ins.c \
-		./parser_utils/ft_strlcpy.c ./simple_parser/lexic_part3.c
+		./parser_utils/ft_strlcpy.c ./simple_parser/lexic_part3.c \
+		./parser_utils/ft_strnstr.c ./simple_parser/command_adjusting.c \
+		./parser_utils/ft_strncmp.c ./parser_utils/ft_strjoin.c \
+		./simple_parser/get_descriptors.c
 
 OBJ = $(SOURCE:.c=.o)
 
