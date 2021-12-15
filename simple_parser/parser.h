@@ -19,7 +19,7 @@
 #define BUILT_IN 4
 #define	REDIRECT_RIGHT 5
 #define REDIRECT_LEFT 6
-#define READ_INPUT 7
+#define HERE_DOC 7
 #define REDIRECT_AND_APPEND 8
 #define ENVIRONMENT_VAR 9
 #define SEMICOLON 10
@@ -27,6 +27,7 @@
 #define COMMAND 12
 #define ABSOLUTE_PATH 13
 #define RELATIVE_PATH 14
+#define SEP_SPACE 15
 
 typedef struct s_command
 {
@@ -71,5 +72,8 @@ void	print_commands_and_words(t_list_commands *list);
 /*some redirect functions*/
 int	get_redirect_type(t_list_commands *list);
 int	rid_of_redirect_right(t_list_commands *list);
+
+/*shitty fucntion to make it more good loking*/
+char	**get_normal_array(t_list_commands *list);
 
 #endif

@@ -7,16 +7,17 @@ void	ft_putstr(int fd, char *str)
 
 /*i have no idea what should i do
 still in progress*/
-void	get_fd_left_redirects(t_list_commands *list, char *path, int type)
+int	get_fd_left_redirects(t_list_commands *list, char *path, int type)
 {
 	int	fd_to_apply;
 
 	fd_to_apply = 0;
 	if (type == REDIRECT_LEFT)
-		fd_to_apply = open(path, O_RDWR | O_TRUNC | O_CREAT, S_IRWXU);
-	else if (type == READ_INPUT)
-		fd_to_apply = open(path, O_RDWR | O_TRUNC | O_CREAT, S_IRWXU);
-	dup2(fd_to_apply, list->fd[0]);
+	{
+		fd_to_apply = open(path, O_RDONLY);
+		dup2(fd_to_apply, list->fd[0]);
+	}
+	return (list->fd[0]);
 }
 
 int	get_fd_right_redirects(t_list_commands *list, char *path, int type)
@@ -49,7 +50,8 @@ int	get_redirect_type(t_list_commands *list)
 	i = 0;
 	while (i <= list->number && list->command[i])
 	{
-		if (list->type[i] >= REDIRECT_RIGHT && list->type[i] <= REDIRECT_AND_APPEND)
+		if (list->type[i] == REDIRECT_RIGHT || list->type[i] == REDIRECT_AND_APPEND
+			|| list->type[i] == REDIRECT_LEFT)
 			return (1);
 		i++;
 	}
@@ -79,10 +81,15 @@ int	rid_of_redirect_right(t_list_commands *list)
 	int	i;
 
 	i = 0;
-	while ((list->type[i] < REDIRECT_RIGHT || list->type[i] > REDIRECT_AND_APPEND)
+	while ((list->type[i] != REDIRECT_RIGHT && list->type[i] != REDIRECT_LEFT && list->type[i] != REDIRECT_AND_APPEND)
 		&& list->command[i] && i < list->number)
 		i++;
-	list->fd[1] = get_fd_right_redirects(list, list->command[i + 1], list->type[i]);
+	if (list->type[i] == REDIRECT_RIGHT || list->type[i] == REDIRECT_AND_APPEND)
+		list->fd[1] = get_fd_right_redirects(list, list->command[i + 1], list->type[i]);
+	else if (list->type[i] == REDIRECT_LEFT)
+		list->fd[0] = get_fd_left_redirects(list, list->command[i + 1], list->type[i]);
+	else if (list->type[i] == HERE_DOC)
+		return (0);
 	if (list->command[i])
 	{
 		if (list->command[i + 1])

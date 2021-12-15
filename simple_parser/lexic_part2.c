@@ -12,7 +12,7 @@ int	define_redirect(t_command *command, int i)
 	else
 	{
 		if (command->word[i + 1] == '<')
-			return (READ_INPUT);
+			return (HERE_DOC);
 		return (REDIRECT_LEFT);
 	}
 }
@@ -120,10 +120,22 @@ t_list_commands	*start_parse(t_command *command, t_list_commands *list)
 		else if	(list->type[list->number] == ENVIRONMENT_VAR)
 		{
 			get_built_in_cmd(command, list, &i);
-			printf("here %s\n", list->command[list->number - 1]);
+			//get_env_var_word(command, list, &i);
 			if (list->command[list->number - 1][0] != '\''
-				|| list->command[list->number - 1][0] != '\"')
+				&& list->command[list->number - 1][0] != '\"')
+			{
 				list->command[list->number - 1] = get_env_var_value(list->env_vars, list->command[list->number - 1] + 1);
+				while (ft_strchr(list->command[list->number - 1], '$') >= 0)
+					list->command[list->number - 1] = get_prefix_for_env(list->env_vars, list->command[list->number - 1]);
+			}
+		}
+		if (command->word[i] == ' ')
+		{
+			//list->command[list->number] = malloc(2);
+			list->command[list->number] = " ";
+			list->type[list->number] = SEP_SPACE;
+			list->number += 1;
+			list->command[list->number] = NULL;
 		}
 		while (command->word[i] == ' ')
 			i++;

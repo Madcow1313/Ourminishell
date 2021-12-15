@@ -84,7 +84,7 @@ char	*get_env_var_value(char **env_vars, char *string)
 
 	i = 0;
 	size = 0;
-	printf("string is %s\n", string);
+	//printf("string is %s\n", string);
 	temp = string;
 	if (string[i] == '\'' || string[i] == '\"')
 		return (string);
@@ -98,7 +98,7 @@ char	*get_env_var_value(char **env_vars, char *string)
 	if (size == 0)
 		return (string - 1);
 	temp += i;
-	printf("remainder %s\n", temp);
+	//printf("remainder %s\n", temp);
 	i = 0;
 	while (env_vars[i])
 	{
@@ -138,13 +138,16 @@ char *get_prefix_for_env(char **env_vars, char *string)
 	}
 	temp = malloc(size + 1);
 	i = 0;
-	while (i < size && string[i])
-	{
-		temp[i] = string[i];
-		i++;
-	}
-	temp[i] = '\0';
+	ft_strlcpy(temp, string, size + 1);
+	// while (i < size && string[i])
+	// {
+	// 	temp[i] = string[i];
+	// 	i++;
+	// }
+	//temp[i] = '\0';
+	//printf("temp is %s\n", temp);
 	temp2 = get_env_var_value(env_vars, (string + size + 1));
 	new_string = ft_strjoin(temp, temp2);
+	//printf("new string is %s\n", new_string);
 	return (new_string);
 }

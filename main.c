@@ -43,6 +43,7 @@ int	main(int argc, char **argv, char **envp)
 			return (free_and_exit(&command, &list, -1));
 		if (!delete_quotes(&list))
 			exit(EXIT_FAILURE);
+		get_normal_array(&list);
 		while (get_redirect_type(&list)){
 			rid_of_redirect_right(&list);
 		}
