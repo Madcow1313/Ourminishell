@@ -87,9 +87,9 @@ int	get_redirect_type(t_list_commands *list)
 
 char	*repoint(char *string1, char *string2, int *type, int i)
 {
-	char	*temp;
+	//char	*temp;
 
-	temp = string1;
+	//temp = string1;
 	string1 = string2;
 	type[i] = type[i + 2];
 	//temp = temp;
