@@ -14,7 +14,6 @@ int	prepare_list(t_list_commands *list, t_command *command)
 			free (list->type);
 		return (-1);
 	}
-	list->command[0] = NULL;
 	list->number = 0;
 	return (0);
 }

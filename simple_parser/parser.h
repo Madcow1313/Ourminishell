@@ -1,9 +1,9 @@
 #ifndef PARSER_H
 #define PARSER_H
 
-#include <stdio.h>
 #include <readline/readline.h>
 #include <readline/history.h>
+#include <stdio.h>
 #include <sys/types.h>
 #include <sys/wait.h>
 #include <stdlib.h>
@@ -12,6 +12,7 @@
 #include <sys/stat.h>
 #include <fcntl.h>
 #include <errno.h>
+#include <signal.h>
 
 #define SINGLE_QM 1
 #define DOUBLE_QM 2
@@ -44,6 +45,8 @@ typedef struct s_list_commands
 	int	fd[2];
 } t_list_commands;
 
+int	ft_s_h();
+void	print_shit();
 /*some libft utils*/
 char	*ft_strnstr (const char *big, const char *little, size_t len);
 size_t ft_strlen(const char *string);
@@ -70,10 +73,10 @@ int	prepare_list(t_list_commands *list, t_command *command);
 void	print_commands_and_words(t_list_commands *list);
 
 /*some redirect functions*/
+void	get_here_doc(char *end, t_list_commands *list);
 int	get_redirect_type(t_list_commands *list);
 int	rid_of_redirect_right(t_list_commands *list);
 
 /*shitty fucntion to make it more good loking*/
 char	**get_normal_array(t_list_commands *list);
-
 #endif

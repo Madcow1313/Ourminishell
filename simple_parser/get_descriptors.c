@@ -1,5 +1,31 @@
 #include "parser.h"
 
+void	get_here_doc(char *end, t_list_commands *list)
+{
+	char	*line;
+	int		fd;
+
+	fd = open(".here_doc_minishell", O_RDWR | O_TRUNC | O_CREAT, S_IRWXU);
+	while (1)
+	{
+		line = readline(">");
+		if (!line)
+			break;
+		line = get_prefix_for_env(list->env_vars, line);
+		if (!ft_strncmp(line, end, ft_strlen(line)))
+		{
+			free (line);
+			break;
+		}
+		write(fd, line, ft_strlen(line));
+		write(fd, "\n", 1);
+		free(line);
+	}
+	close(fd);
+}
+
+
+
 void	ft_putstr(int fd, char *str)
 {
 	write(fd, str, ft_strlen(str));
@@ -51,7 +77,7 @@ int	get_redirect_type(t_list_commands *list)
 	while (i <= list->number && list->command[i])
 	{
 		if (list->type[i] == REDIRECT_RIGHT || list->type[i] == REDIRECT_AND_APPEND
-			|| list->type[i] == REDIRECT_LEFT)
+			|| list->type[i] == REDIRECT_LEFT || list->type[i] == HERE_DOC)
 			return (1);
 		i++;
 	}
@@ -66,7 +92,7 @@ char	*repoint(char *string1, char *string2, int *type, int i)
 	temp = string1;
 	string1 = string2;
 	type[i] = type[i + 2];
-	temp = temp;
+	//temp = temp;
 	return (string1);
 }
 
@@ -81,7 +107,8 @@ int	rid_of_redirect_right(t_list_commands *list)
 	int	i;
 
 	i = 0;
-	while ((list->type[i] != REDIRECT_RIGHT && list->type[i] != REDIRECT_LEFT && list->type[i] != REDIRECT_AND_APPEND)
+	while ((list->type[i] != REDIRECT_RIGHT && list->type[i] != REDIRECT_LEFT && list->type[i] != REDIRECT_AND_APPEND
+		&& list->type[i] != HERE_DOC)
 		&& list->command[i] && i < list->number)
 		i++;
 	if (list->type[i] == REDIRECT_RIGHT || list->type[i] == REDIRECT_AND_APPEND)
@@ -89,7 +116,7 @@ int	rid_of_redirect_right(t_list_commands *list)
 	else if (list->type[i] == REDIRECT_LEFT)
 		list->fd[0] = get_fd_left_redirects(list, list->command[i + 1], list->type[i]);
 	else if (list->type[i] == HERE_DOC)
-		return (0);
+		get_here_doc(list->command[i + 1], list);
 	if (list->command[i])
 	{
 		if (list->command[i + 1])

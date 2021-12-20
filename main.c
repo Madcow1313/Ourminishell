@@ -1,4 +1,4 @@
-#include "./simple_parser/parser.h"
+#include "parser.h"
 
 int	free_and_exit(t_command *command, t_list_commands *list, int ret)
 {
@@ -29,13 +29,16 @@ int	main(int argc, char **argv, char **envp)
 	/*should be a copy, for now is fine*/
 	if (argc && argv)
 		list.env_vars = envp;
+	print_shit();
+	ft_s_h();
 	// string = "VSCODE_GIT_ASKPASS_EXTRA_ARGS";
 	// get_env_var_value(list.env_vars, string);
 	// while (1)
 	// {
-		string = (readline("I am waiting for your command, my lord!\n"));
+		string = (readline("I am waiting for your command, my lord!$>"));
 		if (!string)
 			free_and_exit(&command, &list, -1);
+		add_history(string);
 		get_full_command(string, &command);
 		if (prepare_list(&list, &command) == -1)
 			return (free_and_exit(&command, &list, -1));
