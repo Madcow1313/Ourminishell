@@ -1,4 +1,4 @@
-#include "../simple_parser/parser.h"
+//#include "../simple_parser/parser.h"
 #include "../logic/logic.h"
 
 int	free_and_exit(t_command *command, t_list_commands *list, int ret)
@@ -31,7 +31,7 @@ int	main(int argc, char **argv, char **envp)
 	if (argc && argv)
 		list.env_vars = envp;
 	//print_shit();
-	//ft_s_h();
+	ft_s_h();
 	// string = "VSCODE_GIT_ASKPASS_EXTRA_ARGS";
 	// get_env_var_value(list.env_vars, string);
 	while (1)

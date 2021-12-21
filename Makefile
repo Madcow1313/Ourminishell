@@ -1,5 +1,11 @@
 NAME = minishell
 
+LIBA_C = ./logic/libft/*.c
+
+LIBA_H = ./logic/libft/libft.h
+
+LIBA = libft.a
+
 SOURCE = main.c ./parser_utils/ft_strlen.c ./simple_parser/lexic_part1.c \
 		./simple_parser/here_doc.c \
 		./simple_parser/lexic_part2.c \
@@ -10,7 +16,10 @@ SOURCE = main.c ./parser_utils/ft_strlen.c ./simple_parser/lexic_part1.c \
 		./parser_utils/ft_strncmp.c ./parser_utils/ft_strjoin.c \
 		./simple_parser/get_descriptors.c ./simple_parser/get_normal.c \
 		./signal_handler/get_signal.c ./simple_parser/shit.c \
-		./logic/builtins.c 
+		./logic/builtins.c \
+		./logic/check_quotes_pipe_semicol.c \
+		./logic/errors.c
+
 
 OBJ = $(SOURCE:.c=.o)
 
@@ -30,9 +39,17 @@ INCLUDE = -I./simple_parser/
 
 all: $(NAME)
 
-$(NAME): $(OBJ) $(HEADER)
-		$(CC) $(CFLAGS) $(INCLUDE) $(OBJ) $(LFLAGS) -o $(NAME)
+$(LIBA): $(LIBA_C) $(LIBA_H)
+			cd ./logic/libft; \
+			make; \
+			mv $(LIBA) ../..; \
+			cd ./logic/libft; \
+			make clean
+
+$(NAME): $(LIBA) $(OBJ) $(HEADER)
+		$(CC) $(CFLAGS) $(INCLUDE) $(OBJ) $(LIBA) $(LFLAGS) -o $(NAME)
 		
+
 #-fsanitize=address
 
 clean:

@@ -30,6 +30,8 @@
 #define RELATIVE_PATH 14
 #define SEP_SPACE 15
 
+int	error_code;
+
 typedef struct s_command
 {
 	const char *word;
@@ -43,6 +45,7 @@ typedef struct s_list_commands
 	int	*type;
 	int number;
 	int	fd[2];
+	int	error_code;
 } t_list_commands;
 
 int	ft_s_h();
