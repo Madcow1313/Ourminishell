@@ -1,2 +1,3 @@
 main.o
 ./simple_parser/empty_built_ins.o ./simple_parser/lexic_part1.o ./simple_parser/lexic_part2.o ./simple_parser/lexic_part3.o ./simple_parser/prepare_list.o ./parser_utils/ft_strchr.o ./parser_utils/ft_strlcpy.o ./parser_utils/ft_strlen.o
+*.o

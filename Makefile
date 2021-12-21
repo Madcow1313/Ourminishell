@@ -10,7 +10,7 @@ SOURCE = main.c ./parser_utils/ft_strlen.c ./simple_parser/lexic_part1.c \
 		./parser_utils/ft_strncmp.c ./parser_utils/ft_strjoin.c \
 		./simple_parser/get_descriptors.c ./simple_parser/get_normal.c \
 		./signal_handler/get_signal.c ./simple_parser/shit.c \
-		./builtins.c 
+		./logic/builtins.c 
 
 OBJ = $(SOURCE:.c=.o)
 
@@ -21,7 +21,7 @@ CFLAGS = -Wall -Wextra -Werror
 LFLAGS = -L/usr/include -lreadline
 
 HEADER = ./simple_parser/parser.h \
-		./logic.h
+		./logic/logic.h
 
 INCLUDE = -I./simple_parser/
 

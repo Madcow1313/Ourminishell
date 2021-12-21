@@ -1,5 +1,5 @@
-#include "parser.h"
-#include "logic.h"
+#include "../simple_parser/parser.h"
+#include "../logic/logic.h"
 
 int	free_and_exit(t_command *command, t_list_commands *list, int ret)
 {

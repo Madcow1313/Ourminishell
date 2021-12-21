@@ -19,7 +19,7 @@ void	start_cmd(t_list_commands *cmd)
 {
 	//int		i = 0;
 	//char	*rez;
-	//ft_signal_cmd() do i need to work with signals here?
+	ft_s_h();
 /* 	while (cmd->command[i])
 	{
 		printf("%s\n", cmd->command[i]);

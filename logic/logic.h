@@ -2,7 +2,7 @@
 
 # define LOGIC_H
 
-#include "parser.h"
+#include "../simple_parser/parser.h"
 #include <sys/time.h>
 #include <unistd.h>
 #include <stdio.h>
