@@ -12,9 +12,27 @@ char	**path_directories(t_list_commands *cmd)
 	return (path);
 }
 
-void	check_start_cmd(t_list_commands *cmd)
+int	check_pipes(t_list_commands *cmd)
 {
-	/* if (cmd->type[0] == BUILT_IN)
+	int	i;
+
+	i = 1;
+	while(cmd->command[i])
+	{
+		if (!ft_strncmp(cmd->command[i], "|", ft_strlen(cmd->command[i])))
+			cmd->pipe_right++;
+		i++;
+	}
+	if (cmd->pipe_right > 0)
+		return (1);
+	else
+		return (0);
+}
+
+void	check_start_cmd(t_list_commands *cmd)
+{	
+	cmd->pipe_right = 0;
+/* 	if (cmd->type[0] == BUILT_IN)
 		check_builtins(cmd);
 	else if (cmd->type[0] == COMMAND)
 		check_command();
@@ -28,9 +46,11 @@ void	check_start_cmd(t_list_commands *cmd)
 	else if (cmd->type[0] == REDIRECT_AND_APPEND)
 		check_redir_and_append();
 	else if (cmd->type[0] == HERE_DOC)
-		check_here_doc();
-	else
-	 */	check_quotes_pipe_semicol(cmd);
+		check_here_doc(); */
+	if (!check_pipe_semicol(cmd))
+		return ;
+	//if (!check_pipes)
+	
 }
 
 void	start_cmd(t_list_commands *cmd)

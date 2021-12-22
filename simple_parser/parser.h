@@ -45,8 +45,11 @@ typedef struct s_list_commands
 	int	*type;
 	int number;
 	int	fd[2];
-	int	error_code;
-} t_list_commands;
+	int	pipe_right;
+	int	redir_right;
+	int	heredoc;
+	int	redir_append;
+} 			t_list_commands;
 
 int	ft_s_h();
 void	print_shit();

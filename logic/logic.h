@@ -27,8 +27,7 @@ typedef struct s_subprocess
 void	errors(void);
 
 void	start_cmd(t_list_commands *cmd);
-void	check_quotes_pipe_semicol(t_list_commands *cmd);
-
+int		check_pipe_semicol(t_list_commands *cmd);
 char	*process_echo(t_list_commands *cmd, char *rez);
 void	check_echo(char *str, t_list_commands *cmd);
 
