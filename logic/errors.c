@@ -4,6 +4,6 @@ void	errors(void)
 {
 	char	*s;
 
-	s = strerror(error_code);
+	s = strerror(g_error_code);
 	perror(s);
 }

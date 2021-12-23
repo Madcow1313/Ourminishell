@@ -1,4 +1,5 @@
-#include "../simple_parser/parser.h"
+//#include "../simple_parser/parser.h"
+#include "../logic/logic.h"
 
 void	ft_signal_ctrl_c()
 {

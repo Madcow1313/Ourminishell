@@ -30,7 +30,7 @@
 #define RELATIVE_PATH 14
 #define SEP_SPACE 15
 
-int	error_code;
+int	g_error_code;
 
 typedef struct s_command
 {
@@ -46,12 +46,14 @@ typedef struct s_list_commands
 	int number;
 	int	fd[2];
 	int	pipe_right;
+	int	semicol;
 	int	redir_right;
-	int	heredoc;
 	int	redir_append;
+	int	heredoc;
 } 			t_list_commands;
 
 int	ft_s_h();
+
 void	print_shit();
 /*some libft utils*/
 char	*ft_strnstr (const char *big, const char *little, size_t len);

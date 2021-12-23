@@ -16,10 +16,8 @@ SOURCE = main.c ./parser_utils/ft_strlen.c ./simple_parser/lexic_part1.c \
 		./parser_utils/ft_strncmp.c ./parser_utils/ft_strjoin.c \
 		./simple_parser/get_descriptors.c ./simple_parser/get_normal.c \
 		./signal_handler/get_signal.c ./simple_parser/shit.c \
-		./logic/builtins.c \
-		./logic/check_pipe_semicol.c \
-		./logic/errors.c
-
+		./logic/builtins.c ./logic/check_pipe_semicol.c ./logic/errors.c \
+		./logic/single_command.c ./logic/start_cmd.c  
 
 OBJ = $(SOURCE:.c=.o)
 

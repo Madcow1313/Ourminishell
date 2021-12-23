@@ -1,12 +1,11 @@
-//#include "../simple_parser/parser.h"
 #include "../logic/logic.h"
+//#include "../simple_parser/parser.h"
 
 int	free_and_exit(t_command *command, t_list_commands *list, int ret)
 {
-	if (command)
-		free (command);
-	if (list->type)
-		free (list->type);
+	// free (command);
+	// if (list->type)
+	// 	free (list->type);	if (command)
 	// if (list->command)
 	// {
 	// 	while (list->number > 0)
@@ -17,6 +16,20 @@ int	free_and_exit(t_command *command, t_list_commands *list, int ret)
 	// 	}
 	// 	free (list->command);
 	// }
+	(void)command;
+	int	i;
+
+	i = -1;
+	if (list->env_vars[++i])
+	{
+		while (list->env_vars[i++])
+			free(list->env_vars);
+	}
+	if (list->type)
+		free(list->type);
+	i = 0;
+	while (i++ < 2)
+		close(list->fd[i]);
 	return (ret);
 }
 
@@ -38,7 +51,7 @@ int	main(int argc, char **argv, char **envp)
 	{
 		string = (readline("minishell$>"));
 		if (!string)
-			free_and_exit(&command, &list, -1);
+			exit(0);//free_and_exit(&command, &list, -1);
 		add_history(string);
 		get_full_command(string, &command);
 		if (prepare_list(&list, &command) == -1)
@@ -55,6 +68,6 @@ int	main(int argc, char **argv, char **envp)
 		//print_commands_and_words(&list);
 	//}
 	//free_and_exit(&command, &list, 0);
-	//exit(0);
+	exit(0);
 	//return (0);
 }

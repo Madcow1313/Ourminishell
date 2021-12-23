@@ -25,10 +25,14 @@ typedef struct s_subprocess
 }				t_subprocess;
 
 void	errors(void);
+char	**path_directories(t_list_commands *cmd);
 
 void	start_cmd(t_list_commands *cmd);
+void	single_command(t_list_commands *cmd);
 int		check_pipe_semicol(t_list_commands *cmd);
-char	*process_echo(t_list_commands *cmd, char *rez);
+
+void	builtins(t_list_commands *cmd);
+void	process_echo(t_list_commands *cmd);
 void	check_echo(char *str, t_list_commands *cmd);
 
 #endif
