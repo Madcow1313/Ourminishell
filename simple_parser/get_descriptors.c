@@ -64,11 +64,10 @@ int	get_fd_right_redirects(t_list_commands *list, char *path, int type)
 void	set_default_fd(t_list_commands *list)
 {
 	int	ttyfd;
-	
+
 	ttyfd = open("/dev/tty", O_RDWR);
 	dup2(ttyfd, STDOUT_FILENO);
 	close(ttyfd);
-	printf("%d\n", list->fd[1]);
 	// if (list->fd[0] != 0)
 	// {
 		//close(list->fd[0]);
