@@ -50,6 +50,8 @@ typedef struct s_list_commands
 	int	redir_right;
 	int	redir_append;
 	int	heredoc;
+	int	old_stdin;
+	int	old_stdout;
 } 			t_list_commands;
 
 int	ft_s_h();
@@ -84,7 +86,9 @@ void	print_commands_and_words(t_list_commands *list);
 void	get_here_doc(char *end, t_list_commands *list);
 int	get_redirect_type(t_list_commands *list);
 int	rid_of_redirect_right(t_list_commands *list);
+void	set_default_fd(t_list_commands *list);
 
 /*shitty fucntion to make it more good loking*/
 char	**get_normal_array(t_list_commands *list);
+char **get_no_space(t_list_commands *list);
 #endif

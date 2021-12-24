@@ -60,10 +60,14 @@ int	main(int argc, char **argv, char **envp)
 			return (free_and_exit(&command, &list, -1));
 		if (!delete_quotes(&list))
 			exit(EXIT_FAILURE);
+		//print_commands_and_words(&list);
 		get_normal_array(&list);
+		//print_commands_and_words(&list);
 		while (get_redirect_type(&list))
 			rid_of_redirect_right(&list);
+		//list.command = get_no_space(&list);
 		start_cmd(&list);
+		set_default_fd(&list);
 	}
 		//print_commands_and_words(&list);
 	//}

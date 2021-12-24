@@ -108,7 +108,7 @@ char	*get_env_var_value(char **env_vars, char *string)
 			{
 				string = env_vars[i] + size + 1;
 				new_string = ft_strjoin(string, temp);
-				printf("%s\n", new_string);
+				//printf("%s\n", new_string);
 				return (new_string);
 			}
 		}
@@ -116,7 +116,7 @@ char	*get_env_var_value(char **env_vars, char *string)
 	}
 	string = "";
 	new_string = ft_strjoin(string, temp);
-	printf("no such shit %s\n", new_string);
+	//printf("no such shit %s\n", new_string);
 	return (new_string);
 }
 

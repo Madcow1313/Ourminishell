@@ -21,7 +21,7 @@ void	get_here_doc(char *end, t_list_commands *list)
 		write(fd, "\n", 1);
 		free(line);
 	}
-	close(fd);
+	//close(fd);
 }
 
 
@@ -63,10 +63,22 @@ int	get_fd_right_redirects(t_list_commands *list, char *path, int type)
 
 void	set_default_fd(t_list_commands *list)
 {
-	close(list->fd[0]);
-	close(list->fd[1]);
-	list->fd[0] = 0;
-	list->fd[1] = 1;
+	int	ttyfd;
+	
+	ttyfd = open("/dev/tty", O_RDWR);
+	dup2(ttyfd, STDOUT_FILENO);
+	close(ttyfd);
+	printf("%d\n", list->fd[1]);
+	// if (list->fd[0] != 0)
+	// {
+		//close(list->fd[0]);
+		dup2(list->fd[0], list->old_stdin);
+	//}
+	// if (list->fd[1] != 1)
+	// {
+		//close(list->fd[1]);
+		dup2(list->fd[1], list->old_stdout);
+	//}
 }
 
 int	get_redirect_type(t_list_commands *list)
@@ -107,9 +119,13 @@ int	rid_of_redirect_right(t_list_commands *list)
 	int	i;
 
 	i = 0;
+	list->old_stdin = dup(STDIN_FILENO);
+	list->old_stdout = dup(STDOUT_FILENO);
 	while ((list->type[i] != REDIRECT_RIGHT && list->type[i] != REDIRECT_LEFT && list->type[i] != REDIRECT_AND_APPEND
 		&& list->type[i] != HERE_DOC)
 		&& list->command[i] && i < list->number)
+		i++;
+	if (list->type[i + 1] == SEP_SPACE)
 		i++;
 	if (list->type[i] == REDIRECT_RIGHT || list->type[i] == REDIRECT_AND_APPEND)
 		list->fd[1] = get_fd_right_redirects(list, list->command[i + 1], list->type[i]);

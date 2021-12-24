@@ -54,15 +54,25 @@ int get_built_in_cmd(t_command *command, t_list_commands *list, size_t *i)
 	size = 0;
 	while (command->word[*i + size] != ' ' && command->word[*i + size] != '\0'
 		&& size <= command->len - *i && command->word[*i + size] && command->word[*i + size] != '>'
-		&& command->word[*i + size] != '<')
-		size++;
+		&& command->word[*i + size] != '<' && command->word[*i + size] != '\"' && command->word[*i + size] != '\'')
+	{
+		if (command->word[*i + size] == '$' && size == 0)
+			size++;
+		else if (command->word[*i + size] == '$')
+			break;
+		else
+			size++;
+	}
 	list->command[list->number] = malloc(size + 1);
 	if (!list->command[list->number])
 		return(-1);
 	ft_strlcpy(list->command[list->number], command->word + *i, size + 1);
 	*i += size;
-	while (ft_strchr(list->command[list->number], '$') >= 0 && list->type[list->number] == BUILT_IN)
+	while (ft_strchr(list->command[list->number], '$') > 0 && list->type[list->number] == BUILT_IN)
+	{
 		list->command[list->number] = get_prefix_for_env(list->env_vars, list->command[list->number]);
+		write(1, "1\n", 1);
+	}
 	list->number += 1;
 	list->command[list->number] = NULL;
 	return (0);
@@ -125,7 +135,7 @@ t_list_commands	*start_parse(t_command *command, t_list_commands *list)
 				&& list->command[list->number - 1][0] != '\"')
 			{
 				list->command[list->number - 1] = get_env_var_value(list->env_vars, list->command[list->number - 1] + 1);
-				while (ft_strchr(list->command[list->number - 1], '$') >= 0)
+				//while (ft_strchr(list->command[list->number - 1], '$') >= 0)
 					list->command[list->number - 1] = get_prefix_for_env(list->env_vars, list->command[list->number - 1]);
 			}
 		}
