@@ -67,11 +67,12 @@ void	set_default_fd(t_list_commands *list)
 
 	ttyfd = open("/dev/tty", O_RDWR);
 	dup2(ttyfd, STDOUT_FILENO);
+	dup2(ttyfd, STDIN_FILENO);
 	close(ttyfd);
 	// if (list->fd[0] != 0)
 	// {
 		//close(list->fd[0]);
-		dup2(list->fd[0], list->old_stdin);
+		//dup2(list->fd[0], list->old_stdin);
 	//}
 	// if (list->fd[1] != 1)
 	// {
