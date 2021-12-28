@@ -2,8 +2,6 @@
 
 void	single_command(t_list_commands *cmd)
 {
-	printf("i'm in single_command!\n");
-	//printf("type[0] - %d\n", cmd->type[0]);
 	if (cmd->type[0] == BUILT_IN)
 		builtins(cmd);
 /* 	else if (cmd->type[0] == COMMAND)
@@ -19,6 +17,5 @@ void	single_command(t_list_commands *cmd)
 		redir_and_append();
 	else if (cmd->type[0] == HERE_DOC)
 		here_doc(); */
-	else
-		return ;
+	return ;
 }

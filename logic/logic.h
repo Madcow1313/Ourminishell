@@ -25,6 +25,7 @@ typedef struct s_subprocess
 }				t_subprocess;
 
 void	errors(void);
+void	cd_errors(char *path);
 char	**path_directories(t_list_commands *cmd);
 
 void	start_cmd(t_list_commands *cmd);
@@ -33,6 +34,10 @@ int		check_pipe_semicol(t_list_commands *cmd);
 
 void	builtins(t_list_commands *cmd);
 void	process_echo(t_list_commands *cmd);
-void	check_echo(char *str, t_list_commands *cmd);
+
+void	process_cd(t_list_commands *cmd);
+char	*cd_other_paths(t_list_commands *cmd, char *new_path);
+void	set_pwd(t_list_commands *cmd, char *new_path);
+//void	check_echo(char *str, t_list_commands *cmd);
 
 #endif
