@@ -18,7 +18,7 @@ SOURCE = main.c ./parser_utils/ft_strlen.c ./simple_parser/lexic_part1.c \
 		./signal_handler/get_signal.c ./simple_parser/shit.c \
 		./logic/builtins.c ./logic/check_pipe_semicol.c ./logic/errors.c \
 		./logic/single_command.c ./logic/start_cmd.c ./logic/echo.c \
-		./logic/cd.c ./logic/cd_2.c 
+		./logic/cd.c 
 
 OBJ = $(SOURCE:.c=.o)
 

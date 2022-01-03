@@ -44,7 +44,7 @@ void	check_start_cmd(t_list_commands *cmd)
 	if (!count_pipes_and_semicol(cmd))
 		single_command(cmd);
 	//else
-		//cmd_with_pipe_semicol(cmd);
+		//cmd_with_pipe(cmd);
 	return ;
 }
 
@@ -54,8 +54,7 @@ void	start_cmd(t_list_commands *cmd)
 	cmd->semicol = 0;
 
 	ft_s_h();
-	//printf("%s\n", cmd->command[1]);
-	printf("aaaaaaaaaaaaaaaaa\n");
+
 	check_start_cmd(cmd);
 	return ;
 }

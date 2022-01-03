@@ -43,7 +43,6 @@ int	main(int argc, char **argv, char **envp)
 	/*should be a copy, for now is fine*/
 	if (argc && argv)
 		list.env_vars = envp;
-	//print_shit();
 	ft_s_h();
 	// string = "VSCODE_GIT_ASKPASS_EXTRA_ARGS";
 	// get_env_var_value(list.env_vars, string);
