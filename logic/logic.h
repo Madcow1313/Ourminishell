@@ -28,13 +28,17 @@ void	errors(void);
 void	cd_errors(char *path);
 char	**path_directories(t_list_commands *cmd);
 
-void	start_cmd(t_list_commands *cmd);
+void	start_cmd(t_list_commands *cmd, t_command *p);
 void	single_command(t_list_commands *cmd);
 int		check_pipe_semicol(t_list_commands *cmd);
 
 void	builtins(t_list_commands *cmd);
 
+//single echo with redirs
 void	process_echo(t_list_commands *cmd);
+void	redirects(t_list_commands *cmd, int nl);
+
+//single cd's
 void	process_cd(t_list_commands *cmd);
 void	set_pwd(t_list_commands *cmd);
 

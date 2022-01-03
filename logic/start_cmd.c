@@ -38,7 +38,8 @@ int	count_pipes_and_semicol(t_list_commands *cmd)
 
 void	check_start_cmd(t_list_commands *cmd)
 {	
-
+	if (cmd->command[0] == NULL)
+		return ;
 	if (!check_pipe_semicol(cmd))
 		return ;
 	if (!count_pipes_and_semicol(cmd))
@@ -48,8 +49,9 @@ void	check_start_cmd(t_list_commands *cmd)
 	return ;
 }
 
-void	start_cmd(t_list_commands *cmd)
+void	start_cmd(t_list_commands *cmd, t_command *p)
 {	
+	cmd->p = p;
 	cmd->pipe_right = 0;
 	cmd->semicol = 0;
 

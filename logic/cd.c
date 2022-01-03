@@ -16,12 +16,10 @@ void	set_pwd(t_list_commands *cmd)
 		if (!ft_strncmp(cmd->env_vars[i], "PWD", ft_strlen("PWD")))
 		{
 			free(cmd->env_vars[i]);
-			printf ("I'm in loop PWD\n");
 			cmd->env_vars[i] = buf;
 		}
 		if (!ft_strncmp(cmd->env_vars[i], "OLDPWD", ft_strlen("OLDPWD")))
 		{
-			printf ("I'm in loop OLDPWD\n");
 			free(cmd->env_vars[i]);
 			cmd->env_vars[i] = old_pwd;
 		}

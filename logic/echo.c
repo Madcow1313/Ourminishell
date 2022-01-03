@@ -1,11 +1,31 @@
 #include "../logic/logic.h"
 
+int	check_redir(t_list_commands *cmd, int nl)
+{
+	size_t	i;
+
+	i = 0;
+	while (i < cmd->p->len)
+	{
+		if (cmd->type[i] == REDIRECT_RIGHT ||
+			cmd->type[i] == REDIRECT_AND_APPEND)
+		{
+			redirects(cmd, nl);
+			return (0);
+		}
+		i++;
+	}
+	return (1);
+}
+
 void	echo_without_newline(t_list_commands *cmd)
 {
 	int	i;
 	int	j;
 
 	i = 2;
+	if (!check_redir(cmd, 0))
+		return ;
 	while(cmd->command[i])
 	{
 		j = 0;
@@ -27,6 +47,8 @@ void	echo_with_newline(t_list_commands *cmd)
 	int	j;
 
 	i = 1;
+	if (!check_redir(cmd, 1))
+		return ;
 	while(cmd->command[i])
 	{
 		j = 0;

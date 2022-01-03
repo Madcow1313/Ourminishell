@@ -43,6 +43,7 @@ typedef struct s_list_commands
 	char **command;
 	char **env_vars;
 	int	*type;
+	t_command	*p;
 	int number;
 	int	fd[2];
 	int	pipe_right;
