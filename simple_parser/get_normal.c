@@ -9,7 +9,7 @@ char	**get_normal_array(t_list_commands *list)
 
 	i = 0;
 	j = 0;
-	new = malloc(sizeof(list->command));
+	new = malloc(sizeof(char *) * list->number);
 	while (list->command[i] && i < list->number)
 	{
 		while ((list->type[i] == SEP_SPACE || (list->type[i] >= REDIRECT_RIGHT && list->type[i] < ENVIRONMENT_VAR))
