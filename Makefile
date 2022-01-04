@@ -16,9 +16,11 @@ SOURCE = main.c ./parser_utils/ft_strlen.c ./simple_parser/lexic_part1.c \
 		./parser_utils/ft_strncmp.c ./parser_utils/ft_strjoin.c \
 		./simple_parser/get_descriptors.c ./simple_parser/get_normal.c ./simple_parser/no_space.c \
 		./signal_handler/get_signal.c ./simple_parser/shit.c \
-		./logic/builtins.c ./logic/check_pipe_semicol.c ./logic/errors.c \
-		./logic/single_command.c ./logic/start_cmd.c ./logic/echo.c \
-		./logic/echo_redir.c ./logic/cd.c 
+		./logic/builtins/builtins.c ./logic/check_pipe_semicol.c ./logic/errors.c \
+		./logic/single_command.c ./logic/start_cmd.c ./logic/builtins/echo.c \
+		./logic/builtins/echo_redir.c ./logic/builtins/cd.c ./logic/builtins/pwd.c \
+		./logic/builtins/export.c ./logic/builtins/export_utils.c \
+		./logic/builtins/utils/check_export_input.c 
 
 OBJ = $(SOURCE:.c=.o)
 

@@ -13,12 +13,12 @@ void	set_pwd(t_list_commands *cmd)
 	//printf ("%s\n", buf);
 	while(cmd->env_vars[i])
 	{
-		if (!ft_strncmp(cmd->env_vars[i], "PWD", ft_strlen("PWD")))
+		if (!ft_strncmp(cmd->env_vars[i], "PWD", ft_strlen(cmd->env_vars[i])))
 		{
 			free(cmd->env_vars[i]);
 			cmd->env_vars[i] = buf;
 		}
-		if (!ft_strncmp(cmd->env_vars[i], "OLDPWD", ft_strlen("OLDPWD")))
+		if (!ft_strncmp(cmd->env_vars[i], "OLDPWD", ft_strlen(cmd->env_vars[i])))
 		{
 			free(cmd->env_vars[i]);
 			cmd->env_vars[i] = old_pwd;
@@ -40,53 +40,6 @@ void	cd_to_home_dir(t_list_commands *cmd)
 	}
 	return ;
 }
-
-/* char	*process_relative_path(t_list_commands *cmd)
-{
-	char	*new_path = NULL;
-
-	if (cmd->command[1][0] == '-')
-	{
-		new_path = get_env_var_value(cmd->env_vars, "OLDPWD");
-		if (chdir(new_path) == -1)
-		{
-			g_error_code = errno;
-			cd_errors(new_path);
-		}
-	}
-	else if (!(ft_strncmp(cmd->command[1], "..", 2)))
-	{
-		cmd->command[1] = ft_strtrim(cmd->command[1], "../");
-		new_path = get_env_var_value(cmd->env_vars, "HOME");
-		new_path = ft_strjoin(new_path, cmd->command[1]);
-		if (chdir(new_path) == -1)
-		{
-			g_error_code = errno;
-			cd_errors(new_path);
-		}
-	}
-	else
-		new_path = cd_other_paths(cmd, new_path);
-	return (new_path);
-}
-
-char	*cd_has_path(t_list_commands *cmd)
-{
-	char	*new_path = NULL;
-
-	if (cmd->type[1] == 13)
-	{
-		new_path = cmd->command[1];
-		if (chdir(new_path) == -1)
-		{
-			g_error_code = errno;
-			cd_errors(new_path);
-		}
-	}
-	else if (cmd->type[1] == 14)
-		new_path = process_relative_path(cmd);
-	return (new_path);
-} */
 
 void	cd_has_path(t_list_commands *cmd)
 {

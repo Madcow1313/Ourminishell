@@ -24,9 +24,15 @@ typedef struct s_subprocess
 	int stderr;
 }				t_subprocess;
 
+char	**free_array(char **new_env);
+int		check_first_symbol(char c);
+int		wrong_symbols(char *str);
+
 void	errors(void);
 void	cd_errors(char *path);
-char	**path_directories(t_list_commands *cmd);
+void	export_errors(char *str);
+void	malloc_error();
+
 
 void	start_cmd(t_list_commands *cmd, t_command *p);
 void	single_command(t_list_commands *cmd);
@@ -41,5 +47,12 @@ void	redirects(t_list_commands *cmd, int nl);
 //single cd's
 void	process_cd(t_list_commands *cmd);
 void	set_pwd(t_list_commands *cmd);
+
+//single pwd
+void	process_pwd(t_list_commands *cmd);
+
+//single export
+void	process_export(t_list_commands *cmd);
+char	**check_valid_envp(t_list_commands *cmd);
 
 #endif
