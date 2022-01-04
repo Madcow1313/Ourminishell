@@ -15,15 +15,15 @@ char	**get_normal_array(t_list_commands *list)
 		while ((list->type[i] == SEP_SPACE || (list->type[i] >= REDIRECT_RIGHT && list->type[i] < ENVIRONMENT_VAR))
 			&& list->command[i])
 		{
-			new[j] = malloc(2);
-			new[j] = "";
+			new[j] = malloc(1);
+			new[j] = "\0";
 			new[j] = ft_strjoin(new[j], list->command[i]);
 			list->type[j] = list->type[i];
 			i++;
 			j++;
 		}
-		new[j] = malloc(2);
-		new[j] = "";
+		new[j] = malloc(1);
+		new[j] = "\0";
 		while(list->type[i] != SEP_SPACE && ((list->type[i] < REDIRECT_RIGHT || list->type[i] > REDIRECT_AND_APPEND))
 			&& list->command[i] && i < list->number)
 		{

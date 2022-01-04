@@ -12,7 +12,7 @@ void	ft_signal_ctrl_c()
 
 int	ft_s_h()
 {
-	signal(SIGTERM, SIG_IGN);
+	//signal(SIGTERM, SIG_IGN);
 	signal(SIGINT, ft_signal_ctrl_c);
 	signal(SIGQUIT, SIG_IGN);
 	return (1);

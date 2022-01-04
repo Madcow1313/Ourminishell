@@ -9,10 +9,8 @@ void	get_here_doc(char *end, t_list_commands *list)
 	while (1)
 	{
 		line = readline(">");
-		if (!line)
-			break;
 		line = get_prefix_for_env(list->env_vars, line);
-		if (!ft_strncmp(line, end, ft_strlen(line)))
+		if (!ft_strncmp(line, end, ft_strlen(line)) && ft_strlen(line) > 0)
 		{
 			free (line);
 			break;
@@ -21,7 +19,7 @@ void	get_here_doc(char *end, t_list_commands *list)
 		write(fd, "\n", 1);
 		free(line);
 	}
-	//close(fd);
+	close(fd);
 }
 
 
@@ -55,7 +53,7 @@ int	get_fd_right_redirects(t_list_commands *list, char *path, int type)
 		fd_to_apply = open(path, O_RDWR | O_TRUNC | O_CREAT, S_IRWXU);
 	else if (type == REDIRECT_AND_APPEND)
 		fd_to_apply = open(path, O_RDWR | O_APPEND | O_CREAT, S_IRWXU);
-	//printf("fd of file %d\n", fd_to_apply);
+	printf("fd of file %d\n", fd_to_apply);
 	dup2(fd_to_apply, list->fd[1]);
 	return (list->fd[1]);
 	//close(list->fd[1]);
