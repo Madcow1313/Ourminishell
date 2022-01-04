@@ -24,7 +24,7 @@ SOURCE = main.c ./parser_utils/ft_strlen.c ./simple_parser/lexic_part1.c \
 
 OBJ = $(SOURCE:.c=.o)
 
-CC = gcc
+CC = gcc -g
 
 CFLAGS = -Wall -Wextra -Werror
 

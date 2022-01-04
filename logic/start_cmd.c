@@ -23,14 +23,7 @@ int	count_pipes_and_semicol(t_list_commands *cmd)
 			cmd->pipe_right++;
 		i++;
 	}
-	i = 1;
-	while(cmd->command[i])
-	{
-		if (cmd->command[i] && !ft_strncmp(cmd->command[i], ";", ft_strlen(";")))
-			cmd->semicol++;
-		i++;
-	}
-	if (cmd->pipe_right > 0 || cmd->semicol > 0)
+	if (cmd->pipe_right > 0)
 		return (1);
 	else
 		return (0);
@@ -53,7 +46,6 @@ void	start_cmd(t_list_commands *cmd, t_command *p)
 {	
 	cmd->p = p;
 	cmd->pipe_right = 0;
-	cmd->semicol = 0;
 
 	ft_s_h();
 
