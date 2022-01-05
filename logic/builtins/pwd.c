@@ -15,7 +15,8 @@ void	process_pwd(t_list_commands *cmd)
 			return ;
 		}
 	}
-	pwd = get_env_var_value(cmd->env_vars, "PWD");
+	//pwd = get_env_var_value(cmd->env_vars, "PWD");
+	pwd = getcwd(NULL, 0);
 	ft_putendl_fd(pwd, cmd->fd[1]);
 	return ;
 }

@@ -31,7 +31,7 @@ int		wrong_symbols(char *str);
 void	errors(void);
 void	cd_errors(char *path);
 void	export_errors(char *str);
-void	malloc_error();
+void	malloc_error(char **s);
 
 
 void	start_cmd(t_list_commands *cmd, t_command *p);
@@ -47,6 +47,7 @@ void	redirects(t_list_commands *cmd, int nl);
 //single cd's
 void	process_cd(t_list_commands *cmd);
 void	set_pwd(t_list_commands *cmd);
+char	**find_old_pwd(t_list_commands *cmd);
 
 //single pwd
 void	process_pwd(t_list_commands *cmd);
@@ -54,5 +55,7 @@ void	process_pwd(t_list_commands *cmd);
 //single export
 void	process_export(t_list_commands *cmd);
 char	**check_valid_envp(t_list_commands *cmd);
+int	count_env_len(char **env);
+char	**check_replace_env(char **old_env, char **new_env, int len);
 
 #endif

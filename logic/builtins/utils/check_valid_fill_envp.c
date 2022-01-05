@@ -10,25 +10,26 @@ char	**free_array(char **new_env)
 		free (new_env[i]);
 		i++;
 	}
-	free(new_env);
+	if (new_env)
+		free(new_env);
 	new_env = NULL;
 	return (new_env);
 }
 
-char	**init_new_env(int len)
+static char	**init_new_env(int len)
 {
 	char	**new_env;
 
 	new_env = malloc(sizeof(char*) * (len + 1));
 	if (!new_env)
 	{
-		malloc_error();
+		malloc_error(new_env);
 		return (NULL);
 	}
 	return (new_env);
 }
 
-char	**alloc_and_fill_new_env(t_list_commands *cmd, char **new_env)
+static char	**alloc_and_fill_new_env(t_list_commands *cmd, char **new_env)
 {
 	int	i;
 	int	id;
@@ -41,8 +42,11 @@ char	**alloc_and_fill_new_env(t_list_commands *cmd, char **new_env)
 		if (!check_first_symbol(cmd->command[i][0]) || !wrong_symbols(cmd->command[i]))
 			i++;
 		new_env[id] = ft_strdup(cmd->command[i]);
-		if (!new_env[id])	
+		if (!new_env[id])
+		{	
+			malloc_error(new_env);
 			return (new_env);
+		}
 		id++;
 	}
 	new_env[id] = NULL;

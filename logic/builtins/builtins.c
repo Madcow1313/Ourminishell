@@ -2,12 +2,12 @@
 
 void	builtins(t_list_commands *cmd)
 {
-	int i = 0;
+/* 	int i = 0;
 	while (cmd->command[i])
 	{
 		printf("%s\n", cmd->command[i]);
 		i++;
-	}
+	} */
 	if (!ft_strncmp(cmd->command[0], "echo", ft_strlen("echo")))
 		process_echo(cmd);
  	else if (!ft_strncmp(cmd->command[0], "cd", ft_strlen("cd")))

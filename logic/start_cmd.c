@@ -12,7 +12,7 @@ char	**path_directories(t_list_commands *cmd)
 	return (path);
 }
 
-int	count_pipes_and_semicol(t_list_commands *cmd)
+int	count_pipes(t_list_commands *cmd)
 {
 	int	i;
 
@@ -35,7 +35,7 @@ void	check_start_cmd(t_list_commands *cmd)
 		return ;
 	if (!check_pipe_semicol(cmd))
 		return ;
-	if (!count_pipes_and_semicol(cmd))
+	if (!count_pipes(cmd))
 		single_command(cmd);
 	//else
 		//cmd_with_pipe(cmd);
