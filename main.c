@@ -33,6 +33,23 @@ int	free_and_exit(t_command *command, t_list_commands *list, int ret)
 	return (ret);
 }
 
+void	duplicate_envp(char **envp, t_list_commands *list)
+{
+	int	i;
+
+	i = 0;
+	while (envp[i])
+		i++;
+	list->env_vars = malloc(sizeof(char *) * (i + 1));
+	i = 0;
+	while (envp[i])
+	{
+		list->env_vars[i] = ft_strdup(envp[i]);
+		i++;
+	}
+	list->env_vars[i] = NULL;
+}
+
 /*free and exit doesn't work, because no malloc*/
 int	main(int argc, char **argv, char **envp)
 {
@@ -42,7 +59,7 @@ int	main(int argc, char **argv, char **envp)
 
 	/*should be a copy, for now is fine*/
 	if (argc && argv)
-		list.env_vars = envp;
+		duplicate_envp(envp, &list);
 	ft_s_h();
 	// string = "VSCODE_GIT_ASKPASS_EXTRA_ARGS";
 	// get_env_var_value(list.env_vars, string);
