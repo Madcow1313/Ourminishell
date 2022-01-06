@@ -20,7 +20,7 @@ void	builtins(t_list_commands *cmd)
 	// 	process_unset(cmd);
 	// else if(!ft_strncmp(cmd->command[0], "env", ft_strlen("env")))
 	// 	process_env(cmd);
-	// else if (!ft_strncmp(cmd->command[0], "exit", ft_strlen("exit")))
-	// 	process_exit(cmd);
+	else if (!ft_strncmp(cmd->command[0], "exit", ft_strlen("exit")))
+		process_exit(&cmd->command[1]);
 	return ;
 }

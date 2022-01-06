@@ -58,4 +58,7 @@ char	**check_valid_envp(t_list_commands *cmd);
 int	count_env_len(char **env);
 char	**check_replace_env(char **old_env, char **new_env, int len);
 
+//single exit
+void	process_exit(char **args);
+
 #endif

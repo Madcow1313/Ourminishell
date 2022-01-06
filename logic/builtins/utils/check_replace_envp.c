@@ -1,5 +1,6 @@
 #include "../logic/logic.h"
 
+//counts double array's len(not str len)
 int count_env_len(char **env)
 {
 	int i;
