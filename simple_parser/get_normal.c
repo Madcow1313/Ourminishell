@@ -4,7 +4,7 @@
 char	**get_normal_array(t_list_commands *list)
 {
 	char	**new;
-	char 	*temp;
+	//char 	*temp;
 	int		i;
 	int		j;
 
@@ -20,25 +20,25 @@ char	**get_normal_array(t_list_commands *list)
 				i++;
 			//new[j] = malloc(1);
 			new[j] = "\0";
-			temp = new[j];
+			//temp = new[j];
 			new[j] = ft_strjoin(new[j], list->command[i]);
 			list->type[j] = list->type[i];
-			free(temp);
+			//free(temp);
 			i++;
 			j++;
 		}
-		//new[j] = malloc(1);
+		new[j] = malloc(1);
 		new[j] = "\0";
 		while(list->type[i] != SEP_SPACE && ((list->type[i] < REDIRECT_RIGHT || list->type[i] > REDIRECT_AND_APPEND))
 			&& list->command[i] && i < list->number)
 		{
 			//printf("here %s\n", list->command[i]);
-			temp = new[j];
+			//temp = new[j];
 			new[j] = ft_strjoin(new[j], list->command[i]);
 			//printf("string in new array %d %d %s\n", j, i, list->command[i]);
 			if (i > 0)
 				list->type[j] = list->type[i];
-			free (temp);
+			//free (temp);
 			i++;
 		}
 		j++;
