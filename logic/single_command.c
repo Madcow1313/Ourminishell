@@ -2,6 +2,7 @@
 
 void	single_command(t_list_commands *cmd)
 {
+	printf("%d\n", cmd->type[0]);
 	if (cmd->type[0] == BUILT_IN)
 		builtins(cmd);
 /* 	else if (cmd->type[0] == COMMAND)

@@ -58,6 +58,7 @@ int	main(int argc, char **argv, char **envp)
 	const char 	*string;
 
 	/*should be a copy, for now is fine*/
+	g_error_code = 0;
 	if (argc && argv)
 		duplicate_envp(envp, &list);
 	ft_s_h();
