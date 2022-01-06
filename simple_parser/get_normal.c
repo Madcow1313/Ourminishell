@@ -39,6 +39,7 @@ char	**get_normal_array(t_list_commands *list)
 		j++;
 		//i++;
 	}
+	list->type[j - 1] = SEP_SPACE;
 	new[j] = NULL;
 	list->command = new;
 	//printf("hre %s\n", list->command[0]);
