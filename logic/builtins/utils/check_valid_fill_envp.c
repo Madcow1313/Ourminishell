@@ -20,12 +20,11 @@ static char	**init_new_env(int len)
 {
 	char	**new_env;
 
+	if (!len)
+		return (NULL);
 	new_env = malloc(sizeof(char*) * (len + 1));
 	if (!new_env)
-	{
 		malloc_error(new_env);
-		return (NULL);
-	}
 	return (new_env);
 }
 
@@ -36,7 +35,7 @@ static char	**alloc_and_fill_new_env(t_list_commands *cmd, char **new_env)
 	
 	i = 0;
 	id = 0;
-	new_env[id] = NULL;
+	//new_env[id] = NULL;
 	while(cmd->command[++i])
 	{
 		if (!check_first_symbol(cmd->command[i][0]) || !wrong_symbols(cmd->command[i]))
@@ -63,16 +62,21 @@ char	**check_valid_envp(t_list_commands *cmd)
 	len = 0;
 	while(cmd->command[i])
 	{
-		if (!check_first_symbol(cmd->command[i][0]) || !wrong_symbols(cmd->command[i]))
+		if (!check_first_symbol(cmd->command[i][0])
+			|| !wrong_symbols(cmd->command[i]))
 		{
 			export_errors(cmd->command[i]);
 			i++;
 		}
-		len++;
 		if (cmd->command[i])
+		{
 			i++;
+			len++;
+		}
 	}
 	new_env = init_new_env(len);
+	if (!new_env)
+		return(NULL);
 	new_env = alloc_and_fill_new_env(cmd, new_env);
 	return (new_env);
 }
