@@ -46,7 +46,7 @@ int	handle_redirects(t_list_commands *list, int character, size_t *i)
 		list->command[list->number] = ">>";
 	else if (character == HERE_DOC)
 		list->command[list->number] = "<<";
-	*i += ft_strlen(list->command[list->number]) + 1;
+	*i += ft_strlen(list->command[list->number]);
 	list->number += 1;
 	list->command[list->number] = NULL;
 	return (0);
