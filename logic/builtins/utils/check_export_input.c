@@ -15,8 +15,8 @@ int	wrong_symbols(char *str)
 	i = 0;
 	while (str[i])
 	{
-		if ((str[i] >= 33 && str[i] <= 47) || (str[i] >= 58 && str[i] <= 64)
-			|| (str[i] >= 91 && str[i] <= 96) || (str[i] >= 123 && str[i] <= 126))
+		if (str[i] == '`' || str[i] == '\\' || str[i] == '(' || str[i] == ')'
+			|| str[i] == '&' || str[i] == '<' || str[i] == '>' || str[i] == '|')
 			return (0);
 		i++;
 	}
