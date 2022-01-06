@@ -15,6 +15,8 @@ char	**get_normal_array(t_list_commands *list)
 		while ((list->type[i] == SEP_SPACE || (list->type[i] >= REDIRECT_RIGHT && list->type[i] < ENVIRONMENT_VAR))
 			&& list->command[i])
 		{
+			while (list->type[i] == SEP_SPACE && i < list->number)
+				i++;
 			new[j] = malloc(1);
 			new[j] = "\0";
 			new[j] = ft_strjoin(new[j], list->command[i]);
@@ -35,8 +37,9 @@ char	**get_normal_array(t_list_commands *list)
 			i++;
 		}
 		j++;
-		i++;
+		//i++;
 	}
+	list->type[j - 1] = SEP_SPACE;
 	new[j] = NULL;
 	list->command = new;
 	//printf("hre %s\n", list->command[0]);

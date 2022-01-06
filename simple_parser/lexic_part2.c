@@ -56,23 +56,30 @@ int get_built_in_cmd(t_command *command, t_list_commands *list, size_t *i)
 		&& size <= command->len - *i && command->word[*i + size] && command->word[*i + size] != '>'
 		&& command->word[*i + size] != '<' && command->word[*i + size] != '\"' && command->word[*i + size] != '\'')
 	{
-		if (command->word[*i + size] == '$' && size == 0)
+		if (command->word[*i + size] == '$' && size == 0
+			&& command->word[*i + size + 1] != '\"'
+			&& command->word[*i + size + 1] != '\'')
 			size++;
 		else if (command->word[*i + size] == '$')
 			break;
 		else
 			size++;
 	}
+	if (size == 0)
+	{
+		*i += 1;
+		return (0);
+	}
 	list->command[list->number] = malloc(size + 1);
 	if (!list->command[list->number])
 		return(-1);
 	ft_strlcpy(list->command[list->number], command->word + *i, size + 1);
 	*i += size;
-	while (ft_strchr(list->command[list->number], '$') > 0 && list->type[list->number] == BUILT_IN)
-	{
-		list->command[list->number] = get_prefix_for_env(list->env_vars, list->command[list->number]);
-		write(1, "1\n", 1);
-	}
+	// while (ft_strchr(list->command[list->number], '$') > 0 && list->type[list->number] == BUILT_IN)
+	// {
+	// 	list->command[list->number] = get_prefix_for_env(list->env_vars, list->command[list->number]);
+	// 	write(1, "1\n", 1);
+	// }
 	list->number += 1;
 	list->command[list->number] = NULL;
 	return (0);
@@ -126,7 +133,10 @@ t_list_commands	*start_parse(t_command *command, t_list_commands *list)
 		}
 		else if (list->type[list->number] >= REDIRECT_RIGHT
 			&& list->type[list->number] <= REDIRECT_AND_APPEND)
-			ret = handle_redirects(list, list->type[list->number], &i);
+			{
+				ret = handle_redirects(list, list->type[list->number], &i);
+				//print_commands_and_words(list);
+			}
 		else if	(list->type[list->number] == ENVIRONMENT_VAR)
 		{
 			get_built_in_cmd(command, list, &i);
@@ -147,6 +157,8 @@ t_list_commands	*start_parse(t_command *command, t_list_commands *list)
 			list->number += 1;
 			list->command[list->number] = NULL;
 		}
+		else
+			continue ;
 		while (command->word[i] == ' ')
 			i++;
 	}
