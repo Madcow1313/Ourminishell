@@ -16,7 +16,7 @@ char	**free_array(char **new_env)
 	return (new_env);
 }
 
-static char	**init_new_env(int len)
+char	**init_new_env(int len)
 {
 	char	**new_env;
 
@@ -28,7 +28,7 @@ static char	**init_new_env(int len)
 	return (new_env);
 }
 
-static char	**alloc_and_fill_new_env(t_list_commands *cmd, char **new_env)
+char	**alloc_and_fill_new_env(t_list_commands *cmd, char **new_env)
 {
 	int	i;
 	int	id;

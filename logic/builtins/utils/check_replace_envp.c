@@ -90,9 +90,9 @@ char **check_replace_env(char **old_env, char **new_env, int len)
 	char	**result;
 
 	i = -1;
-	j = -1;
+/* 	j = -1;
 	while(++j < len)
-		printf("%s\n", new_env[j]);
+		printf("%s\n", new_env[j]); */
 	while (old_env[++i])
 	{
 		j = -1;
@@ -107,10 +107,10 @@ char **check_replace_env(char **old_env, char **new_env, int len)
 			}
 		}
 	}
-	while(old_env[++j])
-		printf("%s\n", old_env[j]);
+	/* while(old_env[++j])
+		printf("%s\n", old_env[j]); */
 	result = join_ostatok(old_env, new_env, len);
-	free_array(new_env);
+	//free_array(new_env);
 	free_array(old_env);
 	return (result);
 }

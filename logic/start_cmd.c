@@ -1,5 +1,22 @@
 #include "../logic/logic.h"
 
+/* static void	free_cmd(t_list_commands *cmd)
+{
+	size_t	i;
+
+	i = -1;
+	if (cmd->command)
+	{
+		while(cmd->command[++i])
+			free(cmd->command[i]);
+	}
+	free(cmd->command);
+	cmd->command = NULL;
+	i = -1;
+	if (cmd->type)
+		free(cmd->type);
+} */
+
 char	**path_directories(t_list_commands *cmd)
 {
 	int	i;
@@ -50,5 +67,6 @@ void	start_cmd(t_list_commands *cmd, t_command *p)
 	ft_s_h();
 
 	check_start_cmd(cmd);
+	//free_cmd(cmd);
 	return ;
 }

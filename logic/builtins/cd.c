@@ -51,21 +51,12 @@ static void cd_has_path(t_list_commands *cmd)
 		g_error_code = errno;
 		cd_errors(new_path);
 	}
+	free(new_path);
 	return;
 }
 
 void process_cd(t_list_commands *cmd)
 {
-	// int i = 0;
-	// while(cmd->env_vars[i])
-	// {
-	// 	/* if (!ft_strncmp(cmd->env_vars[i], "PWD", ft_strlen("PWD")))
-	// 		printf("%s\n", cmd->env_vars[i]);
-	// 	if (!ft_strncmp(cmd->env_vars[i], "OLDPWD", ft_strlen("OLDPWD")))
-	// 		printf("%s\n", cmd->env_vars[i]); */
-	// 	printf("%s\n", cmd->env_vars[i]);
-	// 	i++;
-	// }
 	if (cmd->command[1] != NULL)
 		cd_has_path(cmd);
 	else
