@@ -42,7 +42,6 @@ size_t	count_double_qm(t_command *command, size_t start, size_t end)
 	return (counter);
 }
 
-
 /* add ft_strchr and make return int if found*/
 size_t	find_first_qm(const char *string)
 {

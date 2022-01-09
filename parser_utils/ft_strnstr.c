@@ -2,7 +2,7 @@
 
 /*search for first occurence of little string in big string,
 return pointer to first occurence or NULL*/
-char	*ft_strnstr (const char *big, const char *little, size_t len)
+char	*ft_strnstr(const char *big, const char *little, size_t len)
 {
 	size_t	i;
 	size_t	j;

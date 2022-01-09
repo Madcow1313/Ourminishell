@@ -13,7 +13,7 @@ void	get_here_doc(char *end, t_list_commands *list)
 		if (!ft_strncmp(line, end, ft_strlen(line)) && ft_strlen(line) > 0)
 		{
 			free (line);
-			break;
+			break ;
 		}
 		write(fd, line, ft_strlen(line));
 		write(fd, "\n", 1);
@@ -21,8 +21,6 @@ void	get_here_doc(char *end, t_list_commands *list)
 	}
 	close(fd);
 }
-
-
 
 void	ft_putstr(int fd, char *str)
 {
@@ -56,7 +54,6 @@ int	get_fd_right_redirects(t_list_commands *list, char *path, int type)
 	printf("fd of file %d\n", fd_to_apply);
 	dup2(fd_to_apply, list->fd[1]);
 	return (list->fd[1]);
-	//close(list->fd[1]);
 }
 
 void	set_default_fd(t_list_commands *list)
@@ -67,16 +64,7 @@ void	set_default_fd(t_list_commands *list)
 	dup2(ttyfd, STDOUT_FILENO);
 	dup2(ttyfd, STDIN_FILENO);
 	close(ttyfd);
-	// if (list->fd[0] != 0)
-	// {
-		//close(list->fd[0]);
-		//dup2(list->fd[0], list->old_stdin);
-	//}
-	// if (list->fd[1] != 1)
-	// {
-		//close(list->fd[1]);
-		dup2(list->fd[1], list->old_stdout);
-	//}
+	dup2(list->fd[1], list->old_stdout);
 }
 
 int	get_redirect_type(t_list_commands *list)
@@ -93,7 +81,6 @@ int	get_redirect_type(t_list_commands *list)
 	}
 	return (0);
 }
-
 
 char	*repoint(char *string1, char *string2, int *type, int i)
 {

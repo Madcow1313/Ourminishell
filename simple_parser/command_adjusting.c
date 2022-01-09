@@ -50,7 +50,6 @@ char	*delete_a_char(char *string)
 /*something is wrong with memory, of course leaks*/
 int	delete_quotes(t_list_commands *list)
 {
-	//char	*temp;
 	int		i;
 
 	i = 0;
@@ -61,10 +60,7 @@ int	delete_quotes(t_list_commands *list)
 		{
 			if (find_first_qm(list->command[i]) < ft_strlen(list->command[i]))
 			{
-				//temp = list->command[i];
 				list->command[i] = delete_a_char(list->command[i]);
-				// if (temp)
-				// 	free (temp);
 				if (!list->command[i])
 					return (0);
 			}
@@ -84,15 +80,14 @@ char	*get_env_var_value(char **env_vars, char *string)
 
 	i = 0;
 	size = 0;
-	//printf("string is %s\n", string);
 	temp = string;
 	if (string[i] == '\'' || string[i] == '\"')
 		return (string);
 	if (string[i] == '?')
 		return (ft_strjoin("?", string + 1));
 	while (string[i] && ((string[i] >= 'a' && string[i] <= 'z')
-		|| (string[i] >= '0' && string[i] <= '9')
-		|| (string[i] >= 'A' && string[i] <= 'Z')))
+			|| (string[i] >= '0' && string[i] <= '9')
+			|| (string[i] >= 'A' && string[i] <= 'Z')))
 	{
 		i++;
 		size++;
@@ -100,7 +95,6 @@ char	*get_env_var_value(char **env_vars, char *string)
 	if (size == 0)
 		return (string - 1);
 	temp += i;
-	//printf("remainder %s\n", temp);
 	i = 0;
 	while (env_vars[i])
 	{
@@ -110,7 +104,6 @@ char	*get_env_var_value(char **env_vars, char *string)
 			{
 				string = env_vars[i] + size + 1;
 				new_string = ft_strjoin(string, temp);
-				//printf("%s\n", new_string);
 				return (new_string);
 			}
 		}
@@ -118,12 +111,10 @@ char	*get_env_var_value(char **env_vars, char *string)
 	}
 	string = "";
 	new_string = ft_strjoin(string, temp);
-	//printf("no such shit %s\n", new_string);
 	return (new_string);
 }
 
-
-char *get_prefix_for_env(char **env_vars, char *string)
+char	*get_prefix_for_env(char **env_vars, char *string)
 {
 	char	*temp;
 	char	*temp2;
@@ -141,15 +132,7 @@ char *get_prefix_for_env(char **env_vars, char *string)
 	temp = malloc(size + 1);
 	i = 0;
 	ft_strlcpy(temp, string, size + 1);
-	// while (i < size && string[i])
-	// {
-	// 	temp[i] = string[i];
-	// 	i++;
-	// }
-	//temp[i] = '\0';
-	//printf("temp is %s\n", temp);
 	temp2 = get_env_var_value(env_vars, (string + size + 1));
 	new_string = ft_strjoin(temp, temp2);
-	//printf("new string is %s\n", new_string);
 	return (new_string);
 }

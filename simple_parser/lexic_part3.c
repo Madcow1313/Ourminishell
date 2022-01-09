@@ -66,7 +66,8 @@ int	handle_relative_path(t_list_commands *list, t_command *command, size_t *i)
 	list->command[list->number] = malloc(size + 1);
 	if (!list->command[list->number])
 		return (-1);
-	ft_strlcpy(list->command[list->number], command->word + *i - size, size + 1);
+	ft_strlcpy(list->command[list->number],
+		command->word + *i - size, size + 1);
 	list->type[list->number] = RELATIVE_PATH;
 	list->number += 1;
 	list->command[list->number] = NULL;
@@ -78,8 +79,10 @@ int	handle_absolute_path(t_list_commands *list, t_command *command, size_t *i)
 	size_t	size;
 
 	size = 0;
-	while (ft_strchr("><$\"\'|\n", command->word[*i + size]) < 0 && *i + size < command->len
-			&& command->word[*i + size] != '\0' && command->word[*i + size] != ' ')
+	while (ft_strchr("><$\"\'|\n", command->word[*i + size]) < 0
+		&& *i + size < command->len
+		&& command->word[*i + size] != '\0'
+		&& command->word[*i + size] != ' ')
 		size++;
 	list->command[list->number] = malloc(size + 1);
 	if (!list->command[list->number])

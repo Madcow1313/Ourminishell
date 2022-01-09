@@ -1,4 +1,3 @@
-//#include "../simple_parser/parser.h"
 #include "../logic/logic.h"
 
 void	ft_signal_ctrl_c()
@@ -9,8 +8,7 @@ void	ft_signal_ctrl_c()
 	rl_redisplay();
 }
 
-
-int	ft_s_h()
+int	ft_s_h(void)
 {
 	//signal(SIGTERM, SIG_IGN);
 	signal(SIGINT, ft_signal_ctrl_c);
