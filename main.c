@@ -69,6 +69,7 @@ int	main(int argc, char **argv, char **envp)
 		string = (readline("minishell$>"));
 		if (!string)
 			exit(0);//free_and_exit(&command, &list, -1);
+		printf("No free error 2\n");
 		add_history(string);
 		get_full_command(string, &command);
 		if (prepare_list(&list, &command) == -1)
@@ -86,6 +87,7 @@ int	main(int argc, char **argv, char **envp)
 		printf("No sega\n");
 		start_cmd(&list, &command);
 		set_default_fd(&list);
+		printf("No free error\n");
 	}
 		//print_commands_and_words(&list);
 	//}

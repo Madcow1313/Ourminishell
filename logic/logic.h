@@ -55,6 +55,7 @@ void	process_pwd(t_list_commands *cmd);
 //single export
 void	process_export(t_list_commands *cmd);
 char	**check_valid_envp(t_list_commands *cmd);
+int		check_only_space(char *s);
 char	**init_new_env(int len);
 char	**alloc_and_fill_new_env(t_list_commands *cmd, char **new_env);
 int		count_env_len(char **env);
@@ -64,5 +65,6 @@ char	**check_replace_env(char **old_env, char **new_env, int len);
 void	process_exit(char **args);
 
 void	process_unset(t_list_commands *cmd);
+char	**check_valid_unset(t_list_commands *cmd);
 
 #endif

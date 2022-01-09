@@ -22,5 +22,6 @@ void	builtins(t_list_commands *cmd)
 	// 	process_env(cmd);
 	else if (!ft_strncmp(cmd->command[0], "exit", ft_strlen("exit")))
 		process_exit(&cmd->command[1]);
+	//printf("No free error\n");
 	return ;
 }

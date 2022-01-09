@@ -18,5 +18,6 @@ void	single_command(t_list_commands *cmd)
 		redir_and_append();
 	else if (cmd->type[0] == HERE_DOC)
 		here_doc(); */
+	//printf("No free error\n");
 	return ;
 }

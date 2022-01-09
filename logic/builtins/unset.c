@@ -1,84 +1,32 @@
 #include "../logic/logic.h"
 
-int	find_equal_sign(char *s)
+char	**fill_unset(char **old, int old_len)
 {
-	int	i;
-
-	i = -1;
-	while(s[++i])
-	{
-		if(s[i] == '=')
-			return (0);
-	}
-	return (1);
-}
-
-static char	**check_valid_unset(t_list_commands *cmd)
-{
+	char	**result;
 	int		i;
-	char	**new_env;
-	int		len;
-	
-	i = 1;
-	len = 0;
-	while(cmd->command[i])
+	int		j;
+
+	result = malloc(sizeof(char *) * (old_len + 1));
+	if (!result)
 	{
-		if (!wrong_symbols(cmd->command[i]) || !find_equal_sign(cmd->command[i]))
-		{
-			export_errors(cmd->command[i]);
-			i++;
-		}
-		if (cmd->command[i])
-		{
-			i++;
-			len++;
-		}
+		malloc_error(result);
+		return(old);
 	}
-	new_env = init_new_env(len);
-	if (!new_env)
-		return(NULL);
-	new_env = alloc_and_fill_new_env(cmd, new_env);
-	return (new_env);
-}
-
-int	util_to_cmpr_old_and_set(char **old, char *set)
-{
-	int		i;
-	char	*cmp;
-
-	i = 0;
-	while ((*old)[i] && (*old)[i] != '=')
-		i++;
-	cmp = ft_substr(*old, 0, i);
-	if (!ft_strncmp(set, cmp, ft_strlen(cmp)))
-		return (0);
-	return (1);
-}
-
-static char	**remove_env(char **old, char **unset_env, char *set)
-{
-	int	old_len;
-	int	i;
-	int	j;
-
 	i = -1;
 	j = 0;
-	old_len = count_env_len(old);
-	if (unset_env)
-		free_array(unset_env);
-	unset_env = malloc(sizeof(char*) * (old_len + 1));
-	while(old[++i])
+	while (++i < old_len)
 	{
-		if (!util_to_cmpr_old_and_set(&old[i], set))
-			i++;
-		unset_env[j] = ft_strdup(old[i]);
-		j++;
+		if (old[i])
+		{
+			result[j] = ft_strdup(old[i]);
+			j++;
+		}
 	}
-	unset_env[j] = NULL;
-	return (unset_env);
+	result[j] = NULL;
+	return(result);
 }
 
-static char	**parts_to_compare_unset(char **old_env, char **set, char **full_old_env, char **unset)
+static void	parts_to_compare_unset(char **old_env, char **set)
 {
 	char	*cmp_2;
 	char	*tmp_set;
@@ -86,18 +34,22 @@ static char	**parts_to_compare_unset(char **old_env, char **set, char **full_old
 
 	i = 0;
 	tmp_set = *set;
-	if (!*set || !*old_env)
-		return (old_env);
+	if (!*set || !*old_env || !set || !old_env)
+		return ;
 	while ((*old_env)[i] && (*old_env)[i] != '=')
 		i++;
 	cmp_2 = ft_substr(*old_env, 0, i);
 	if (!ft_strncmp(tmp_set, cmp_2, ft_strlen(cmp_2)))
-		unset = remove_env(full_old_env, unset, tmp_set);
+	{
+		if (*old_env && old_env)
+			free(*old_env);
+		*old_env = NULL;
+	}
 	free(cmp_2);
-	return (unset);
+	return ;
 }
 
-static char	**unset_env(char **old_env, char **set, int len)
+static char	**unset_env(char **old_env, char **set, int len, int old_len)
 {
 	int		i;
 	int		j;
@@ -105,23 +57,24 @@ static char	**unset_env(char **old_env, char **set, int len)
 	char	**unset;
 	
 	i = -1;
-	unset = NULL;
 	while (old_env[++i])
 	{
 		j = -1;
-		while (++j < len && set[j])
+		while (++j < len)
 		{
 			if(set[j])
 			{
 				k = 0;
 				while (old_env[j][k] != '=')
 					k++;
-				unset = parts_to_compare_unset(&old_env[i], &set[j], old_env, unset);
+				parts_to_compare_unset(&old_env[i], &set[j]);
 			}
 		}
 	}
+	unset = fill_unset(old_env, old_len);
 	if (!unset)
 		return (old_env);
+	//free(old_env);
 	return (unset);
 }
 
@@ -129,15 +82,16 @@ static char **deleting_new_env_var(t_list_commands *cmd)
 {
 	char	**new_env;
 	int		env_len;
-//	int i;
+	int		old_len;
 
 	new_env = check_valid_unset(cmd);
 	if (new_env == NULL)
 		return (cmd->env_vars);
-	/* for (i = 0; new_env[i]; i++)
-		printf("%s\n", new_env[i]); */
+	for (int i = 0; new_env[i]; i++)
+		printf("%s\n", new_env[i]);
 	env_len = count_env_len(new_env);
-	cmd->env_vars = unset_env(cmd->env_vars, new_env, env_len);
+	old_len = count_env_len(cmd->env_vars);
+	cmd->env_vars = unset_env(cmd->env_vars, new_env, env_len, old_len);
 	free_array(new_env);
 	return (cmd->env_vars);
 }

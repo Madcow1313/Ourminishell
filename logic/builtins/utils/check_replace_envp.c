@@ -8,15 +8,15 @@ int count_env_len(char **env)
 	i = 0;
 	while (env[i])
 		i++;
-	return (i);
+	return (i - 1);
 }
 
 static char **join_ostatok(char **old, char **new, int len)
 {
-	int old_len;
-	char **filled_env;
-	int i;
-	int j;
+	int		old_len;
+	char	**filled_env;
+	int		i;
+	int		j;
 
 	if (!len || new == NULL)
 		return (old);
@@ -33,7 +33,6 @@ static char **join_ostatok(char **old, char **new, int len)
 	j = -1;
 	while(++j < len && i < (len + old_len + 1))
 	{
-		//printf("%s\n", new[j]);
 		if (new[j])
 		{
 			filled_env[i] = ft_strdup(new[j]);
@@ -46,11 +45,11 @@ static char **join_ostatok(char **old, char **new, int len)
 
 static void do_replace(char **old, char **new)
 {
-	//printf("I'm your replacement = %s\n", *new);
-	//printf("I'm what has been replaced = %s\n", *old);
-	free(*old);
+	if(*old)
+		free(*old);
 	*old = ft_strdup(*new);
-	free(*new);
+	if(*new)
+		free(*new);
 	*new = NULL;
 	return;
 }
@@ -68,17 +67,20 @@ static void parts_to_compare(char **old_env, char **new_env, int k)
 	while ((*old_env)[i] && (*old_env)[i] != '=')
 		i++;
 	cmp_2 = ft_substr(*old_env, 0, i);
-	//printf("No sega\n");
 	if (!ft_strncmp(cmp, cmp_2, ft_strlen(cmp_2)))
 	{
-		if ((*new_env)[k] == '\0')
+		if ((*new_env)[k] == '\0' && *new_env)
+		{
 			free(*new_env);
+			*new_env = NULL;
+		}
 		else
 			do_replace(old_env, new_env);
 	}
-	//printf("i'm after comparing new %s\n", *new_env);
-	free(cmp_2);
-	free(cmp);
+	if (cmp_2)
+		free(cmp_2);
+	if (cmp)
+		free(cmp);
 	return;
 }
 
@@ -90,9 +92,6 @@ char **check_replace_env(char **old_env, char **new_env, int len)
 	char	**result;
 
 	i = -1;
-/* 	j = -1;
-	while(++j < len)
-		printf("%s\n", new_env[j]); */
 	while (old_env[++i])
 	{
 		j = -1;
@@ -107,10 +106,8 @@ char **check_replace_env(char **old_env, char **new_env, int len)
 			}
 		}
 	}
-	/* while(old_env[++j])
-		printf("%s\n", old_env[j]); */
 	result = join_ostatok(old_env, new_env, len);
-	//free_array(new_env);
-	free_array(old_env);
+	//if (old_env || *old_env) //causes free() invalid ptr error and abort
+		//free_array(old_env);
 	return (result);
 }
