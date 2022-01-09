@@ -6,9 +6,10 @@ int count_env_len(char **env)
 	int i;
 
 	i = 0;
+	/*i changed to -1 . Bulat*/
 	while (env[i])
 		i++;
-	return (i);
+	return (i - 1);
 }
 
 static char **join_ostatok(char **old, char **new, int len)
@@ -50,8 +51,8 @@ static void do_replace(char **old, char **new)
 	//printf("I'm what has been replaced = %s\n", *old);
 	free(*old);
 	*old = ft_strdup(*new);
-	free(*new);
-	*new = NULL;
+	//free(*new);
+	//*new = NULL;
 	return;
 }
 
@@ -110,7 +111,11 @@ char **check_replace_env(char **old_env, char **new_env, int len)
 	/* while(old_env[++j])
 		printf("%s\n", old_env[j]); */
 	result = join_ostatok(old_env, new_env, len);
+
+	/*********invalid pointer is lower .Bulat********/
+	/*Ne och ponyatno zachem tut free. */
+	
 	//free_array(new_env);
-	free_array(old_env);
+	//free_array(old_env);
 	return (result);
 }

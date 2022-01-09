@@ -67,9 +67,9 @@ static char	**remove_env(char **old, char **unset_env, char *set)
 	if (unset_env)
 		free_array(unset_env);
 	unset_env = malloc(sizeof(char*) * (old_len + 1));
-	while(old[++i])
+	while(old[i] && old[++i])
 	{
-		if (!util_to_cmpr_old_and_set(&old[i], set))
+		if (!util_to_cmpr_old_and_set(&old[i], set) && old[i])
 			i++;
 		unset_env[j] = ft_strdup(old[i]);
 		j++;
