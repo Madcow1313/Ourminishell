@@ -41,7 +41,7 @@ static char **adding_new_env_var(t_list_commands *cmd)
 {
 	char	**new_env;
 	int		new_len;
-	char	**result;
+	//char	**result;
 	//int		i;
 
 	//i = -1;
@@ -51,13 +51,7 @@ static char **adding_new_env_var(t_list_commands *cmd)
 	//while(new_env[++i])
 		//printf("%s\n", new_env[i]);
 	new_len = count_env_len(new_env);
-	result = check_replace_env(cmd->env_vars, new_env, new_len);
-/* 	printf("\n");
-	for (int j = 0; cmd->env_vars[j]; j++)
-		printf("%s\n", cmd->env_vars[j]);
-	printf("\n"); */
-//	free_array(cmd->env_vars);
-	cmd->env_vars = result;
+	cmd->env_vars = check_replace_env(cmd->env_vars, new_env, new_len);
 /* 	while(++i < env_len)
 		if (new_env[i])
 			free(new_env[i]); */
@@ -67,11 +61,11 @@ static char **adding_new_env_var(t_list_commands *cmd)
 
 void process_export(t_list_commands *cmd)
 {
-	for (int i = 1; cmd->command[i]; i++)
-		printf("%s\n", cmd->command[i]);
-	if (cmd->command[1] == NULL)
-		print_export_no_args(cmd);
-	else
+	/* for (int i = 1; cmd->command[i]; i++)
+		printf("%s\n", cmd->command[i]); */
+	if (cmd->command[1])
 		cmd->env_vars = adding_new_env_var(cmd);
+	else
+		print_export_no_args(cmd);
 	//printf("No free error\n");
 }

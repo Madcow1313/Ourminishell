@@ -24,7 +24,7 @@ typedef struct s_subprocess
 	int stderr;
 }				t_subprocess;
 
-char	**free_array(char **new_env);
+char	**free_array(char **env);
 int		check_first_symbol(char c);
 int		wrong_symbols(char *str);
 

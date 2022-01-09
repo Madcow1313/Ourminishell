@@ -3,15 +3,16 @@
 char	**free_array(char **env)
 {
 	int	i;
+	int	env_len;
 
 	i = 0;
 	if (!env)
 		return (NULL);
-
-	while (env[i])
+	env_len = count_env_len(env);
+	while (i < env_len)
 	{
-		free (env[i]);
-		printf("%d\n", i);
+		if (env[i])
+			free (env[i]);
 		i++;
 	}
 	free(env);

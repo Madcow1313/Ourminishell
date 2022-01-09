@@ -31,6 +31,7 @@ static char **join_ostatok(char **old, char **new, int len)
 	i = -1;
 	while(old[++i])
 		filled_env[i] = ft_strdup(old[i]);
+	free_array(old);
 	j = -1;
 	while(++j < len && i < (len + old_len + 1))
 	{
@@ -77,10 +78,8 @@ static void parts_to_compare(char **old_env, char **new_env, int k)
 		else
 			do_replace(old_env, new_env);
 	}
-	if (cmp_2)
-		free(cmp_2);
-	if (cmp)
-		free(cmp);
+	free(cmp_2);
+	free(cmp);
 	return;
 }
 
@@ -90,6 +89,7 @@ char **check_replace_env(char **old_env, char **new_env, int len)
 	int		j;
 	int		k;
 	char	**result;
+	int		len_after_check_replace;
 
 	i = -1;
 	while (old_env[++i])
@@ -102,15 +102,17 @@ char **check_replace_env(char **old_env, char **new_env, int len)
 				k = 0;
 				while (new_env[j][k] && new_env[j][k] != '=')
 					k++;
-				parts_to_compare(&old_env[i], &new_env[j], k);
+				if (new_env[j])
+					parts_to_compare(&old_env[i], &new_env[j], k);
 			}
 		}
 	}
-	result = join_ostatok(old_env, new_env, len);
-	/*********invalid pointer is lower .Bulat********/
-	/*Ne och ponyatno zachem tut free. */
-	
-	//free_array(new_env);
-	//free_array(old_env);
+	i = -1;
+	len_after_check_replace = 0;
+	while(++i < len) //delete printf after
+		if (new_env[i])
+			{len_after_check_replace++; printf("new_env[i] after replace = %s\n", new_env[i]);}
+	printf("len aftercheck replace = %d\n", len_after_check_replace);
+	result = join_ostatok(old_env, new_env, len_after_check_replace);
 	return (result);
 }
