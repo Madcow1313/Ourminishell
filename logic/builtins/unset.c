@@ -14,6 +14,7 @@ char	**fill_unset(char **old, int old_len)
 	}
 	i = -1;
 	j = 0;
+<<<<<<< HEAD
 	while (++i < old_len)
 	{
 		if (old[i])
@@ -21,6 +22,18 @@ char	**fill_unset(char **old, int old_len)
 			result[j] = ft_strdup(old[i]);
 			j++;
 		}
+=======
+	old_len = count_env_len(old);
+	if (unset_env)
+		free_array(unset_env);
+	unset_env = malloc(sizeof(char*) * (old_len + 1));
+	while(old[i] && old[++i])
+	{
+		if (!util_to_cmpr_old_and_set(&old[i], set) && old[i])
+			i++;
+		unset_env[j] = ft_strdup(old[i]);
+		j++;
+>>>>>>> 0499986547cb2633d8ad4b97747cde207a6f1ae0
 	}
 	result[j] = NULL;
 	return(result);

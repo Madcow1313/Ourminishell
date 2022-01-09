@@ -6,6 +6,7 @@ int count_env_len(char **env)
 	int i;
 
 	i = 0;
+	/*i changed to -1 . Bulat*/
 	while (env[i])
 		i++;
 	return (i - 1);
@@ -48,9 +49,8 @@ static void do_replace(char **old, char **new)
 	if(*old)
 		free(*old);
 	*old = ft_strdup(*new);
-	if(*new)
-		free(*new);
-	*new = NULL;
+	//free(*new);
+	//*new = NULL;
 	return;
 }
 
@@ -107,7 +107,11 @@ char **check_replace_env(char **old_env, char **new_env, int len)
 		}
 	}
 	result = join_ostatok(old_env, new_env, len);
-	//if (old_env || *old_env) //causes free() invalid ptr error and abort
-		//free_array(old_env);
+
+	/*********invalid pointer is lower .Bulat********/
+	/*Ne och ponyatno zachem tut free. */
+	
+	//free_array(new_env);
+	//free_array(old_env);
 	return (result);
 }
