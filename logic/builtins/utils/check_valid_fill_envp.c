@@ -1,19 +1,23 @@
 #include "../logic/logic.h"
 
-char	**free_array(char **new_env)
+char	**free_array(char **env)
 {
 	int	i;
+	int	env_len;
 
 	i = 0;
-	while (new_env[i])
+	if (!env)
+		return (NULL);
+	env_len = count_env_len(env);
+	while (i < env_len)
 	{
-		free (new_env[i]);
+		if (env[i])
+			free (env[i]);
 		i++;
 	}
-	if (new_env)
-		free(new_env);
-	new_env = NULL;
-	return (new_env);
+	free(env);
+	env = NULL;
+	return (env);
 }
 
 char	**init_new_env(int len)
@@ -21,7 +25,10 @@ char	**init_new_env(int len)
 	char	**new_env;
 
 	if (!len)
-		return (NULL);
+	{
+		new_env = NULL;
+		return (new_env);
+	}
 	new_env = malloc(sizeof(char*) * (len + 1));
 	if (!new_env)
 		malloc_error(new_env);
@@ -35,16 +42,15 @@ char	**alloc_and_fill_new_env(t_list_commands *cmd, char **new_env)
 	
 	i = 0;
 	id = 0;
-	//new_env[id] = NULL;
 	while(cmd->command[++i])
 	{
 		if (!check_first_symbol(cmd->command[i][0]) || !wrong_symbols(cmd->command[i]))
-			i++;
+			continue ;
 		new_env[id] = ft_strdup(cmd->command[i]);
 		if (!new_env[id])
 		{	
 			malloc_error(new_env);
-			return (new_env);
+			return (NULL);
 		}
 		id++;
 	}
@@ -67,6 +73,7 @@ char	**check_valid_envp(t_list_commands *cmd)
 		{
 			export_errors(cmd->command[i]);
 			i++;
+			continue ;
 		}
 		if (cmd->command[i])
 		{

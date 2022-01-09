@@ -1,8 +1,25 @@
 #include "../logic/logic.h"
 
+int	check_only_space(char *s)
+{
+	int	i;
+	int	count;
+
+	i = -1;
+	count = 0;
+	while(s[++i])
+	{
+		if (s[i] != ' ')
+			count = 1;
+	}
+	if (count == 1)
+		return (1);
+	return (0);
+}
+
 int	check_first_symbol(char c)
 {
-	if ((c >= 33 && c <= 64) || (c >= 91 && c <= 96)
+	if (c == '=' || (c >= 33 && c <= 64) || (c >= 91 && c <= 96)
 		|| (c >= 123 && c <= 126))
 		return (0);
 	return (1);

@@ -14,10 +14,10 @@ int count_env_len(char **env)
 
 static char **join_ostatok(char **old, char **new, int len)
 {
-	int old_len;
-	char **filled_env;
-	int i;
-	int j;
+	int		old_len;
+	char	**filled_env;
+	int		i;
+	int		j;
 
 	if (!len || new == NULL)
 		return (old);
@@ -31,10 +31,10 @@ static char **join_ostatok(char **old, char **new, int len)
 	i = -1;
 	while(old[++i])
 		filled_env[i] = ft_strdup(old[i]);
+	free_array(old);
 	j = -1;
 	while(++j < len && i < (len + old_len + 1))
 	{
-		//printf("%s\n", new[j]);
 		if (new[j])
 		{
 			filled_env[i] = ft_strdup(new[j]);
@@ -47,12 +47,11 @@ static char **join_ostatok(char **old, char **new, int len)
 
 static void do_replace(char **old, char **new)
 {
-	//printf("I'm your replacement = %s\n", *new);
-	//printf("I'm what has been replaced = %s\n", *old);
-	free(*old);
+	if(*old)
+		free(*old);
 	*old = ft_strdup(*new);
-	//free(*new);
-	//*new = NULL;
+	free(*new);
+	*new = NULL;
 	return;
 }
 
@@ -69,15 +68,16 @@ static void parts_to_compare(char **old_env, char **new_env, int k)
 	while ((*old_env)[i] && (*old_env)[i] != '=')
 		i++;
 	cmp_2 = ft_substr(*old_env, 0, i);
-	//printf("No sega\n");
 	if (!ft_strncmp(cmp, cmp_2, ft_strlen(cmp_2)))
 	{
-		if ((*new_env)[k] == '\0')
+		if ((*new_env)[k] == '\0' && *new_env)
+		{
 			free(*new_env);
+			*new_env = NULL;
+		}
 		else
 			do_replace(old_env, new_env);
 	}
-	//printf("i'm after comparing new %s\n", *new_env);
 	free(cmp_2);
 	free(cmp);
 	return;
@@ -89,11 +89,9 @@ char **check_replace_env(char **old_env, char **new_env, int len)
 	int		j;
 	int		k;
 	char	**result;
+	int		len_after_check_replace;
 
 	i = -1;
-/* 	j = -1;
-	while(++j < len)
-		printf("%s\n", new_env[j]); */
 	while (old_env[++i])
 	{
 		j = -1;
@@ -104,18 +102,17 @@ char **check_replace_env(char **old_env, char **new_env, int len)
 				k = 0;
 				while (new_env[j][k] && new_env[j][k] != '=')
 					k++;
-				parts_to_compare(&old_env[i], &new_env[j], k);
+				if (new_env[j])
+					parts_to_compare(&old_env[i], &new_env[j], k);
 			}
 		}
 	}
-	/* while(old_env[++j])
-		printf("%s\n", old_env[j]); */
-	result = join_ostatok(old_env, new_env, len);
-
-	/*********invalid pointer is lower .Bulat********/
-	/*Ne och ponyatno zachem tut free. */
-	
-	//free_array(new_env);
-	//free_array(old_env);
+	i = -1;
+	len_after_check_replace = 0;
+	while(++i < len) //delete printf after
+		if (new_env[i])
+			{len_after_check_replace++; printf("new_env[i] after replace = %s\n", new_env[i]);}
+	printf("len aftercheck replace = %d\n", len_after_check_replace);
+	result = join_ostatok(old_env, new_env, len_after_check_replace);
 	return (result);
 }

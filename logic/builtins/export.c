@@ -40,21 +40,32 @@ static void print_export_no_args(t_list_commands *cmd)
 static char **adding_new_env_var(t_list_commands *cmd)
 {
 	char	**new_env;
-	int		env_len;
+	int		new_len;
+	//char	**result;
+	//int		i;
 
+	//i = -1;
 	new_env = check_valid_envp(cmd);
-	if (new_env == NULL)
+	if (new_env == NULL) 
 		return (cmd->env_vars);
-	env_len = count_env_len(new_env);
-	cmd->env_vars = check_replace_env(cmd->env_vars, new_env, env_len);
+	//while(new_env[++i])
+		//printf("%s\n", new_env[i]);
+	new_len = count_env_len(new_env);
+	cmd->env_vars = check_replace_env(cmd->env_vars, new_env, new_len);
+/* 	while(++i < env_len)
+		if (new_env[i])
+			free(new_env[i]); */
 	free_array(new_env);
 	return (cmd->env_vars);
 }
 
 void process_export(t_list_commands *cmd)
 {
-	if (cmd->command[1] == NULL)
-		print_export_no_args(cmd);
-	else
+	/* for (int i = 1; cmd->command[i]; i++)
+		printf("%s\n", cmd->command[i]); */
+	if (cmd->command[1])
 		cmd->env_vars = adding_new_env_var(cmd);
+	else
+		print_export_no_args(cmd);
+	//printf("No free error\n");
 }

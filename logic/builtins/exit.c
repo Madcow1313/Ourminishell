@@ -16,8 +16,8 @@ static int	is_digit(char *s)
 
 void	process_exit(char **args)
 {
-	printf("%s\n", args[0]);
-	printf("%s\n", args[1]);
+	//printf("%s\n", args[0]);
+	//printf("%s\n", args[1]);
 	ft_putstr_fd("exit\n", 2);
 	if (!*args || !args)
 		exit(g_error_code);
