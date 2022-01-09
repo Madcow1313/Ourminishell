@@ -49,8 +49,8 @@ static void do_replace(char **old, char **new)
 	if(*old)
 		free(*old);
 	*old = ft_strdup(*new);
-	//free(*new);
-	//*new = NULL;
+	free(*new);
+	*new = NULL;
 	return;
 }
 
@@ -107,7 +107,6 @@ char **check_replace_env(char **old_env, char **new_env, int len)
 		}
 	}
 	result = join_ostatok(old_env, new_env, len);
-
 	/*********invalid pointer is lower .Bulat********/
 	/*Ne och ponyatno zachem tut free. */
 	
