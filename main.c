@@ -80,7 +80,7 @@ int	main(int argc, char **argv, char **envp)
 			exit(EXIT_FAILURE);
 		//print_commands_and_words(&list);
 		get_normal_array(&list);
-		//print_commands_and_words(&list);
+		print_commands_and_words(&list);
 		while (get_redirect_type(&list))
 			rid_of_redirect_right(&list);
 		//list.command = get_no_space(&list);

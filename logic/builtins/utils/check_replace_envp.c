@@ -7,9 +7,10 @@ int count_env_len(char **env)
 
 	i = 0;
 	/*i changed to -1 . Bulat*/
+	/*changed back*/
 	while (env[i])
 		i++;
-	return (i - 1);
+	return (i);
 }
 
 static char **join_ostatok(char **old, char **new, int len)
@@ -39,6 +40,7 @@ static char **join_ostatok(char **old, char **new, int len)
 		if (new[j])
 		{
 			filled_env[i] = ft_strdup(new[j]);
+			printf("here ? %s\n", filled_env[i]);
 			i++;
 		}
 	}

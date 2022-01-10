@@ -48,8 +48,8 @@ static char **adding_new_env_var(t_list_commands *cmd)
 	new_env = check_valid_envp(cmd);
 	if (new_env == NULL) 
 		return (cmd->env_vars);
-	//while(new_env[++i])
-		//printf("%s\n", new_env[i]);
+	// while(new_env[++i])
+	// 	printf("%s\n", new_env[i]);
 	new_len = count_env_len(new_env);
 	cmd->env_vars = check_replace_env(cmd->env_vars, new_env, new_len);
 /* 	while(++i < env_len)

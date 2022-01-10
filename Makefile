@@ -7,7 +7,6 @@ LIBA_H = ./logic/libft/libft.h
 LIBA = libft.a
 
 SOURCE = main.c ./parser_utils/ft_strlen.c ./simple_parser/lexic_part1.c \
-		./simple_parser/here_doc.c \
 		./simple_parser/lexic_part2.c \
 		./simple_parser/prepare_list.c ./parser_utils/ft_strchr.c \
 		./simple_parser/empty_built_ins.c \
