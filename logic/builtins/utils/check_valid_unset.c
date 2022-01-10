@@ -54,6 +54,11 @@ char	**check_valid_unset(t_list_commands *cmd)
 			i++;
 			continue ;
 		}
+		if (!check_only_space(cmd->command[i]))
+		{
+			i++;
+			continue;
+		}
 		if (cmd->command[i])
 		{
 			i++;

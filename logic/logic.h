@@ -67,4 +67,6 @@ void	process_exit(char **args);
 void	process_unset(t_list_commands *cmd);
 char	**check_valid_unset(t_list_commands *cmd);
 
+void	process_env(t_list_commands *cmd);
+
 #endif

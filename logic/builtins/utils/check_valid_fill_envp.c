@@ -44,7 +44,8 @@ char	**alloc_and_fill_new_env(t_list_commands *cmd, char **new_env)
 	id = 0;
 	while(cmd->command[++i])
 	{
-		if (!check_first_symbol(cmd->command[i][0]) || !wrong_symbols(cmd->command[i]))
+		if (!check_first_symbol(cmd->command[i][0]) || !wrong_symbols(cmd->command[i])
+			||!check_only_space(cmd->command[i]))
 			continue ;
 		new_env[id] = ft_strdup(cmd->command[i]);
 		if (!new_env[id])
@@ -72,6 +73,11 @@ char	**check_valid_envp(t_list_commands *cmd)
 			|| !wrong_symbols(cmd->command[i]))
 		{
 			export_errors(cmd->command[i]);
+			i++;
+			continue ;
+		}
+		if(!check_only_space(cmd->command[i]))
+		{
 			i++;
 			continue ;
 		}

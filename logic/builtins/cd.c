@@ -1,6 +1,6 @@
 #include "../logic/logic.h"
 
-void dup_and_free_new_paths(t_list_commands *cmd, char *buf, int i)
+static void dup_and_free_new_paths(t_list_commands *cmd, char *buf, int i)
 {
 	free(cmd->env_vars[i]);
 	cmd->env_vars[i] = ft_strdup(buf);
@@ -36,7 +36,7 @@ void set_pwd(t_list_commands *cmd)
 	free(tmp);
 }
 
-static void cd_to_home_dir(t_list_commands *cmd)
+static int	cd_to_home_dir(t_list_commands *cmd, int sign)
 {
 	char *home_path;
 
@@ -44,13 +44,14 @@ static void cd_to_home_dir(t_list_commands *cmd)
 	if (chdir(home_path) == -1)
 	{
 		g_error_code = errno;
+		sign = 1;
 		cd_errors(home_path);
 	}
 	free(home_path);
-	return;
+	return (sign);
 }
 
-static void cd_has_path(t_list_commands *cmd)
+static int	cd_has_path(t_list_commands *cmd, int sign)
 {
 	char *new_path;
 
@@ -58,21 +59,23 @@ static void cd_has_path(t_list_commands *cmd)
 	if (chdir(new_path) == -1)
 	{
 		g_error_code = errno;
+		sign = 1;
 		cd_errors(new_path);
 	}
 	free(new_path);
-	return;
+	return (sign);
 }
 
 void process_cd(t_list_commands *cmd)
 {
+	int	error_sign;
+
+	error_sign = 0;
 	if (cmd->command[1] != NULL)
-		cd_has_path(cmd);
+		error_sign = cd_has_path(cmd, error_sign);
 	else
-		cd_to_home_dir(cmd);
-	
+		error_sign = cd_to_home_dir(cmd, error_sign);
 	set_pwd(cmd);
-	// while (1);
-	g_error_code = 0;
-	return;
+	if (error_sign != 1)
+		g_error_code = 0;
 }

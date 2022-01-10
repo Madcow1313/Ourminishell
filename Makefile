@@ -21,7 +21,8 @@ SOURCE = main.c ./parser_utils/ft_strlen.c ./simple_parser/lexic_part1.c \
 		./logic/builtins/utils/find_old_pwd.c ./logic/builtins/exit.c \
 		./logic/builtins/export.c ./logic/builtins/utils/check_export_input.c\
 		./logic/builtins/utils/check_valid_fill_envp.c ./logic/builtins/unset.c\
-		./logic/builtins/utils/check_replace_envp.c ./logic/builtins/utils/check_valid_unset.c 
+		./logic/builtins/utils/check_replace_envp.c ./logic/builtins/utils/check_valid_unset.c \
+		./logic/builtins/env.c
 
 OBJ = $(SOURCE:.c=.o)
 

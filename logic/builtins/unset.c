@@ -115,6 +115,7 @@ void	process_unset(t_list_commands *cmd)
 	// for (int i = 0; cmd->env_vars[i]; i++)
 	// 	printf("%s\n", cmd->env_vars[i]);
 	// printf("\n");
+	g_error_code = 0;
 	if (cmd->command[1])
 		cmd->env_vars = deleting_new_env_var(cmd);
 	return ;

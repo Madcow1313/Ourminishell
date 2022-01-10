@@ -55,7 +55,6 @@ static char **adding_new_env_var(t_list_commands *cmd)
 		if (new_env[i])
 			free(new_env[i]);
 	free(new_env);
-	while (1);
 	return (cmd->env_vars);
 }
 
@@ -64,6 +63,7 @@ void process_export(t_list_commands *cmd)
 	// for (int i = 1; cmd->command[i]; i++)
 	// 	printf("%s\n", cmd->command[i]);
 	//printf("Hello\n");
+	g_error_code = 0;
 	if (cmd->command[1])
 		cmd->env_vars = adding_new_env_var(cmd);
 	else
