@@ -4,7 +4,7 @@ void dup_and_free_new_paths(t_list_commands *cmd, char *buf, int i)
 {
 	free(cmd->env_vars[i]);
 	cmd->env_vars[i] = ft_strdup(buf);
-	free(buf);
+	//free(buf);
 }
 
 void set_pwd(t_list_commands *cmd)
@@ -26,6 +26,8 @@ void set_pwd(t_list_commands *cmd)
 		if (!ft_strncmp(cmd->env_vars[i], "OLDPWD", ft_strlen("OLDPWD")))
 			dup_and_free_new_paths(cmd, old_pwd, i);
 	}
+	free(buf);
+	free(old_pwd);
 }
 
 static void cd_to_home_dir(t_list_commands *cmd)
@@ -38,6 +40,7 @@ static void cd_to_home_dir(t_list_commands *cmd)
 		g_error_code = errno;
 		cd_errors(home_path);
 	}
+	free(home_path);
 	return;
 }
 

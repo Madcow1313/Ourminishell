@@ -13,11 +13,13 @@ static char	**create_old_pwd(char **new_env, t_list_commands *cmd, int len)
 	}
 	i = -1;
 	while(cmd->env_vars[++i])
-		new_env[i] = ft_strdup(cmd->env_vars[i]);
+		new_env[i] = cmd->env_vars[i]; //new_env[i] = ft_strdup(cmd->env_vars[i]);
+	//printf("%s\n", new_env[i]);
+	i++;
 	new_env[i] = ft_strdup("OLDPWD=");
+	//printf("%s\n", new_env[i]);
 	i++;
 	new_env[i] = NULL;
-	free_array(cmd->env_vars);
 	return(new_env);
 }
 
@@ -36,5 +38,7 @@ char	**find_old_pwd(t_list_commands *cmd)
 			return (cmd->env_vars);
 	}
 	new_env = create_old_pwd(new_env, cmd, len);
+	free(cmd->env_vars);
+	cmd->env_vars = NULL;
 	return(new_env);
 }

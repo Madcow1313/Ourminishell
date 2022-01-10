@@ -9,7 +9,7 @@ char	**free_array(char **env)
 	if (!env)
 		return (NULL);
 	env_len = count_env_len(env);
-	while (i < env_len)
+	while (i <= env_len + 1)
 	{
 		if (env[i])
 			free (env[i]);

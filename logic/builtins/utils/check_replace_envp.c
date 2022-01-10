@@ -10,7 +10,7 @@ int count_env_len(char **env)
 	/*changed back*/
 	while (env[i])
 		i++;
-	return (i);
+	return (i - 1);
 }
 
 static char **join_ostatok(char **old, char **new, int len)
@@ -31,16 +31,15 @@ static char **join_ostatok(char **old, char **new, int len)
 	}
 	i = -1;
 	while(old[++i])
-		filled_env[i] = old[i]; //look here
-	free(old); //look here
-	old = NULL; //look here
+		filled_env[i] = old[i];
+	free(old);
+	old = NULL;
 	j = -1;
-	while(++j < len)
+	while(++j <= len)
 	{
 		if (new[j])
 		{
 			filled_env[i] = ft_strdup(new[j]);
-			printf("here ? %s\n", filled_env[i]);
 			i++;
 		}
 	}
@@ -98,7 +97,7 @@ char **check_replace_env(char **old_env, char **new_env, int len)
 	while (old_env[++i])
 	{
 		j = -1;
-		while (++j < len)
+		while (++j <= len)
 		{
 			if(new_env[j])
 			{
@@ -112,7 +111,7 @@ char **check_replace_env(char **old_env, char **new_env, int len)
 	}
 	i = -1;
 	len_after_check_replace = 0;
-	while(++i < len) //delete printf after
+	while(++i <= len) //delete printf after
 		if (new_env[i])
 			{len_after_check_replace++; printf("new_env[i] after replace = %s\n", new_env[i]);}
 	printf("len aftercheck replace = %d\n", len_after_check_replace);
