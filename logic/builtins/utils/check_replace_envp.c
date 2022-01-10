@@ -30,10 +30,11 @@ static char **join_ostatok(char **old, char **new, int len)
 	}
 	i = -1;
 	while(old[++i])
-		filled_env[i] = ft_strdup(old[i]);
-	free_array(old);
+		filled_env[i] = old[i]; //look here
+	free(old); //look here
+	old = NULL; //look here
 	j = -1;
-	while(++j < len && i < (len + old_len + 1))
+	while(++j < len)
 	{
 		if (new[j])
 		{
