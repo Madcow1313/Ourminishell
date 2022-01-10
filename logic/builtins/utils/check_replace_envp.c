@@ -10,7 +10,7 @@ int count_env_len(char **env)
 	/*changed back*/
 	while (env[i])
 		i++;
-	return (i - 1);
+	return (i); //wtf it works with - 1 on ubuntu but not on mac
 }
 
 static char **join_ostatok(char **old, char **new, int len)
@@ -43,7 +43,7 @@ static char **join_ostatok(char **old, char **new, int len)
 			i++;
 		}
 	}
-	filled_env[i] = NULL;
+	filled_env[i] = NULL; //or i + 1 ?
 	return (filled_env);
 }
 

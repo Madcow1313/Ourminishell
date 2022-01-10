@@ -51,9 +51,11 @@ static char **adding_new_env_var(t_list_commands *cmd)
 	// 	printf("new_env[j] = %s\n", new_env[j]);
 	new_len = count_env_len(new_env);
 	cmd->env_vars = check_replace_env(cmd->env_vars, new_env, new_len);
-	while(++i <= new_len + 1)
+	while(++i <= new_len) //maybe i could use free_array(new_env)
 		if (new_env[i])
 			free(new_env[i]);
+	free(new_env);
+	while (1);
 	return (cmd->env_vars);
 }
 

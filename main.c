@@ -84,7 +84,7 @@ int	main(int argc, char **argv, char **envp)
 		while (get_redirect_type(&list))
 			rid_of_redirect_right(&list);
 		//list.command = get_no_space(&list);
-		printf("No sega\n");
+		//printf("No sega\n");
 		start_cmd(&list, &command);
 		set_default_fd(&list);
 		int	i = 0;

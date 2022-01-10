@@ -15,11 +15,11 @@ void	builtins(t_list_commands *cmd)
 	else if (!ft_strncmp(cmd->command[0], "pwd", ft_strlen("pwd")))
 	 	process_pwd(cmd);
 	else if (!ft_strncmp(cmd->command[0], "export", ft_strlen("export")))
-	 	process_export(cmd);
-//	else if (!ft_strncmp(cmd->command[0], "unset", ft_strlen("unset")))
-	//	process_unset(cmd);
-	// else if(!ft_strncmp(cmd->command[0], "env", ft_strlen("env")))
-	// 	process_env(cmd);
+		process_export(cmd);
+	else if (!ft_strncmp(cmd->command[0], "unset", ft_strlen("unset")))
+		process_unset(cmd);
+	else if(!ft_strncmp(cmd->command[0], "env", ft_strlen("env")))
+		process_env(cmd);
 	else if (!ft_strncmp(cmd->command[0], "exit", ft_strlen("exit")))
 		process_exit(&cmd->command[1]);
 	//printf("No free error\n");
