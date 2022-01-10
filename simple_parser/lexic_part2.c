@@ -82,7 +82,10 @@ int get_built_in_cmd(t_command *command, t_list_commands *list, size_t *i)
 
 int	get_pipe(t_list_commands *list, int character)
 {
+	char	*temp;
+
 	list->command[list->number] = malloc(2);
+	temp = list->command[list->number];
 	if (character == PIPE)
 	{	
 		if (!list->command[list->number])
@@ -97,6 +100,7 @@ int	get_pipe(t_list_commands *list, int character)
 	}
 	list->number += 1;
 	list->command[list->number] = NULL;
+	free (temp);
 	return (0);
 }
 
@@ -104,6 +108,7 @@ t_list_commands	*start_parse(t_command *command, t_list_commands *list)
 {
 	size_t	i;
 	int		ret;
+	char	*temp;
 
 	i = 0;
 	while (i < command->len && command->word[i] != '\0')
@@ -123,9 +128,13 @@ t_list_commands	*start_parse(t_command *command, t_list_commands *list)
 			ret = handle_quotes(list, command, list->type[list->number], &i);
 			if (list->type[list->number - 1] == DOUBLE_QM)
 				while (ft_strchr(list->command[list->number - 1], '$') >= 0)
+				{
+					temp = list->command[list->number - 1];
 					list->command[list->number - 1]
 						= get_prefix_for_env(
 							list->env_vars, list->command[list->number - 1]);
+					free (temp);
+				}
 			i++;
 		}
 		else if (list->type[list->number] >= REDIRECT_RIGHT
@@ -137,17 +146,22 @@ t_list_commands	*start_parse(t_command *command, t_list_commands *list)
 			if (list->command[list->number - 1][0] != '\''
 				&& list->command[list->number - 1][0] != '\"')
 			{
+				temp = list->command[list->number - 1];
 				list->command[list->number - 1]
 					= get_env_var_value(
 						list->env_vars, list->command[list->number - 1] + 1);
+				free (temp);
+				temp = list->command[list->number - 1];
 				list->command[list->number - 1]
 					= get_prefix_for_env(
 						list->env_vars, list->command[list->number - 1]);
+				free (temp);
 			}
 		}
 		if (command->word[i] == ' ')
 		{
-			list->command[list->number] = " ";
+			list->command[list->number] = malloc(1);
+			list->command[list->number][0] = '\0';
 			list->type[list->number] = SEP_SPACE;
 			list->number += 1;
 			list->command[list->number] = NULL;

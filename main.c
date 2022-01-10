@@ -87,6 +87,15 @@ int	main(int argc, char **argv, char **envp)
 		printf("No sega\n");
 		start_cmd(&list, &command);
 		set_default_fd(&list);
+		int	i = 0;
+		while (i < list.number && list.command[i])
+		{
+			if (list.command[i])
+				free (list.command[i]);
+			i++;
+		}
+		free (list.command);
+		free (list.type);
 		printf("No free error\n");
 	}
 		//print_commands_and_words(&list);

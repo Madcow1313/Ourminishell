@@ -109,8 +109,10 @@ char	*get_env_var_value(char **env_vars, char *string)
 		}
 		i++;
 	}
-	string = "";
+	string = malloc(1);
+	string[0] = '\0';
 	new_string = ft_strjoin(string, temp);
+	free (string);
 	return (new_string);
 }
 
@@ -130,9 +132,16 @@ char	*get_prefix_for_env(char **env_vars, char *string)
 		size++;
 	}
 	temp = malloc(size + 1);
+	if (!temp)
+		return (NULL);
 	i = 0;
 	ft_strlcpy(temp, string, size + 1);
 	temp2 = get_env_var_value(env_vars, (string + size + 1));
 	new_string = ft_strjoin(temp, temp2);
+	if (temp)
+		free (temp);
+	/*double free*/
+	if (temp2 && ft_strlen(temp2) > 0)
+		free (temp2);
 	return (new_string);
 }

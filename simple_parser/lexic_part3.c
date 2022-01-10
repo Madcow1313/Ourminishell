@@ -29,13 +29,15 @@ int	handle_quotes(t_list_commands *list, t_command *command, int character, size
 	ft_strlcpy(list->command[list->number], command->word + start, count + 1);
 	list->number += 1;
 	list->command[list->number] = NULL;
-	list->type[list->number] = WORD;
+	list->type[list->number] = BUILT_IN;
 	return (0);
 }
 
 int	handle_redirects(t_list_commands *list, int character, size_t *i)
 {
+	char	*temp;
 	list->command[list->number] = malloc(4);
+	temp = list->command[list->number];
 	if (!list->command[list->number])
 		return (-1);
 	if (character == REDIRECT_RIGHT)
@@ -49,6 +51,7 @@ int	handle_redirects(t_list_commands *list, int character, size_t *i)
 	*i += ft_strlen(list->command[list->number]);
 	list->number += 1;
 	list->command[list->number] = NULL;
+	free (temp);
 	return (0);
 }
 
