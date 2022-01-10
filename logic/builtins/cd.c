@@ -12,12 +12,16 @@ void set_pwd(t_list_commands *cmd)
 	char *buf;
 	char *old_pwd;
 	int i;
+	char *tmp;
+	char *tmp2;
 
 	i = -1;
 	cmd->env_vars = find_old_pwd(cmd);
-	old_pwd = ft_strjoin("OLDPWD=", get_env_var_value(cmd->env_vars, "PWD"));
+	tmp = get_env_var_value(cmd->env_vars, "PWD");
+	old_pwd = ft_strjoin("OLDPWD=", tmp);
 	//	printf("%s\n", old_pwd);
-	buf = ft_strjoin("PWD=", getcwd(NULL, 0));
+	tmp2 = getcwd(NULL, 0);
+	buf = ft_strjoin("PWD=", tmp2);
 	//	printf ("%s\n", buf);
 	while (cmd->env_vars[++i])
 	{
@@ -28,6 +32,8 @@ void set_pwd(t_list_commands *cmd)
 	}
 	free(buf);
 	free(old_pwd);
+	free(tmp2);
+	free(tmp);
 }
 
 static void cd_to_home_dir(t_list_commands *cmd)
@@ -64,7 +70,9 @@ void process_cd(t_list_commands *cmd)
 		cd_has_path(cmd);
 	else
 		cd_to_home_dir(cmd);
+	
 	set_pwd(cmd);
+	// while (1);
 	g_error_code = 0;
 	return;
 }

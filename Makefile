@@ -34,7 +34,9 @@ LFLAGS = -L/usr/include -lreadline
 HEADER = ./simple_parser/parser.h \
 		./logic/logic.h
 
-INCLUDE = -I./simple_parser/
+INCLUDE = -I./simple_parser/  -I/usr/local/opt/readline/include
+
+LIB_MAC = -L/usr/local/opt/readline/lib
 
 .c.o: ${HEADER}
 		${CC} ${INCLUDE} ${CFLAGS} -c $< -o ${<:.c=.o}
@@ -48,16 +50,16 @@ $(LIBA): $(LIBA_C) $(LIBA_H)
 			cd ./logic/libft; \
 			make clean
 
-$(NAME): $(LIBA) $(OBJ) $(HEADER)
-		$(CC) $(CFLAGS) $(INCLUDE) $(OBJ) $(LIBA) $(LFLAGS) -o $(NAME)
-		
 
+$(NAME): $(LIBA) $(OBJ) $(HEADER)
+		$(CC) $(CFLAGS) $(INCLUDE) $(OBJ) $(LIBA) $(LFLAGS) -o $(NAME) -lreadline $(LIB_MAC)
+		
 #-fsanitize=address
 
 clean:
 		rm -rf $(OBJ)
 
 fclean:
-		rm -rf $(OBJ) $(NAME)
+		rm -rf $(OBJ) $(NAME) $(LIBA)
 
 re:		fclean $(NAME)
