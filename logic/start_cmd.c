@@ -17,18 +17,6 @@
 		free(cmd->type);
 } */
 
-char	**path_directories(t_list_commands *cmd)
-{
-	int	i;
-	char	**path;
-
-	i = 0;
-	while (ft_strncmp(cmd->env_vars[i], "PATH", ft_strlen("PATH")))
-		i++;
-	path = ft_split(cmd->command[i], ':');
-	return (path);
-}
-
 int	count_pipes(t_list_commands *cmd)
 {
 	int	i;
@@ -67,6 +55,8 @@ void	start_cmd(t_list_commands *cmd, t_command *p)
 
 	ft_s_h();
 
+	//printf("%d\n", cmd->type[0]);
+	//printf("%s\n", cmd->command[0]);
 	check_start_cmd(cmd);
 	//printf("No free error\n");
 	//free_cmd(cmd);

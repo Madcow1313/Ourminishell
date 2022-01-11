@@ -2,12 +2,6 @@
 
 void	builtins(t_list_commands *cmd)
 {
-/* 	int i = 0;
-	while (cmd->command[i])
-	{
-		printf("%s\n", cmd->command[i]);
-		i++;
-	} */
 	if (!ft_strncmp(cmd->command[0], "echo", ft_strlen("echo")))
 		process_echo(cmd);
  	else if (!ft_strncmp(cmd->command[0], "cd", ft_strlen("cd")))
@@ -22,6 +16,7 @@ void	builtins(t_list_commands *cmd)
 		process_env(cmd);
 	else if (!ft_strncmp(cmd->command[0], "exit", ft_strlen("exit")))
 		process_exit(&cmd->command[1]);
-	//printf("No free error\n");
+	else
+		exec(cmd);
 	return ;
 }

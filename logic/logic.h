@@ -64,9 +64,14 @@ char	**check_replace_env(char **old_env, char **new_env, int len);
 //single exit
 void	process_exit(char **args);
 
+//single unset
 void	process_unset(t_list_commands *cmd);
 char	**check_valid_unset(t_list_commands *cmd);
 
+//single env
 void	process_env(t_list_commands *cmd);
+
+//just env_var; i don't need it, use execve
+void	exec(t_list_commands *cmd);
 
 #endif
