@@ -33,7 +33,7 @@ int	wrong_symbols(char *str)
 	while (str[i])
 	{
 		if (str[i] == '`' || str[i] == '\\' || str[i] == '(' || str[i] == ')'
-			|| str[i] == '&' || str[i] == '<' || str[i] == '>' || str[i] == '|')
+			|| str[i] == '&' || str[i] == '|')
 			return (0);
 		i++;
 	}

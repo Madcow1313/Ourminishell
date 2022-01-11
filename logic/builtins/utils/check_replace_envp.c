@@ -43,6 +43,7 @@ static char **join_ostatok(char **old, char **new, int len)
 			i++;
 		}
 	}
+	printf("last str after join = %s\n", filled_env[i]);
 	filled_env[i] = NULL; //or i + 1 ?
 	return (filled_env);
 }
