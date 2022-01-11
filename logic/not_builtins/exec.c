@@ -15,7 +15,6 @@ char	**path_directories()
 int	open_next_dir(t_opendir *o_dir)
 {
 	o_dir->i++;
-	//closedir(o_dir->dir);
 	if (o_dir->path[o_dir->i])
 		opendir(o_dir->path[o_dir->i]);
 	if (o_dir->dir == NULL)
@@ -23,6 +22,7 @@ int	open_next_dir(t_opendir *o_dir)
 		g_error_code = errno;
 		return (-1);
 	}
+	printf("%s\n", "Hello");
 	return (o_dir->i);
 }
 
@@ -60,12 +60,28 @@ char	*get_binary_from_path(t_list_commands *cmd, t_opendir *o_dir)
 	return(NULL);
 }
 
+void	command_error(t_list_commands *cmd)
+{
+	g_error_code = 2;
+	ft_putstr_fd("Error: ", 2);
+	ft_putstr_fd(cmd->command[0], 2);
+	ft_putstr_fd(" ", 2);
+	errors();
+	return ;
+}
+
 void	exec(t_list_commands *cmd, t_opendir *open_dir)
 {
 	pid_t	pid;
 	char	*file_path;
 
 	file_path = get_binary_from_path(cmd, open_dir);
+	printf("i'm in exec %s\n", file_path);
+	if (!file_path)
+	{
+		command_error(cmd);
+		return ;
+	}
 	pid = fork();
 	if (pid == 0)
 	{
