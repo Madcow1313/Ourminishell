@@ -2,11 +2,13 @@
 
 void	single_command(t_list_commands *cmd)
 {
+	t_opendir	open_dir;
+
 	//printf("%d\n", cmd->type[0]);
 	if (cmd->type[0] == BUILT_IN)
-		builtins(cmd);
+		builtins(cmd, &open_dir);
 	else
-		exec(cmd);
+		exec(cmd, &open_dir);
 	//else if (cmd->type[0] == COMMAND)
 		//command();
 	// else if (cmd->type[0] == REDIRECT_LEFT

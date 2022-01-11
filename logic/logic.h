@@ -24,6 +24,16 @@ typedef struct s_subprocess
 	int stderr;
 }				t_subprocess;
 
+/*structure for finding binaries in PATH*/
+typedef struct s_opendir
+{
+	char			**path;
+	DIR				*dir;
+	int				i;
+	struct dirent	*name;
+	char			*file_path;
+}				t_opendir;
+
 char	**free_array(char **env);
 int		check_first_symbol(char c);
 int		wrong_symbols(char *str);
@@ -38,7 +48,7 @@ void	start_cmd(t_list_commands *cmd, t_command *p);
 void	single_command(t_list_commands *cmd);
 int		check_pipe_semicol(t_list_commands *cmd);
 
-void	builtins(t_list_commands *cmd);
+void	builtins(t_list_commands *cmd, t_opendir *open_dir);
 
 //single echo with redirs
 void	process_echo(t_list_commands *cmd);
@@ -72,6 +82,6 @@ char	**check_valid_unset(t_list_commands *cmd);
 void	process_env(t_list_commands *cmd);
 
 //just env_var; i don't need it, use execve
-void	exec(t_list_commands *cmd);
+void	exec(t_list_commands *cmd, t_opendir *open_dir);
 
 #endif

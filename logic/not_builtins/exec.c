@@ -1,98 +1,75 @@
 #include "../logic/logic.h"
 
-char	**path_directories(t_list_commands *cmd)
+char	**path_directories()
 {
-	int	i;
 	char	**path;
 	char	*env_var;
 
-	i = 0;
-	while (cmd->env_vars[i])
-	{
-		if (!ft_strncmp(cmd->env_vars[i], "PATH", ft_strlen("PATH")))
-			break ;
-		i++;
-	}
 	env_var = getenv("PATH");
+	if (!env_var)
+		return (NULL);
 	path = ft_split(env_var, ':');
-	for (int j = 0; path[j]; j++)
-		printf("dir is %s\n", path[j]);
 	return (path);
 }
 
-char	*get_binary_from_path(t_list_commands *cmd)
+int	open_next_dir(t_opendir *o_dir)
 {
-	char			**path;
-	DIR				*dir;
-	int				i;
-	struct dirent	*name;
-	char			*file_path;
+	o_dir->i++;
+	closedir(o_dir->dir);
+	if (o_dir->path[o_dir->i])
+		opendir(o_dir->path[o_dir->i]);
+	if (o_dir->dir == NULL)
+		return (-1);
+	return (o_dir->i);
+}
 
-	i = 0;
-	path = path_directories(cmd);
-	dir = opendir(path[i]);
-	if (dir == NULL)
+char	*get_binary_from_path(t_list_commands *cmd, t_opendir *o_dir)
+{
+	o_dir->i = 0;
+	o_dir->path = path_directories();
+	o_dir->dir = opendir(o_dir->path[o_dir->i]);
+	if (o_dir->dir == NULL)
 		return (NULL);
-	while(i <= count_env_len(path) && path[i])
+	o_dir->name = readdir(o_dir->dir);
+	while(o_dir->i <= count_env_len(o_dir->path) && o_dir->path[o_dir->i])
 	{
-		name = readdir(dir);
-		printf("name is = %s\n", name->d_name);
-		if(!ft_strncmp(cmd->command[0], name->d_name, ft_strlen(name->d_name)))
+		if (o_dir->name == NULL)
 		{
-			file_path = ft_strjoin(path[7], "/");
-			file_path = ft_strjoin(file_path, name->d_name);
-			printf("%s\n", file_path);
-			free_array(path);
-			closedir(dir);
-			return (file_path);
+			o_dir->i = open_next_dir(o_dir);
+			if (o_dir->i == -1)
+				break ;
+			o_dir->name = readdir(o_dir->dir);
+			continue ; //do i need it?
 		}
+		if(!ft_strncmp(cmd->command[0], o_dir->name->d_name, ft_strlen(o_dir->name->d_name)))
+		{
+			o_dir->file_path = ft_strjoin(o_dir->path[o_dir->i], "/");
+			o_dir->file_path = ft_strjoin(o_dir->file_path, o_dir->name->d_name);
+			free_array(o_dir->path);
+			closedir(o_dir->dir);
+			return (o_dir->file_path);
+		}
+		o_dir->name = readdir(o_dir->dir);
 	}
-/* 	while(i <= count_env_len(path) && path[i])
-	{
-		if (name == NULL)
-		{
-			i++;
-			closedir(dir);
-			dir = opendir(path[i]);
-			if (dir == NULL)
-				return (NULL);
-			name = readdir(dir);
-			continue ;
-		}
-		if (name->d_name)
-		{	
-			if(!ft_strncmp(cmd->command[0], name->d_name, ft_strlen(cmd->command[0])))
-			{
-				file_path = ft_strjoin(path[i], "/");
-				file_path = ft_strjoin(file_path, name->d_name);
-				free_array(path);
-				closedir(dir);
-				return (file_path);
-			}
-		}
-		if (i == 7)
-			printf("name is = %s\n", name->d_name);
-		name = readdir(dir);
-	} */
+	closedir(o_dir->dir);
+	free_array(o_dir->path);
 	return(NULL);
 }
 
-//i need to GET COMMAND PAAATH FROM PATH VARIABLE to get binary
-//so i need to open and search each folder in PATH if it contains file named "ls" (f.e) or nah
-void	exec(t_list_commands *cmd)
+void	exec(t_list_commands *cmd, t_opendir *open_dir)
 {
 	pid_t	pid;
 	char	*file_path;
 
-	file_path = get_binary_from_path(cmd);
+	file_path = get_binary_from_path(cmd, open_dir);
 	pid = fork();
 	if (pid == 0)
 	{
 		if (execve(file_path, cmd->command, cmd->env_vars) == -1)
 			{
-				g_error_code = errno;
+				g_error_code = 127;
 				ft_putstr_fd("Error: ", 2);
-				ft_putstr_fd(file_path, 2);
+				ft_putstr_fd(cmd->command[0], 2);
 				ft_putstr_fd(" ", 2);
 				errors();
 				return ;

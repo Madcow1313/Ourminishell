@@ -1,6 +1,6 @@
 #include "../logic/logic.h"
 
-void	builtins(t_list_commands *cmd)
+void	builtins(t_list_commands *cmd, t_opendir *open_dir)
 {
 	if (!ft_strncmp(cmd->command[0], "echo", ft_strlen("echo")))
 		process_echo(cmd);
@@ -17,6 +17,6 @@ void	builtins(t_list_commands *cmd)
 	else if (!ft_strncmp(cmd->command[0], "exit", ft_strlen("exit")))
 		process_exit(&cmd->command[1]);
 	else
-		exec(cmd);
+		exec(cmd, open_dir);
 	return ;
 }
