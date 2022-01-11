@@ -1,4 +1,5 @@
 #include "parser.h"
+#include "../logic/logic.h"
 
 int	define_redirect(t_command *command, int i)
 {
@@ -157,6 +158,38 @@ t_list_commands	*start_parse(t_command *command, t_list_commands *list)
 						list->env_vars, list->command[list->number - 1]);
 				free (temp);
 			}
+		}
+		if (list->number == 1 && list->type[0] == ENVIRONMENT_VAR)
+		{
+			int	j;
+			char **split_string;
+			char	*temp;
+
+			j = 0;
+			list->number = 0;
+			split_string = ft_split(list->command[0], ' ');
+			temp = list->command[0];
+			while (split_string[j])
+			{
+				list->command[list->number] = ft_strdup(split_string[j]);
+				list->type[list->number] = BUILT_IN;
+				list->number += 1;
+				list->command[list->number] = malloc(1);
+				list->command[list->number][0] = '\0';
+				list->type[list->number] = SEP_SPACE;
+				list->number += 1;
+				//list->command[list->number] = NULL;
+				j++;
+			}
+			free (temp);
+			j = 0;
+			while (split_string[j])
+			{
+				if (split_string[j])
+					free (split_string[j]);
+				j++;
+			}
+			free (split_string);
 		}
 		if (command->word[i] == ' ')
 		{
