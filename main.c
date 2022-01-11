@@ -82,7 +82,6 @@ int	main(int argc, char **argv, char **envp)
 		//print_commands_and_words(&list);
 		while (get_redirect_type(&list))
 			rid_of_redirect_right(&list);
-		//list.command = get_no_space(&list);
 		start_cmd(&list, &command);
 		set_default_fd(&list);
 		int	i = 0;

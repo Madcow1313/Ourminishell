@@ -1,4 +1,5 @@
 #include "parser.h"
+#include "../logic/logic.h"
 
 /*no malloc protection, leaks*/
 char	**get_normal_array(t_list_commands *list)
@@ -21,7 +22,7 @@ char	**get_normal_array(t_list_commands *list)
 			while (list->type[i] == SEP_SPACE && i < list->number)
 				i++;
 			//temp = new[j];
-			new[j] = list->command[i];
+			new[j] = ft_strdup(list->command[i]);
 			list->type[j] = list->type[i];
 			//free(temp);
 			i++;

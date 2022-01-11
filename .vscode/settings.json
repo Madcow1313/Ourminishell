@@ -1,6 +1,7 @@
 {
 	"files.associations": {
 		"parser.h": "c",
-		"stdio.h": "c"
+		"stdio.h": "c",
+		"logic.h": "c"
 	}
 }
