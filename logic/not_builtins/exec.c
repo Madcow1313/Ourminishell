@@ -22,17 +22,21 @@ int	open_next_dir(t_opendir *o_dir)
 		g_error_code = errno;
 		return (-1);
 	}
-	printf("%s\n", "Hello");
+	//printf("%s\n", "Hello");
 	return (o_dir->i);
 }
 
 char	*get_binary_from_path(t_list_commands *cmd, t_opendir *o_dir)
 {
-	o_dir->i = -1;
+	o_dir->i = 0;
 	o_dir->path = path_directories();
-	o_dir->i = open_next_dir(o_dir);
-	if (o_dir->i == -1)
+	if (o_dir->path[o_dir->i])
+		opendir(o_dir->path[o_dir->i]);
+	if (o_dir->dir == NULL)
+	{
+		g_error_code = errno;
 		return (NULL);
+	}
 	o_dir->name = readdir(o_dir->dir);
 	while(o_dir->i <= count_env_len(o_dir->path) && o_dir->path[o_dir->i])
 	{

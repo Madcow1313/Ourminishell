@@ -87,7 +87,7 @@ char	*get_env_var_value(char **env_vars, char *string)
 		return (ft_strjoin("?", string + 1));
 	while (string[i] && ((string[i] >= 'a' && string[i] <= 'z')
 			|| (string[i] >= '0' && string[i] <= '9')
-			|| (string[i] >= 'A' && string[i] <= 'Z')))
+			|| (string[i] >= 'A' && string[i] <= 'Z') || string[i] == '_'))
 	{
 		i++;
 		size++;

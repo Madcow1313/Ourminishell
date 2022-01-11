@@ -77,6 +77,7 @@ int	main(int argc, char **argv, char **envp)
 			exit (0);
 		if (!delete_quotes(&list))
 			exit(EXIT_FAILURE);
+		//write (1, "here\n", 5);
 		//print_commands_and_words(&list);
 		get_normal_array(&list);
 		print_commands_and_words(&list);
