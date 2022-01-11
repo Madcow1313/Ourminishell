@@ -67,7 +67,6 @@ int	main(int argc, char **argv, char **envp)
 		//write (1, "here\n", 5);
 		//print_commands_and_words(&list);
 		get_normal_array(&list);
-		print_commands_and_words(&list);
 		while (get_redirect_type(&list))
 			rid_of_redirect_right(&list);
 		start_cmd(&list, &command);
@@ -87,4 +86,4 @@ int	main(int argc, char **argv, char **envp)
 	//free_and_exit(&command, &list, 0);
 	exit(0);
 	//return (0);
-}
+}	

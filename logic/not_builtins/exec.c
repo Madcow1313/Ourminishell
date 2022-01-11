@@ -44,7 +44,7 @@ char	*get_binary_from_path(t_list_commands *cmd, t_opendir *o_dir)
 			if (o_dir->i == -1)
 				break ;
 			o_dir->name = readdir(o_dir->dir);
-			continue ; //do i need it?
+			continue ;
 		}
 		if(!ft_strncmp(cmd->command[0], o_dir->name->d_name, ft_strlen(o_dir->name->d_name)))
 		{
@@ -64,7 +64,7 @@ char	*get_binary_from_path(t_list_commands *cmd, t_opendir *o_dir)
 
 void	command_error(t_list_commands *cmd)
 {
-	g_error_code = 2;
+	g_error_code = 1;
 	ft_putstr_fd("Error: ", 2);
 	ft_putstr_fd(cmd->command[0], 2);
 	ft_putstr_fd(" ", 2);
@@ -77,12 +77,10 @@ void	exec(t_list_commands *cmd, t_opendir *open_dir)
 	pid_t	pid;
 	char	*file_path;
 
+	for(int i = 0; cmd->command[i]; i++)
+		printf("i got = %s\n", cmd->command[0]);
 	file_path = get_binary_from_path(cmd, open_dir);
-	if (!file_path)
-	{
-		command_error(cmd);
-		return ;
-	}
+	//printf("%s\n", file_path);
 	pid = fork();
 	if (pid == 0)
 	{
