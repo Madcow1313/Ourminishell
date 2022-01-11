@@ -44,7 +44,7 @@ char	**get_normal_array(t_list_commands *list)
 		}
 		j++;
 	}
-	list->type[j - 1] = BUILT_IN;
+	list->type[j] = BUILT_IN;
 	new[j] = NULL;
 	i = 0;
 	while (i < list->number && list->command[i])

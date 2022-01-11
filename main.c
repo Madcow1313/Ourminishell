@@ -72,14 +72,14 @@ int	main(int argc, char **argv, char **envp)
 		add_history(string);
 		get_full_command(string, &command);
 		if (prepare_list(&list, &command) == -1)
-			return (free_and_exit(&command, &list, -1));
+			exit (0);
 		if (start_parse(&command, &list) == NULL)
-			return (free_and_exit(&command, &list, -1));
+			exit (0);
 		if (!delete_quotes(&list))
 			exit(EXIT_FAILURE);
 		//print_commands_and_words(&list);
 		get_normal_array(&list);
-		//print_commands_and_words(&list);
+		print_commands_and_words(&list);
 		while (get_redirect_type(&list))
 			rid_of_redirect_right(&list);
 		start_cmd(&list, &command);

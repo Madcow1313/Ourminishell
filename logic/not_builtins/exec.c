@@ -15,7 +15,7 @@ char	**path_directories()
 int	open_next_dir(t_opendir *o_dir)
 {
 	o_dir->i++;
-	closedir(o_dir->dir);
+	//closedir(o_dir->dir);
 	if (o_dir->path[o_dir->i])
 		opendir(o_dir->path[o_dir->i]);
 	if (o_dir->dir == NULL)

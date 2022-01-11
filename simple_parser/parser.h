@@ -1,34 +1,34 @@
 #ifndef PARSER_H
-#define PARSER_H
+# define PARSER_H
 
-#include <readline/readline.h>
-#include <readline/history.h>
-#include <stdio.h>
-#include <sys/types.h>
-#include <sys/wait.h>
-#include <stdlib.h>
-#include <unistd.h>
-#include <sys/types.h>
-#include <sys/stat.h>
-#include <fcntl.h>
-#include <errno.h>
-#include <signal.h>
+# include <readline/readline.h>
+# include <readline/history.h>
+# include <stdio.h>
+# include <sys/types.h>
+# include <sys/wait.h>
+# include <stdlib.h>
+# include <unistd.h>
+# include <sys/types.h>
+# include <sys/stat.h>
+# include <fcntl.h>
+# include <errno.h>
+# include <signal.h>
 
-#define SINGLE_QM 1
-#define DOUBLE_QM 2
-#define	PIPE 3
-#define BUILT_IN 4
-#define	REDIRECT_RIGHT 5
-#define REDIRECT_LEFT 6
-#define HERE_DOC 7
-#define REDIRECT_AND_APPEND 8
-#define ENVIRONMENT_VAR 9
-#define SEMICOLON 10
-#define	WORD 11
-#define COMMAND 12
-#define ABSOLUTE_PATH 13
-#define RELATIVE_PATH 14
-#define SEP_SPACE 15
+# define SINGLE_QM 1
+# define DOUBLE_QM 2
+# define PIPE 3
+# define BUILT_IN 4
+# define REDIRECT_RIGHT 5
+# define REDIRECT_LEFT 6
+# define HERE_DOC 7
+# define REDIRECT_AND_APPEND 8
+# define ENVIRONMENT_VAR 9
+# define SEMICOLON 10
+# define WORD 11
+# define COMMAND 12
+# define ABSOLUTE_PATH 13
+# define RELATIVE_PATH 14
+# define SEP_SPACE 15
 
 int	g_error_code;
 

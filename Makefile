@@ -53,7 +53,7 @@ $(LIBA): $(LIBA_C) $(LIBA_H)
 
 
 $(NAME): $(LIBA) $(OBJ) $(HEADER)
-		$(CC) $(CFLAGS) $(INCLUDE) $(OBJ) $(LIBA) $(LFLAGS) -o $(NAME) -lreadline $(LIB_MAC)
+		$(CC) -fsanitize=address $(CFLAGS) $(INCLUDE) $(OBJ) $(LIBA) $(LFLAGS) -o $(NAME) -lreadline $(LIB_MAC)
 		
 #-fsanitize=address
 
