@@ -22,7 +22,6 @@ int	open_next_dir(t_opendir *o_dir)
 		g_error_code = errno;
 		return (-1);
 	}
-	//printf("%s\n", "Hello");
 	return (o_dir->i);
 }
 
@@ -30,8 +29,7 @@ char	*get_binary_from_path(t_list_commands *cmd, t_opendir *o_dir)
 {
 	o_dir->i = 0;
 	o_dir->path = path_directories();
-	if (o_dir->path[o_dir->i])
-		opendir(o_dir->path[o_dir->i]);
+	o_dir->dir = opendir(o_dir->path[o_dir->i]);
 	if (o_dir->dir == NULL)
 	{
 		g_error_code = errno;
@@ -80,7 +78,6 @@ void	exec(t_list_commands *cmd, t_opendir *open_dir)
 	char	*file_path;
 
 	file_path = get_binary_from_path(cmd, open_dir);
-	printf("i'm in exec %s\n", file_path);
 	if (!file_path)
 	{
 		command_error(cmd);

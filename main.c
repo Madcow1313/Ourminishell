@@ -3,19 +3,6 @@
 
 int	free_and_exit(t_command *command, t_list_commands *list, int ret)
 {
-	// free (command);
-	// if (list->type)
-	// 	free (list->type);	if (command)
-	// if (list->command)
-	// {
-	// 	while (list->number > 0)
-	// 	{
-	// 		if (list->command[list->number])
-	// 			free (list->command[list->number]);
-	// 		list->number--;
-	// 	}
-	// 	free (list->command);
-	// }
 	(void)command;
 	int	i;
 
