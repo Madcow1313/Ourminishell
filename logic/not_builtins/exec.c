@@ -12,19 +12,6 @@ char	**path_directories()
 	return (path);
 }
 
-int	open_next_dir(t_opendir *o_dir)
-{
-	o_dir->i++;
-	if (o_dir->path[o_dir->i])
-		opendir(o_dir->path[o_dir->i]);
-	if (o_dir->dir == NULL)
-	{
-		g_error_code = errno;
-		return (-1);
-	}
-	return (o_dir->i);
-}
-
 char	*get_binary_from_path(t_list_commands *cmd, t_opendir *o_dir)
 {
 	o_dir->i = 0;
@@ -40,10 +27,19 @@ char	*get_binary_from_path(t_list_commands *cmd, t_opendir *o_dir)
 	{
 		if (o_dir->name == NULL)
 		{
-			o_dir->i = open_next_dir(o_dir);
-			if (o_dir->i == -1)
+			o_dir->i++;
+			if (o_dir->path[o_dir->i])
+			{
+				o_dir->dir = opendir(o_dir->path[o_dir->i]);
+				if (o_dir->dir == NULL)
+				{
+					g_error_code = errno;
+					return (NULL);
+				}
+				o_dir->name	= readdir(o_dir->dir);
+			}
+			else
 				break ;
-			o_dir->name = readdir(o_dir->dir);
 			continue ;
 		}
 		if(!ft_strncmp(cmd->command[0], o_dir->name->d_name, ft_strlen(o_dir->name->d_name)))
@@ -62,13 +58,10 @@ char	*get_binary_from_path(t_list_commands *cmd, t_opendir *o_dir)
 	return(NULL);
 }
 
-void	command_error(t_list_commands *cmd)
+void	command_error()
 {
-	g_error_code = 1;
-	ft_putstr_fd("Error: ", 2);
-	ft_putstr_fd(cmd->command[0], 2);
-	ft_putstr_fd(" ", 2);
-	errors();
+	g_error_code = 127;
+	ft_putstr_fd("Error: bash: 127: command not found\n", 2);
 	return ;
 }
 
@@ -77,27 +70,33 @@ void	exec(t_list_commands *cmd, t_opendir *open_dir)
 	pid_t	pid;
 	char	*file_path;
 
-	for(int i = 0; cmd->command[i]; i++)
-		printf("i got = %s\n", cmd->command[0]);
+	for (int i = 0; cmd->command[i]; i++)
+		printf("i got = %s\n", cmd->command[i]);
 	file_path = get_binary_from_path(cmd, open_dir);
-	//printf("%s\n", file_path);
-	pid = fork();
-	if (pid == 0)
+	printf("file path = %s\n", file_path);
+	if (file_path)
 	{
-		if (execve(file_path, cmd->command, cmd->env_vars) == -1)
-			{
-				g_error_code = errno;
-				ft_putstr_fd("Error: ", 2);
-				ft_putstr_fd(cmd->command[0], 2);
-				ft_putstr_fd(" ", 2);
-				errors();
-				return ;
-			}
-		g_error_code = 0;
+		pid = fork();
+		if (pid == 0)
+		{
+			if (execve(file_path, cmd->command, cmd->env_vars) == -1)
+				{
+					g_error_code = errno;
+					ft_putstr_fd("Error: ", 2);
+					ft_putstr_fd(cmd->command[0], 2);
+					ft_putstr_fd(" ", 2);
+					errors();
+					return ;
+				}
+			g_error_code = 0;
+		}
+		else if (pid > 0)
+			wait(&pid);
+		else
+			ft_putstr_fd("Can't execute command, fork failed\n", 2);
 	}
-	else if (pid > 0)
-		wait(&pid);
 	else
-		ft_putstr_fd("Can't execute command, fork failed\n", 2);
-	free(file_path);
+		command_error();
+	if (file_path)
+		free(file_path);
 }

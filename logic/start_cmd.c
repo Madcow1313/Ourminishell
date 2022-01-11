@@ -42,7 +42,6 @@ void	check_start_cmd(t_list_commands *cmd)
 		return ;
 	if (!count_pipes(cmd))
 		single_command(cmd);
-	//printf("No free error\n");
 	//else
 		//cmd_with_pipe(cmd);
 	return ;
@@ -55,10 +54,7 @@ void	start_cmd(t_list_commands *cmd, t_command *p)
 
 	ft_s_h();
 
-	printf("%d\n", cmd->type[0]);
-	//printf("%s\n", cmd->command[0]);
 	check_start_cmd(cmd);
-	//printf("No free error\n");
 	//free_cmd(cmd);
 	return ;
 }
