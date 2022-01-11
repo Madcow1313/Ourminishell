@@ -172,7 +172,7 @@ t_list_commands	*start_parse(t_command *command, t_list_commands *list)
 			while (split_string[j])
 			{
 				list->command[list->number] = ft_strdup(split_string[j]);
-				list->type[list->number] = BUILT_IN;
+				list->type[list->number] = ENVIRONMENT_VAR;
 				list->number += 1;
 				list->command[list->number] = malloc(1);
 				list->command[list->number][0] = '\0';
