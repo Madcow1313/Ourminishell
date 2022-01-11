@@ -19,16 +19,19 @@ int	open_next_dir(t_opendir *o_dir)
 	if (o_dir->path[o_dir->i])
 		opendir(o_dir->path[o_dir->i]);
 	if (o_dir->dir == NULL)
+	{
+		g_error_code = errno;
 		return (-1);
+	}
 	return (o_dir->i);
 }
 
 char	*get_binary_from_path(t_list_commands *cmd, t_opendir *o_dir)
 {
-	o_dir->i = 0;
+	o_dir->i = -1;
 	o_dir->path = path_directories();
-	o_dir->dir = opendir(o_dir->path[o_dir->i]);
-	if (o_dir->dir == NULL)
+	o_dir->i = open_next_dir(o_dir);
+	if (o_dir->i == -1)
 		return (NULL);
 	o_dir->name = readdir(o_dir->dir);
 	while(o_dir->i <= count_env_len(o_dir->path) && o_dir->path[o_dir->i])
@@ -51,7 +54,8 @@ char	*get_binary_from_path(t_list_commands *cmd, t_opendir *o_dir)
 		}
 		o_dir->name = readdir(o_dir->dir);
 	}
-	closedir(o_dir->dir);
+	if (closedir(o_dir->dir) == -1)
+		g_error_code = errno;
 	free_array(o_dir->path);
 	return(NULL);
 }
@@ -67,7 +71,7 @@ void	exec(t_list_commands *cmd, t_opendir *open_dir)
 	{
 		if (execve(file_path, cmd->command, cmd->env_vars) == -1)
 			{
-				g_error_code = 127;
+				g_error_code = errno;
 				ft_putstr_fd("Error: ", 2);
 				ft_putstr_fd(cmd->command[0], 2);
 				ft_putstr_fd(" ", 2);

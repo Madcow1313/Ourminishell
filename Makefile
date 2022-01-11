@@ -51,7 +51,6 @@ $(LIBA): $(LIBA_C) $(LIBA_H)
 			cd ./logic/libft; \
 			make clean
 
-
 $(NAME): $(LIBA) $(OBJ) $(HEADER)
 		$(CC) $(CFLAGS) $(INCLUDE) $(OBJ) $(LIBA) $(LFLAGS) -o $(NAME) -lreadline $(LIB_MAC)
 		
