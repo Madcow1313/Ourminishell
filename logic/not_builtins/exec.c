@@ -15,6 +15,8 @@ char	**path_directories(t_list_commands *cmd)
 	}
 	env_var = getenv("PATH");
 	path = ft_split(env_var, ':');
+	for (int j = 0; path[j]; j++)
+		printf("dir is %s\n", path[j]);
 	return (path);
 }
 
@@ -28,30 +30,50 @@ char	*get_binary_from_path(t_list_commands *cmd)
 
 	i = 0;
 	path = path_directories(cmd);
-	dir = opendir(path[0]);
+	dir = opendir(path[i]);
 	if (dir == NULL)
 		return (NULL);
-	name = readdir(dir);
-	while(path[i])
+	while(i <= count_env_len(path) && path[i])
+	{
+		name = readdir(dir);
+		printf("name is = %s\n", name->d_name);
+		if(!ft_strncmp(cmd->command[0], name->d_name, ft_strlen(name->d_name)))
+		{
+			file_path = ft_strjoin(path[7], "/");
+			file_path = ft_strjoin(file_path, name->d_name);
+			printf("%s\n", file_path);
+			free_array(path);
+			closedir(dir);
+			return (file_path);
+		}
+	}
+/* 	while(i <= count_env_len(path) && path[i])
 	{
 		if (name == NULL)
 		{
 			i++;
 			closedir(dir);
 			dir = opendir(path[i]);
+			if (dir == NULL)
+				return (NULL);
 			name = readdir(dir);
 			continue ;
 		}
-		if(!ft_strncmp(cmd->command[i], name->d_name, ft_strlen(cmd->command[i])))
-		{
-			file_path = ft_strjoin(path[i], name->d_name);
-			free_array(path);
-			closedir(dir);
-			return (file_path);
+		if (name->d_name)
+		{	
+			if(!ft_strncmp(cmd->command[0], name->d_name, ft_strlen(cmd->command[0])))
+			{
+				file_path = ft_strjoin(path[i], "/");
+				file_path = ft_strjoin(file_path, name->d_name);
+				free_array(path);
+				closedir(dir);
+				return (file_path);
+			}
 		}
-		printf("name is = %s\n", name->d_name);
+		if (i == 7)
+			printf("name is = %s\n", name->d_name);
 		name = readdir(dir);
-	}
+	} */
 	return(NULL);
 }
 
@@ -71,6 +93,7 @@ void	exec(t_list_commands *cmd)
 				g_error_code = errno;
 				ft_putstr_fd("Error: ", 2);
 				ft_putstr_fd(file_path, 2);
+				ft_putstr_fd(" ", 2);
 				errors();
 				return ;
 			}
