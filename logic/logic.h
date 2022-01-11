@@ -38,17 +38,20 @@ char	**free_array(char **env);
 int		check_first_symbol(char c);
 int		wrong_symbols(char *str);
 
+//errors func
+
 void	errors(void);
 void	cd_errors(char *path);
 void	export_errors(char *str);
 void	malloc_error(char **s);
+void	command_error();
+void	exec_error(t_list_commands *cmd, char *file_path);
 
+//starting shell func
 
 void	start_cmd(t_list_commands *cmd, t_command *p);
 void	single_command(t_list_commands *cmd);
 int		check_pipe_semicol(t_list_commands *cmd);
-
-void	builtins(t_list_commands *cmd, t_opendir *open_dir);
 
 //single echo with redirs
 void	process_echo(t_list_commands *cmd);
@@ -81,7 +84,8 @@ char	**check_valid_unset(t_list_commands *cmd);
 //single env
 void	process_env(t_list_commands *cmd);
 
-//just env_var; i don't need it, use execve
 void	exec(t_list_commands *cmd, t_opendir *open_dir);
+char	*get_binary_from_path(t_list_commands *cmd, t_opendir *o_dir);
+int	ft_cmprcmd(const char *string1, const char *string2);
 
 #endif

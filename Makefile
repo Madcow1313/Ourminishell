@@ -15,14 +15,15 @@ SOURCE = main.c ./parser_utils/ft_strlen.c ./simple_parser/lexic_part1.c \
 		./parser_utils/ft_strncmp.c ./parser_utils/ft_strjoin.c \
 		./simple_parser/get_descriptors.c ./simple_parser/get_normal.c ./simple_parser/no_space.c \
 		./signal_handler/get_signal.c ./simple_parser/shit.c \
-		./logic/builtins/builtins.c ./logic/check_pipe_semicol.c ./logic/errors.c \
+		./logic/not_builtins/exec_error.c ./logic/check_pipe_semicol.c ./logic/errors.c \
 		./logic/single_command.c ./logic/start_cmd.c ./logic/builtins/echo.c \
 		./logic/builtins/echo_redir.c ./logic/builtins/cd.c ./logic/builtins/pwd.c \
 		./logic/builtins/utils/find_old_pwd.c ./logic/builtins/exit.c \
 		./logic/builtins/export.c ./logic/builtins/utils/check_export_input.c\
 		./logic/builtins/utils/check_valid_fill_envp.c ./logic/builtins/unset.c\
 		./logic/builtins/utils/check_replace_envp.c ./logic/builtins/utils/check_valid_unset.c \
-		./logic/builtins/env.c ./logic/not_builtins/exec.c
+		./logic/builtins/env.c ./logic/not_builtins/exec.c ./logic/not_builtins/exec_utils.c \
+		./logic/not_builtins/exec_rest_func.c
 
 OBJ = $(SOURCE:.c=.o)
 

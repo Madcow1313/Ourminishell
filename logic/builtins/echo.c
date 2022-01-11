@@ -1,6 +1,6 @@
 #include "../logic/logic.h"
 
-int	check_redir(t_list_commands *cmd, int nl)
+static int	check_redir(t_list_commands *cmd, int nl)
 {
 	size_t	i;
 
@@ -18,7 +18,7 @@ int	check_redir(t_list_commands *cmd, int nl)
 	return (1);
 }
 
-void	echo_without_newline(t_list_commands *cmd)
+static void	echo_without_newline(t_list_commands *cmd)
 {
 	int	i;
 	int	j;
@@ -41,7 +41,7 @@ void	echo_without_newline(t_list_commands *cmd)
 	return ;
 }
 
-void	echo_with_newline(t_list_commands *cmd)
+static void	echo_with_newline(t_list_commands *cmd)
 {
 	int	i;
 	int	j;

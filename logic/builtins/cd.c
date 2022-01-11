@@ -4,7 +4,6 @@ static void dup_and_free_new_paths(t_list_commands *cmd, char *buf, int i)
 {
 	free(cmd->env_vars[i]);
 	cmd->env_vars[i] = ft_strdup(buf);
-	//free(buf);
 }
 
 void set_pwd(t_list_commands *cmd)
@@ -19,10 +18,8 @@ void set_pwd(t_list_commands *cmd)
 	cmd->env_vars = find_old_pwd(cmd);
 	tmp = get_env_var_value(cmd->env_vars, "PWD");
 	old_pwd = ft_strjoin("OLDPWD=", tmp);
-	//	printf("%s\n", old_pwd);
 	tmp2 = getcwd(NULL, 0);
 	buf = ft_strjoin("PWD=", tmp2);
-	//	printf ("%s\n", buf);
 	while (cmd->env_vars[++i])
 	{
 		if (!ft_strncmp(cmd->env_vars[i], "PWD", ft_strlen("PWD")))

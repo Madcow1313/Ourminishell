@@ -32,3 +32,10 @@ void	malloc_error(char **s)
 	errors();
 	return ;
 }
+
+void	command_error()
+{
+	g_error_code = 127;
+	ft_putstr_fd("Error: bash: 127: command not found\n", 2);
+	return ;
+}
