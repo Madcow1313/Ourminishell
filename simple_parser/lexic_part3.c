@@ -1,4 +1,5 @@
 #include "parser.h"
+#include "../logic/logic.h"
 
 /*can't handle slash '\' */
 int	handle_quotes(t_list_commands *list, t_command *command, int character, size_t *i)
@@ -36,18 +37,21 @@ int	handle_quotes(t_list_commands *list, t_command *command, int character, size
 int	handle_redirects(t_list_commands *list, int character, size_t *i)
 {
 	char	*temp;
+
 	list->command[list->number] = malloc(4);
+	if (!list->command[list->number])
+		return (-1);
 	temp = list->command[list->number];
 	if (!list->command[list->number])
 		return (-1);
 	if (character == REDIRECT_RIGHT)
-		list->command[list->number] = ">";
+		list->command[list->number] = ft_strdup(">");
 	else if (character == REDIRECT_LEFT)
-		list->command[list->number] = "<";
+		list->command[list->number] = ft_strdup("<");
 	else if (character == REDIRECT_AND_APPEND)
-		list->command[list->number] = ">>";
+		list->command[list->number] = ft_strdup(">>");
 	else if (character == HERE_DOC)
-		list->command[list->number] = "<<";
+		list->command[list->number] = ft_strdup("<<");
 	*i += ft_strlen(list->command[list->number]);
 	list->number += 1;
 	list->command[list->number] = NULL;

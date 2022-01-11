@@ -100,7 +100,7 @@ and set list->fd[1] to the last redirected file.
 it doesn't close files!!!!*/
 int	rid_of_redirect_right(t_list_commands *list)
 {
-	//char *temp;
+	char *temp;
 	int	i;
 
 	i = 0;
@@ -122,7 +122,9 @@ int	rid_of_redirect_right(t_list_commands *list)
 	{
 		if (list->command[i + 1])
 		{
+			temp = list->command[i];
 			list->command[i] = repoint(list->command[i + 1], list->command[i + 2], list->type, i);
+			free (temp);
 		}
 		else
 			return (-1);
@@ -133,13 +135,17 @@ int	rid_of_redirect_right(t_list_commands *list)
 			{
 				if (!list->command[i + 2])
 				{
+					temp = list->command[i];
 					list->command[i] = repoint(list->command[i + 1], NULL, list->type, i);
+					free (temp);
 					break;
 				}
 				else
 				{
+					temp = list->command[i];
 					list->command[i] = repoint(list->command[i + 1], list->command[i + 2], list->type, i);
 					i++;
+					free (temp);
 				}
 			}
 		}
