@@ -51,7 +51,6 @@ void	check_start_cmd(t_list_commands *cmd)
 void	start_cmd(t_list_commands *cmd, t_command *p)
 {	
 	cmd->p = p;
-	cmd->pipe_right = 0;
 
 	ft_s_h();
 
