@@ -2,15 +2,15 @@
 
 void	errors(void)
 {
-	ft_putstr_fd(strerror(g_error_code), 2);
-	ft_putstr_fd("\n", 2);
+	ft_putstr_fd(strerror(g_error_code), STD_ERROR);
+	ft_putstr_fd("\n", STD_ERROR);
 }
 
 void	cd_errors(char *path)
 {
-	ft_putstr_fd("bash: cd: ", 2);
-	ft_putstr_fd(path, 2);
-	ft_putstr_fd(": ", 2);
+	ft_putstr_fd("bash: cd: ", STD_ERROR);
+	ft_putstr_fd(path, STD_ERROR);
+	ft_putstr_fd(": ", STD_ERROR);
 	errors();
 	return ;
 }
@@ -18,9 +18,9 @@ void	cd_errors(char *path)
 void	export_errors(char *str)
 {
 	g_error_code = 1;
-	ft_putstr_fd("bash: export: '", 2);
-	ft_putstr_fd(str, 2);
-	ft_putendl_fd("': not a valid identifier", 2);
+	ft_putstr_fd("bash: export: '", STD_ERROR);
+	ft_putstr_fd(str, STD_ERROR);
+	ft_putendl_fd("': not a valid identifier", STD_ERROR);
 	return ;
 }
 
@@ -36,6 +36,6 @@ void	malloc_error(char **s)
 void	command_error()
 {
 	g_error_code = 127;
-	ft_putstr_fd("Error: bash: 127: command not found\n", 2);
+	ft_putstr_fd("Error: bash: 127: command not found\n", STD_ERROR);
 	return ;
 }

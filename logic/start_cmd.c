@@ -40,10 +40,11 @@ void	check_start_cmd(t_list_commands *cmd)
 		return ;
 	if (!check_pipe_semicol(cmd))
 		return ;
-	if (!count_pipes(cmd))
+	if (!count_pipes(cmd) || (cmd->pipe_right == -1 &&
+		cmd->pipe_left == -1))
 		single_command(cmd);
-	//else
-		//cmd_with_pipe(cmd);
+	else
+		cmd_with_pipes(cmd);
 	return ;
 }
 
