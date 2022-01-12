@@ -46,13 +46,12 @@ typedef struct s_list_commands
 	t_command	*p;
 	int number;
 	int	fd[2];
+	int	stdin_copy;
+	int	stdout_copy;
 	int	pipe_right;
+	int	pipe_left;
 	int	semicol;
-	int	redir_right;
-	int	redir_append;
 	int	heredoc;
-	int	old_stdin;
-	int	old_stdout;
 } 			t_list_commands;
 
 int	ft_s_h();

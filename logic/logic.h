@@ -14,15 +14,11 @@
 #include <sys/wait.h>
 #include <dirent.h>
 #include <limits.h>
+#include <stdbool.h>
 
-//updated func will write info about the process into a struct
-typedef struct s_subprocess
-{
-	pid_t pid;
-	int stdin;
-	int stdout;
-	int stderr;
-}				t_subprocess;
+# define STD_IN 0
+# define STD_OUT 1
+# define STD_ERROR 2
 
 /*structure for finding binaries in PATH*/
 typedef struct s_opendir
@@ -87,5 +83,12 @@ void	process_env(t_list_commands *cmd);
 void	exec(t_list_commands *cmd, t_opendir *open_dir);
 char	*get_binary_from_path(t_list_commands *cmd, t_opendir *o_dir);
 int	ft_cmprcmd(const char *string1, const char *string2);
+
+//pipes
+void	cmd_with_pipes(t_list_commands *cmd);
+bool	our_builtin(char *command);
+int	ft_strcmp(const char *s1, const char *s2);
+void	manage_out_pipe(t_list_commands *cmd);
+void	manage_in_pipe(t_list_commands *cmd);
 
 #endif
