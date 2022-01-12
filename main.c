@@ -90,7 +90,7 @@ int	main(int argc, char **argv, char **envp)
 		if (!check_redirects(&list))
 		{
 			//print_commands_and_words(&list);
-			get_normal_array(&list);
+			get_normal_array(&list); //here is a double free error
 			while (get_redirect_type(&list) > 0)
 				rid_of_redirect_right(&list);
 			//print_commands_and_words(&list);

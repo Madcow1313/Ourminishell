@@ -69,7 +69,7 @@ void	process_echo(t_list_commands *cmd)
 {
 	if (cmd->command[1] != NULL)
 	{
-		if (!ft_strncmp(cmd->command[1], "-n", ft_strlen("-n")))
+		if (!ft_strcmp(cmd->command[1], "-n"))
 			echo_without_newline(cmd);
 		else
 			echo_with_newline(cmd);

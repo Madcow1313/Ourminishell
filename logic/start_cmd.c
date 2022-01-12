@@ -20,15 +20,17 @@
 int	count_pipes(t_list_commands *cmd)
 {
 	int	i;
+	int	count;
 
+	count = 0;
 	i = 1;
 	while(cmd->command[i])
 	{
-		if (cmd->command[i] && !ft_strncmp(cmd->command[i], "|", ft_strlen("|")))
-			cmd->pipe_right++;
+		if (cmd->command[i] && !ft_strcmp(cmd->command[i], "|"))
+			count++;
 		i++;
 	}
-	if (cmd->pipe_right > 0)
+	if (count > 0)
 		return (1);
 	else
 		return (0);
