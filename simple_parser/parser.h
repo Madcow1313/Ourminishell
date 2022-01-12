@@ -52,6 +52,8 @@ typedef struct s_list_commands
 	int	pipe_left;
 	int	semicol;
 	int	heredoc;
+	int	old_stdout;
+	int	old_stdin;
 } 			t_list_commands;
 
 int	ft_s_h();
