@@ -1,23 +1,31 @@
 #include "parser.h"
+#include "../logic/logic.h"
 
 void	get_here_doc(char *end, t_list_commands *list)
 {
 	char	*line;
+	char	*temp;
+	char	*new_line;
 	int		fd;
 
 	fd = open(".here_doc_minishell", O_RDWR | O_TRUNC | O_CREAT, S_IRWXU);
 	while (1)
 	{
 		line = readline(">");
-		line = get_prefix_for_env(list->env_vars, line);
+		temp = line;
+		new_line = get_prefix_for_env(list->env_vars, line);
+		line = ft_strdup(new_line);
+		free (temp);
 		if (!ft_strncmp(line, end, ft_strlen(line)) && ft_strlen(line) > 0)
 		{
+			free (new_line);
 			free (line);
 			break ;
 		}
 		write(fd, line, ft_strlen(line));
 		write(fd, "\n", 1);
 		free(line);
+		free (new_line);
 	}
 	close(fd);
 }
@@ -51,6 +59,8 @@ int	get_fd_right_redirects(t_list_commands *list, char *path, int type)
 		fd_to_apply = open(path, O_RDWR | O_TRUNC | O_CREAT, S_IRWXU);
 	else if (type == REDIRECT_AND_APPEND)
 		fd_to_apply = open(path, O_RDWR | O_APPEND | O_CREAT, S_IRWXU);
+	if (fd_to_apply < 0)
+		return (0);
 	printf("fd of file %d\n", fd_to_apply);
 	dup2(fd_to_apply, list->fd[1]);
 	return (list->fd[1]);
@@ -76,7 +86,11 @@ int	get_redirect_type(t_list_commands *list)
 	{
 		if (list->type[i] == REDIRECT_RIGHT || list->type[i] == REDIRECT_AND_APPEND
 			|| list->type[i] == REDIRECT_LEFT || list->type[i] == HERE_DOC)
-			return (1);
+			{
+				if (!list->command[i + 1])
+					return (-1);
+				return (1);
+			}
 		i++;
 	}
 	return (0);
@@ -118,12 +132,27 @@ int	rid_of_redirect_right(t_list_commands *list)
 		list->fd[0] = get_fd_left_redirects(list, list->command[i + 1], list->type[i]);
 	else if (list->type[i] == HERE_DOC)
 		get_here_doc(list->command[i + 1], list);
+	if (list->number < 3)
+	{
+		i = 0;
+		while (i < list->number - 1 && list->command[i])
+		{
+			//temp = list->command[i];
+			list->command[i] = ft_strdup(" ");
+			list->type[i] = BUILT_IN;
+			//printf("here %d\n", list->number);
+			// if (temp)
+			// 	free (temp);
+			i++;
+		}
+		return (0);
+	}
 	if (list->command[i])
 	{
 		if (list->command[i + 1])
 		{
 			temp = list->command[i];
-			list->command[i] = repoint(list->command[i + 1], list->command[i + 2], list->type, i);
+			list->command[i] = ft_strdup(repoint(list->command[i + 1], list->command[i + 2], list->type, i));
 			free (temp);
 		}
 		else
@@ -131,19 +160,19 @@ int	rid_of_redirect_right(t_list_commands *list)
 		if (list->command[i + 1])
 		{
 			i++;
-			while (i <= list->number)
+			while (i < list->number)
 			{
 				if (!list->command[i + 2])
 				{
 					temp = list->command[i];
-					list->command[i] = repoint(list->command[i + 1], NULL, list->type, i);
+					list->command[i] = ft_strdup(repoint(list->command[i + 1], NULL, list->type, i));
 					free (temp);
 					break;
 				}
 				else
 				{
 					temp = list->command[i];
-					list->command[i] = repoint(list->command[i + 1], list->command[i + 2], list->type, i);
+					list->command[i] = ft_strdup(repoint(list->command[i + 1], list->command[i + 2], list->type, i));
 					i++;
 					free (temp);
 				}

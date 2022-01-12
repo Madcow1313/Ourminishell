@@ -37,6 +37,28 @@ void	duplicate_envp(char **envp, t_list_commands *list)
 	list->env_vars[i] = NULL;
 }
 
+int	check_redirects(t_list_commands *list)
+{
+	int	i;
+
+	i = 0;
+	if (get_redirect_type(list))
+	{
+		while (list->command[i] && i < list->number - 1)
+			i++;
+		if (list->type[i] >= REDIRECT_RIGHT
+			&& list->type[i] <= REDIRECT_AND_APPEND)
+			return (1);
+		if (list->type[i - 1] >= REDIRECT_RIGHT
+			&& list->type[i - 1] <= REDIRECT_AND_APPEND
+			&& list->command[i] && !ft_strlen(list->command[i]))
+			return (1);
+		else 
+			return (0);
+	}
+	return (0);
+}
+
 /*free and exit doesn't work, because no malloc*/
 int	main(int argc, char **argv, char **envp)
 {
@@ -64,12 +86,21 @@ int	main(int argc, char **argv, char **envp)
 			exit (0);
 		if (!delete_quotes(&list))
 			exit(EXIT_FAILURE);
-		//write (1, "here\n", 5);
 		//print_commands_and_words(&list);
-		get_normal_array(&list);
-		while (get_redirect_type(&list))
-			rid_of_redirect_right(&list);
-		start_cmd(&list, &command);
+		if (!check_redirects(&list))
+		{
+			//print_commands_and_words(&list);
+			get_normal_array(&list);
+			while (get_redirect_type(&list) > 0)
+				rid_of_redirect_right(&list);
+			//print_commands_and_words(&list);
+			start_cmd(&list, &command);
+		}
+		else
+		{
+			g_error_code = 2;
+			write(1, "bash: syntax error near unexpected token `newline'\n", 52);
+		}
 		set_default_fd(&list);
 		int	i = 0;
 		while (i < list.number && list.command[i])

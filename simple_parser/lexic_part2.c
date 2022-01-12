@@ -130,6 +130,15 @@ t_list_commands	*start_parse(t_command *command, t_list_commands *list)
 			if (list->type[list->number - 1] == DOUBLE_QM)
 				while (ft_strchr(list->command[list->number - 1], '$') >= 0)
 				{
+					if (ft_strchr(list->command[list->number - 1], '$')
+						== (int)ft_strlen(list->command[list->number - 1]) - 1)
+					{
+						list->command[list->number] = ft_strdup("");
+						list->type[list->number] = DOUBLE_QM;
+						list->number += 1;
+						list->command[list->number] = NULL;
+						break ;
+					}
 					temp = list->command[list->number - 1];
 					list->command[list->number - 1]
 						= get_prefix_for_env(
@@ -145,43 +154,65 @@ t_list_commands	*start_parse(t_command *command, t_list_commands *list)
 		{
 			get_built_in_cmd(command, list, &i);
 			if (list->command[list->number - 1][0] != '\''
-				&& list->command[list->number - 1][0] != '\"')
+				&& list->command[list->number - 1][0] != '\"'
+				&& ft_strlen(list->command[list->number - 1]) > 1)
 			{
 				temp = list->command[list->number - 1];
 				list->command[list->number - 1]
 					= get_env_var_value(
 						list->env_vars, list->command[list->number - 1] + 1);
+				// if (temp)
 				free (temp);
-				temp = list->command[list->number - 1];
-				list->command[list->number - 1]
-					= get_prefix_for_env(
-						list->env_vars, list->command[list->number - 1]);
-				free (temp);
+				// temp = list->command[list->number - 1];
+				// list->command[list->number - 1]
+				// 	= get_prefix_for_env(
+				// 		list->env_vars, list->command[list->number - 1]);
+				// free (temp);
 			}
 		}
 		if (list->number == 1 && list->type[0] == ENVIRONMENT_VAR)
 		{
 			int	j;
+			int	*temp2;
 			char **split_string;
-			char	*temp;
+			//char	*temp4;
+			char	**temp3;
+			int		counter;
 
 			j = 0;
+			counter = 0;
 			list->number = 0;
+			while (list->command[0][j])
+			{
+				if (list->command[0][j] == ' ')
+					counter++;
+				j++;
+			}
+			j = 0;
 			split_string = ft_split(list->command[0], ' ');
-			temp = list->command[0];
+			temp2 = list->type;
+			temp3 = list->command;
+			//temp4 = list->command[0];
+			list->command = malloc(sizeof(char *) * (command->len + 1) + sizeof(char *) * (counter * 2 + 1));
+			list->type = malloc(sizeof(int *) * (command->len + 1) + sizeof(int *) * (counter * 2 + 1));
+			if (!list->command || !list->type)
+				return (NULL);
 			while (split_string[j])
 			{
 				list->command[list->number] = ft_strdup(split_string[j]);
-				list->type[list->number] = ENVIRONMENT_VAR;
+				//printf("inside %s\n", list->command[list->number]);
+				list->type[list->number] = BUILT_IN;
 				list->number += 1;
 				list->command[list->number] = malloc(1);
 				list->command[list->number][0] = '\0';
 				list->type[list->number] = SEP_SPACE;
 				list->number += 1;
-				//list->command[list->number] = NULL;
+				list->command[list->number] = NULL;
 				j++;
 			}
-			free (temp);
+			//free (temp4);
+			free (temp2);
+			free (temp3);
 			j = 0;
 			while (split_string[j])
 			{
