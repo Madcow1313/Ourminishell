@@ -1,9 +1,9 @@
 #include "../logic/logic.h"
 
 //counts double array's len(not str len)
-int count_env_len(char **env)
+int	count_env_len(char **env)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	/*i changed to -1 . Bulat*/
@@ -13,7 +13,7 @@ int count_env_len(char **env)
 	return (i); //wtf it works with - 1 on ubuntu but not on mac
 }
 
-static char **join_ostatok(char **old, char **new, int len)
+static char	**join_ostatok(char **old, char **new, int len)
 {
 	int		old_len;
 	char	**filled_env;
@@ -48,7 +48,7 @@ static char **join_ostatok(char **old, char **new, int len)
 	return (filled_env);
 }
 
-static void do_replace(char **old, char **new)
+static void	do_replace(char **old, char **new)
 {
 	if(*old)
 		free(*old);
@@ -86,7 +86,7 @@ static void	parts_to_compare(char **old_env, char **new_env, int k)
 	return;
 }
 
-char **check_replace_env(char **old_env, char **new_env, int len)
+char	**check_replace_env(char **old_env, char **new_env, int len)
 {
 	int		i;
 	int		j;

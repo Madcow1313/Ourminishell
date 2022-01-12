@@ -102,15 +102,15 @@ int	main(int argc, char **argv, char **envp)
 			write(1, "bash: syntax error near unexpected token `newline'\n", 52);
 		}
 		set_default_fd(&list);
-		int	i = 0;
-		while (i < list.number && list.command[i])
-		{
-			if (list.command[i])
-				free (list.command[i]);
-			i++;
-		}
-		free (list.command);
-		free (list.type);
+		// int	i = 0;
+		// while (i < list.number && list.command[i])
+		// {
+		// 	if (list.command[i])
+		// 		free (list.command[i]);
+		// 	i++;
+		// }
+		// free (list.command);
+		// free (list.type);
 	}
 		//print_commands_and_words(&list);
 	//}

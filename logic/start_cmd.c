@@ -1,6 +1,6 @@
 #include "../logic/logic.h"
 
-/* static void	free_cmd(t_list_commands *cmd)
+static void	free_cmd(t_list_commands *cmd)
 {
 	size_t	i;
 
@@ -15,7 +15,7 @@
 	i = -1;
 	if (cmd->type)
 		free(cmd->type);
-} */
+}
 
 int	count_pipes(t_list_commands *cmd)
 {
@@ -57,6 +57,6 @@ void	start_cmd(t_list_commands *cmd, t_command *p)
 	ft_s_h();
 
 	check_start_cmd(cmd);
-	//free_cmd(cmd);
+	free_cmd(cmd);
 	return ;
 }

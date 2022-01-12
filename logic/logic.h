@@ -41,7 +41,7 @@ void	errors(void);
 void	cd_errors(char *path);
 void	export_errors(char *str);
 void	malloc_error(char **s);
-void	command_error();
+void	command_error(char *s);
 void	exec_error(t_list_commands *cmd, char *file_path);
 
 //starting shell func
