@@ -29,7 +29,7 @@ void	malloc_error(char **s)
 	if (s)
 		free_array(s);
 	g_error_code = 12;
-	errors();
+	//errors();
 	return ;
 }
 

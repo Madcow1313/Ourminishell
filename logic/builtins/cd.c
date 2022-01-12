@@ -1,12 +1,12 @@
 #include "../logic/logic.h"
 
-static void dup_and_free_new_paths(t_list_commands *cmd, char *buf, int i)
+static void	dup_new_paths(t_list_commands *cmd, char *buf, int i)
 {
 	free(cmd->env_vars[i]);
 	cmd->env_vars[i] = ft_strdup(buf);
 }
 
-void set_pwd(t_list_commands *cmd)
+void	set_pwd(t_list_commands *cmd)
 {
 	char *buf;
 	char *old_pwd;
@@ -22,10 +22,10 @@ void set_pwd(t_list_commands *cmd)
 	buf = ft_strjoin("PWD=", tmp2);
 	while (cmd->env_vars[++i])
 	{
-		if (!ft_strncmp(cmd->env_vars[i], "PWD", ft_strlen("PWD")))
-			dup_and_free_new_paths(cmd, buf, i);
-		if (!ft_strncmp(cmd->env_vars[i], "OLDPWD", ft_strlen("OLDPWD")))
-			dup_and_free_new_paths(cmd, old_pwd, i);
+		if (!cmpr_pwd(cmd, i))
+			dup_new_paths(cmd, buf, i);
+		if (!cmpr_oldpwd(cmd, i))
+			dup_new_paths(cmd, old_pwd, i);
 	}
 	free(buf);
 	free(old_pwd);
@@ -35,7 +35,7 @@ void set_pwd(t_list_commands *cmd)
 
 static int	cd_to_home_dir(t_list_commands *cmd, int sign)
 {
-	char *home_path;
+	char	*home_path;
 
 	home_path = get_env_var_value(cmd->env_vars, "HOME");
 	if (chdir(home_path) == -1)
@@ -50,7 +50,7 @@ static int	cd_to_home_dir(t_list_commands *cmd, int sign)
 
 static int	cd_has_path(t_list_commands *cmd, int sign)
 {
-	char *new_path;
+	char	*new_path;
 
 	new_path = ft_strdup(cmd->command[1]);
 	if (chdir(new_path) == -1)
@@ -63,7 +63,7 @@ static int	cd_has_path(t_list_commands *cmd, int sign)
 	return (sign);
 }
 
-void process_cd(t_list_commands *cmd)
+void	process_cd(t_list_commands *cmd)
 {
 	int	error_sign;
 

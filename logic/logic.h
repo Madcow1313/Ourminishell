@@ -33,6 +33,7 @@ typedef struct s_opendir
 char	**free_array(char **env);
 int		check_first_symbol(char c);
 int		wrong_symbols(char *str);
+bool	is_numeric(char *str);
 
 //errors func
 
@@ -57,6 +58,8 @@ void	redirects(t_list_commands *cmd, int nl);
 void	process_cd(t_list_commands *cmd);
 void	set_pwd(t_list_commands *cmd);
 char	**find_old_pwd(t_list_commands *cmd);
+int	cmpr_oldpwd(t_list_commands *cmd, int i);
+int	cmpr_pwd(t_list_commands *cmd, int i);
 
 //single pwd
 void	process_pwd(t_list_commands *cmd);

@@ -30,10 +30,10 @@ static char **join_ostatok(char **old, char **new, int len)
 		return (old);
 	}
 	i = -1;
-	while(old[++i])
+	while(old[++i]) //i can move it to another func
 		filled_env[i] = old[i];
 	free(old);
-	old = NULL;
+	//old = NULL;
 	j = -1;
 	while(++j <= len)
 	{
@@ -53,16 +53,16 @@ static void do_replace(char **old, char **new)
 	if(*old)
 		free(*old);
 	*old = ft_strdup(*new);
-	free(*new);
+	//free(*new);
 	*new = NULL;
 	return;
 }
 
-static void parts_to_compare(char **old_env, char **new_env, int k)
+static void	parts_to_compare(char **old_env, char **new_env, int k)
 {
-	char *cmp;
-	char *cmp_2;
-	int i;
+	char	*cmp;
+	char	*cmp_2;
+	int		i;
 
 	i = 0;
 	if(!*new_env || !*old_env)
@@ -71,11 +71,11 @@ static void parts_to_compare(char **old_env, char **new_env, int k)
 	while ((*old_env)[i] && (*old_env)[i] != '=')
 		i++;
 	cmp_2 = ft_substr(*old_env, 0, i);
-	if (!ft_strncmp(cmp, cmp_2, ft_strlen(cmp_2)))
+	if (!ft_strncmp(cmp, cmp_2, ft_strlen(cmp_2))) //i can change ot to ft_cmdcmpr or ft_strcmp
 	{
 		if ((*new_env)[k] == '\0' && *new_env)
 		{
-			free(*new_env);
+			//free(*new_env);
 			*new_env = NULL;
 		}
 		else

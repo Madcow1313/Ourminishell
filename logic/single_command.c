@@ -6,7 +6,6 @@ void	single_command(t_list_commands *cmd)
 
 	//for(int i = 0; cmd->command[i]; i++)
 		//printf("single command %s\n", cmd->command[i]);
-	printf("Im here\n");
 	if (!ft_strcmp(cmd->command[0], "echo"))
 		process_echo(cmd);
  	else if (!ft_strcmp(cmd->command[0], "cd"))
@@ -20,7 +19,7 @@ void	single_command(t_list_commands *cmd)
 	else if(!ft_strcmp(cmd->command[0], "env"))
 		process_env(cmd);
 	else if (!ft_strcmp(cmd->command[0], "exit"))
-		process_exit(&cmd->command[1]);
+		process_exit(cmd->command + 1);
 	else
 		exec(cmd, &open_dir);
 	return ;
