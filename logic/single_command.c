@@ -5,7 +5,8 @@ void	single_command(t_list_commands *cmd)
 	t_opendir	open_dir;
 
 	//for(int i = 0; cmd->command[i]; i++)
-	//	printf("single command %s\n", cmd->command[i]);
+		//printf("single command %s\n", cmd->command[i]);
+	printf("Im here\n");
 	if (!ft_strcmp(cmd->command[0], "echo"))
 		process_echo(cmd);
  	else if (!ft_strcmp(cmd->command[0], "cd"))
