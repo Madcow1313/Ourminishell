@@ -70,6 +70,7 @@ int	main(int argc, char **argv, char **envp)
 	g_error_code = 0;
 	if (argc && argv)
 		duplicate_envp(envp, &list);
+	init_stdcopies_g_error(&list);
 	ft_s_h();
 	// string = "VSCODE_GIT_ASKPASS_EXTRA_ARGS";
 	// get_env_var_value(list.env_vars, string);

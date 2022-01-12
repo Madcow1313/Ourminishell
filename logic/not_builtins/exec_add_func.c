@@ -30,8 +30,11 @@ static struct dirent	*next_dir(t_opendir *o_dir)
 
 static char	*fill_path(t_opendir *o_dir)
 {
-	o_dir->file_path = ft_strjoin(o_dir->path[o_dir->i], "/");
-	o_dir->file_path = ft_strjoin(o_dir->file_path, o_dir->name->d_name);
+	char	*path;
+
+	path = ft_strjoin(o_dir->path[o_dir->i], "/");
+	o_dir->file_path = ft_strjoin(path, o_dir->name->d_name);
+	free(path);
 	//free_array(o_dir->path);
 	//if (closedir(o_dir->dir) == -1)
 	//	g_error_code = errno;
@@ -40,7 +43,10 @@ static char	*fill_path(t_opendir *o_dir)
 
 char	*reading_directories(t_list_commands *cmd, t_opendir *o_dir)
 {
-	while(o_dir->i <= count_env_len(o_dir->path) && o_dir->path[o_dir->i])
+	int	path_len;
+
+	path_len = count_env_len(o_dir->path);
+	while(o_dir->i <= path_len && o_dir->path[o_dir->i])
 	{
 		if (o_dir->name == NULL)
 		{
@@ -74,5 +80,6 @@ char	*get_binary_from_path(t_list_commands *cmd, t_opendir *o_dir)
 	if (closedir(o_dir->dir) == -1)
 		g_error_code = errno;
 	free_array(o_dir->path);
+	while (1);
 	return(o_dir->file_path);
 }

@@ -34,6 +34,7 @@ char	**free_array(char **env);
 int		check_first_symbol(char c);
 int		wrong_symbols(char *str);
 bool	is_numeric(char *str);
+void	init_stdcopies_g_error(t_list_commands *cmd);
 
 //errors func
 
