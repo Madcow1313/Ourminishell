@@ -162,7 +162,7 @@ t_list_commands	*start_parse(t_command *command, t_list_commands *list)
 					= get_env_var_value(
 						list->env_vars, list->command[list->number - 1] + 1);
 				// if (temp)
-				free (temp);
+				//free (temp);
 				// temp = list->command[list->number - 1];
 				// list->command[list->number - 1]
 				// 	= get_prefix_for_env(

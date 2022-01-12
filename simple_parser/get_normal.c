@@ -47,8 +47,8 @@ char	**get_normal_array(t_list_commands *list)
 	list->type[j] = BUILT_IN;
 	if (list->type[j - 1] >= REDIRECT_RIGHT && list->type[j - 1] < ENVIRONMENT_VAR)
 		list->type[j - 1] = BUILT_IN;
-	if (new[j])
-		free (new[j]);
+	// if (new[j])
+	// 	free (new[j]);
 	new[j] = NULL;
 	i = 0;
 	while (i < list->number && list->command[i])
