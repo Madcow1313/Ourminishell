@@ -38,7 +38,7 @@ int	count_pipes(t_list_commands *cmd)
 
 void	check_start_cmd(t_list_commands *cmd)
 {	
-	if (cmd->command[0] == NULL)
+	if (cmd->command[0] == NULL || !cmd->command)
 		return ;
 	if (!check_pipe_semicol(cmd))
 		return ;

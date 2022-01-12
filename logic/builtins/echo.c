@@ -31,11 +31,11 @@ static void	echo_without_newline(t_list_commands *cmd)
 		j = 0;
 		while (cmd->command[i][j])
 		{
-			write(1, &(cmd->command[i][j]), 1);
+			write(STD_OUT, &(cmd->command[i][j]), STD_OUT);
 			j++;
 		}
 		if (cmd->command[i + 1])
-			write(1, " ", 1);
+			write(STD_OUT, " ", STD_OUT);
 		i++;
 	}
 	return ;
@@ -47,21 +47,21 @@ static void	echo_with_newline(t_list_commands *cmd)
 	int	j;
 
 	i = 1;
-	if (!check_redir(cmd, 1))
+	if (!check_redir(cmd, STD_OUT))
 		return ;
 	while(cmd->command[i])
 	{
 		j = 0;
 		while (cmd->command[i][j])
 		{
-			write(1, &(cmd->command[i][j]), 1);
+			write(STD_OUT, &(cmd->command[i][j]), STD_OUT);
 			j++;
 		}
-		if (cmd->command[i + 1])
-			write(1, " ", 1);
+		if (cmd->command[i + STD_OUT])
+			write(STD_OUT, " ", STD_OUT);
 		i++;
 	}
-	write (1, "\n", 1);
+	write (STD_OUT, "\n", STD_OUT);
 	return ;
 }
 
@@ -75,6 +75,6 @@ void	process_echo(t_list_commands *cmd)
 			echo_with_newline(cmd);
 	}
 	else
-		write(1, "\n", 1);
+		write(STD_OUT, "\n", STD_OUT);
 	return ;
 }
