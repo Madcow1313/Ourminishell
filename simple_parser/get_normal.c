@@ -21,10 +21,10 @@ char	**get_normal_array(t_list_commands *list)
 		{
 			while (list->type[i] == SEP_SPACE && i < list->number)
 				i++;
-			//temp = new[j];
+			temp = new[j];
 			new[j] = ft_strdup(list->command[i]);
 			list->type[j] = list->type[i];
-			//free(temp);
+			free(temp);
 			i++;
 			j++;
 			// new[j] = malloc(1);
@@ -33,7 +33,7 @@ char	**get_normal_array(t_list_commands *list)
 		new[j] = malloc(1);
 		new[j][0] = '\0';
 		while(list->type[i] != SEP_SPACE && ((list->type[i] < REDIRECT_RIGHT || list->type[i] > REDIRECT_AND_APPEND))
-			&& list->command[i] && i < list->number)
+			&& list->command[i])
 		{
 			temp = new[j];
 			new[j] = ft_strjoin(new[j], list->command[i]);
@@ -45,6 +45,10 @@ char	**get_normal_array(t_list_commands *list)
 		j++;
 	}
 	list->type[j] = BUILT_IN;
+	if (list->type[j - 1] >= REDIRECT_RIGHT && list->type[j - 1] < ENVIRONMENT_VAR)
+		list->type[j - 1] = BUILT_IN;
+	if (new[j])
+		free (new[j]);
 	new[j] = NULL;
 	i = 0;
 	while (i < list->number && list->command[i])

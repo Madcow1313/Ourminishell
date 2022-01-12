@@ -53,7 +53,7 @@ int	delete_quotes(t_list_commands *list)
 	int		i;
 
 	i = 0;
-	while (list->command[i])
+	while (list->command[i] && i < list->number)
 	{
 		if (list->type[i] == BUILT_IN || list->type[i] == WORD
 			|| list->type[i] == ENVIRONMENT_VAR)
@@ -131,6 +131,8 @@ char	*get_prefix_for_env(char **env_vars, char *string)
 		i++;
 		size++;
 	}
+	if (size == 0)
+		return (NULL);
 	temp = malloc(size + 1);
 	if (!temp)
 		return (NULL);
