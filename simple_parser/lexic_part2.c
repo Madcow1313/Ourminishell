@@ -151,7 +151,7 @@ t_list_commands	*start_parse(t_command *command, t_list_commands *list)
 						= get_prefix_for_env(
 							list->env_vars, list->command[list->number - 1]);
 					free (temp);
-					temp = temp;
+					//temp = temp;
 				}
 			}
 			i++;

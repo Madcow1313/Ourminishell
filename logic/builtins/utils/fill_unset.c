@@ -1,31 +1,42 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strcmp.c                                        :+:      :+:    :+:   */
+/*   fill_unset.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: chudapak <chudapak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/01/13 18:44:05 by chudapak          #+#    #+#             */
-/*   Updated: 2022/01/13 18:44:05 by chudapak         ###   ########.fr       */
+/*   Created: 2022/01/13 17:56:10 by chudapak          #+#    #+#             */
+/*   Updated: 2022/01/13 17:59:36 by chudapak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../logic/logic.h"
 
-int	ft_strcmp(const char *s1, const char *s2)
+char	**fill_unset(char **old, int old_len, int final_len)
 {
-	unsigned int	index;
-	int				comp_value;
+	char	**result;
+	int		i;
+	int		j;
 
-	index = 0;
-	if (!s1 || !s2)
-		return (s1 == s2);
-	while (s1[index] || s2[index])
+	result = malloc(sizeof(char *) * (final_len + 1));
+	if (!result)
 	{
-		comp_value = (unsigned char)s1[index] - (unsigned char)s2[index];
-		if (comp_value)
-			return (comp_value);
-		index++;
+		malloc_error(result);
+		return (NULL);
 	}
-	return (0);
+	i = -1;
+	j = 0;
+	while (++i <= old_len)
+	{
+		if (old[i])
+		{
+			result[j] = old[i];
+			j++;
+		}
+	}
+	result[j] = NULL;
+	//printf("result[j] = %s\n", result[j]);
+	free(old);
+	old = NULL;
+	return (result);
 }

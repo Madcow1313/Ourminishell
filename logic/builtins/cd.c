@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   cd.c                                               :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: chudapak <chudapak@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/01/13 17:35:03 by chudapak          #+#    #+#             */
+/*   Updated: 2022/01/13 17:35:22 by chudapak         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../logic/logic.h"
 
 static void	dup_new_paths(t_list_commands *cmd, char *buf, int i)
@@ -8,11 +20,11 @@ static void	dup_new_paths(t_list_commands *cmd, char *buf, int i)
 
 void	set_pwd(t_list_commands *cmd)
 {
-	char *buf;
-	char *old_pwd;
-	int i;
-	char *tmp;
-	char *tmp2;
+	char	*buf;
+	char	*old_pwd;
+	int		i;
+	char	*tmp;
+	char	*tmp2;
 
 	i = -1;
 	cmd->env_vars = find_old_pwd(cmd);

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   cmd_with_pipes.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: chudapak <chudapak@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/01/13 18:43:50 by chudapak          #+#    #+#             */
+/*   Updated: 2022/01/13 18:43:50 by chudapak         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../logic/logic.h"
 
 //not sure if i need redir func
@@ -34,10 +46,10 @@ void	cmd_with_pipes(t_list_commands *cmd)
 {
 	t_opendir	o_dir;
 
-	if(pipe(cmd->fd) == -1)
+	if (pipe(cmd->fd) == -1)
 	{
 		g_error_code = errno;
-		ft_putstr_fd("Pipe, failed, initializing undefined behavior", STD_ERROR);
+		ft_putstr_fd("Pipe failed, initializing undefined behavior", STD_ERROR);
 	}
 	open_redirections(cmd);
 	manage_out_pipe(cmd);

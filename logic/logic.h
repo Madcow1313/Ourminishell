@@ -1,20 +1,32 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   logic.h                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: chudapak <chudapak@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/01/13 18:49:58 by chudapak          #+#    #+#             */
+/*   Updated: 2022/01/13 18:50:00 by chudapak         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef LOGIC_H
 
 # define LOGIC_H
 
-#include "../simple_parser/parser.h"
-#include "../logic/libft/libft.h"
-#include <sys/time.h>
-#include <unistd.h>
-#include <stdio.h>
-#include <sys/types.h>
-#include <stdint.h>
-#include <string.h>
-#include <stdlib.h>
-#include <sys/wait.h>
-#include <dirent.h>
-#include <limits.h>
-#include <stdbool.h>
+# include "../simple_parser/parser.h"
+# include "../logic/libft/libft.h"
+# include <sys/time.h>
+# include <unistd.h>
+# include <stdio.h>
+# include <sys/types.h>
+# include <stdint.h>
+# include <string.h>
+# include <stdlib.h>
+# include <sys/wait.h>
+# include <dirent.h>
+# include <limits.h>
+# include <stdbool.h>
 
 # define STD_IN 0
 # define STD_OUT 1
@@ -51,21 +63,21 @@ void	start_cmd(t_list_commands *cmd, t_command *p);
 void	single_command(t_list_commands *cmd);
 int		check_pipe_semicol(t_list_commands *cmd);
 
-//single echo with redirs
+//echo with redirs
 void	process_echo(t_list_commands *cmd);
 void	redirects(t_list_commands *cmd, int nl);
 
-//single cd's
+//cd's
 void	process_cd(t_list_commands *cmd);
 void	set_pwd(t_list_commands *cmd);
 char	**find_old_pwd(t_list_commands *cmd);
-int	cmpr_oldpwd(t_list_commands *cmd, int i);
-int	cmpr_pwd(t_list_commands *cmd, int i);
+int		cmpr_oldpwd(t_list_commands *cmd, int i);
+int		cmpr_pwd(t_list_commands *cmd, int i);
 
-//single pwd
+//pwd
 void	process_pwd(t_list_commands *cmd);
 
-//single export
+//export
 void	process_export(t_list_commands *cmd);
 char	**check_valid_envp(t_list_commands *cmd);
 int		check_only_space(char *s);
@@ -76,27 +88,29 @@ void	check_duplicates(char **new_env, int new_len);
 char	**check_replace_env(char **old_env, char **new_env, int len);
 void	parts_to_compare(char **old_env, char **new_env, int k);
 
-//single exit
+//exit
 void	process_exit(char **args);
 
-//single unset
+//unset
 void	process_unset(t_list_commands *cmd);
 char	**check_valid_unset(t_list_commands *cmd);
+int		ft_len_after(char **env, int old_len);
+char	**fill_unset(char **old, int old_len, int final_len);
 
-//single env
+//env
 void	process_env(t_list_commands *cmd);
 
 void	exec(t_list_commands *cmd, t_opendir *open_dir);
 char	*get_binary_from_path(t_list_commands *cmd, t_opendir *o_dir);
-int	ft_cmprcmd(const char *string1, const char *string2);
+int		ft_cmprcmd(const char *string1, const char *string2);
 
 //pipes
 void	cmd_with_pipes(t_list_commands *cmd);
 bool	our_builtin(char *command);
-int	ft_strcmp(const char *s1, const char *s2);
+int		ft_strcmp(const char *s1, const char *s2);
 void	manage_out_pipe(t_list_commands *cmd);
 void	manage_in_pipe(t_list_commands *cmd);
 
-void	process_only_redirects(t_list_commands * cmd);
+void	process_only_redirects(t_list_commands *cmd);
 
 #endif

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   echo.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: chudapak <chudapak@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/01/13 17:37:58 by chudapak          #+#    #+#             */
+/*   Updated: 2022/01/13 17:39:15 by chudapak         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../logic/logic.h"
 
 /* static int	check_redir(t_list_commands *cmd, int nl)
@@ -26,7 +38,7 @@ static void	echo_without_newline(t_list_commands *cmd)
 	i = 2;
 	//if (!check_redir(cmd, 0))
 		//return ;
-	while(cmd->command[i])
+	while (cmd->command[i])
 	{
 		j = 0;
 		while (cmd->command[i][j])
@@ -49,7 +61,7 @@ static void	echo_with_newline(t_list_commands *cmd)
 	i = 1;
 	//if (!check_redir(cmd, STD_OUT)
 		//return ;
-	while(cmd->command[i])
+	while (cmd->command[i])
 	{
 		j = 0;
 		while (cmd->command[i][j])
@@ -67,7 +79,7 @@ static void	echo_with_newline(t_list_commands *cmd)
 
 void	process_echo(t_list_commands *cmd)
 {
-	printf("%s\n", "All good");
+	//printf("%s\n", "All good");
 	if (cmd->command[1] != NULL)
 	{
 		if (!ft_strcmp(cmd->command[1], "-n"))

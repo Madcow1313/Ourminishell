@@ -1,4 +1,27 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   exec.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: chudapak <chudapak@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/01/13 18:40:15 by chudapak          #+#    #+#             */
+/*   Updated: 2022/01/13 18:40:16 by chudapak         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../logic/logic.h"
+
+static void	call_exec(char *file_path, t_list_commands *cmd)
+{
+	if (execve(file_path, cmd->command, cmd->env_vars) == -1)
+	{
+		g_error_code = errno;
+		exec_error(cmd, file_path);
+		return ;
+	}
+	g_error_code = 0;
+}
 
 void	exec(t_list_commands *cmd, t_opendir *open_dir)
 {
@@ -10,15 +33,7 @@ void	exec(t_list_commands *cmd, t_opendir *open_dir)
 	{
 		pid = fork();
 		if (pid == 0)
-		{
-			if (execve(file_path, cmd->command, cmd->env_vars) == -1)
-			{
-				g_error_code = errno;
-				exec_error(cmd, file_path);
-				return ;
-			}
-			g_error_code = 0;
-		}
+			call_exec(file_path, cmd);
 		else if (pid > 0)
 			wait(&pid);
 		else
