@@ -70,7 +70,7 @@ static char	**unset_env(char **old_env, char **set, int len, int old_len)
 			{
 				k = 0;
 				if (old_env[i])
-					while (old_env[i][k] != '=')
+					while (old_env[i][k] && old_env[i][k] != '=')
 						k++;
 				parts_to_compare_unset(&old_env[i], &set[j]);
 			}
@@ -102,7 +102,6 @@ static char **deleting_new_env_var(t_list_commands *cmd)
 		printf("%s\n", new_env[i]);
 	unset_len = count_env_len(new_env);
 	old_len = count_env_len(cmd->env_vars);
-	//while(1);
 	cmd->env_vars = unset_env(cmd->env_vars, new_env, unset_len, old_len);
 	//free_array(new_env);
 	free(new_env);

@@ -41,26 +41,31 @@ static char **adding_new_env_var(t_list_commands *cmd)
 {
 	char	**new_env;
 	int		new_len;
-	//int		i;
 
-	//i = -1;
 	new_env = check_valid_envp(cmd);
 	if (new_env == NULL) 
 		return (cmd->env_vars);
 	new_len = count_env_len(new_env);
+	check_duplicates(new_env, new_len);
 	cmd->env_vars = check_replace_env(cmd->env_vars, new_env, new_len);
-	//while(++i <= new_len) //maybe i could use free_array(new_env)
-		//if (new_env[i])
-			//free(new_env[i]);
-	//free_array(new_env);
 	free(new_env);
 	return (cmd->env_vars);
 }
 
 void	process_export(t_list_commands *cmd)
 {
+	int	i;
+	int	only_spaces;
+
+	i = 0;
+	only_spaces = 0;
 	g_error_code = 0;
-	if (cmd->command[1]) //check cmd for duplicates, where i'll count len without duples and in filling new_env i'll skip same str???
+	while (cmd->command[++i])
+		if (check_only_space(cmd->command[i]))
+			only_spaces++;
+	if (only_spaces == 0)
+		print_export_no_args(cmd);
+	else if (cmd->command[1]) //check cmd for duplicates, where i'll count len without duples and in filling new_env i'll skip same str???
 		cmd->env_vars = adding_new_env_var(cmd);
 	else
 		print_export_no_args(cmd);

@@ -1,5 +1,55 @@
 #include "../logic/logic.h"
 
+static void	find_duplicates(char **new_env, int j, int k, int i)
+{
+	char	*cmp;
+	char	*cmp_2;
+	int		l;
+
+	l = 0;
+	cmp = ft_substr(new_env[j], 0, k);
+	while(new_env[i][l] && new_env[i][l] != '=')
+		l++;
+	cmp_2 = ft_substr(new_env[i], 0, l);
+	if (!ft_strcmp(cmp, cmp_2))
+	{
+		if (new_env[j][k + 1] && new_env[j][k + 1] != '\0')
+			new_env[i] = NULL;
+		else
+			new_env[j] = NULL;
+	}
+	free(cmp_2);
+	free(cmp);
+}
+
+void	check_duplicates(char **new_env, int new_len)
+{
+	int	i;
+	int	j;
+	int	k;
+
+	i = -1;
+	while(++i <= new_len)
+	{
+		if (new_env[i])
+		{
+			j = i + 1;
+			while(j <= new_len)
+			{
+				k = 0;
+				if (new_env[j])
+				{
+					while(new_env[j][k] && new_env[j][k] != '=')
+						k++;
+					if (new_env[i])
+						find_duplicates(new_env, j, k, i);
+				}
+				j++;
+			}
+		}
+	}
+}
+
 int	check_only_space(char *s)
 {
 	int	i;

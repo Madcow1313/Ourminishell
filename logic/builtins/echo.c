@@ -67,7 +67,7 @@ static void	echo_with_newline(t_list_commands *cmd)
 
 void	process_echo(t_list_commands *cmd)
 {
-	printf("%s\n", cmd->command[1]);
+	printf("%s\n", "All good");
 	if (cmd->command[1] != NULL)
 	{
 		if (!ft_strcmp(cmd->command[1], "-n"))

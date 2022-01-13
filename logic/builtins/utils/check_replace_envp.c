@@ -13,7 +13,7 @@ int	count_env_len(char **env)
 	return (i); //wtf it works with - 1 on ubuntu but not on mac
 }
 
-static char	**join_ostatok(char **old, char **new, int len)
+static char	**join_ostatok(char **old, char **new, int len, int len_2)
 {
 	int		old_len;
 	char	**filled_env;
@@ -35,7 +35,7 @@ static char	**join_ostatok(char **old, char **new, int len)
 	free(old);
 	//old = NULL;
 	j = -1;
-	while(++j <= len)
+	while(++j <= len_2)
 	{
 		if (new[j])
 		{
@@ -58,7 +58,7 @@ static void	do_replace(char **old, char **new)
 	return;
 }
 
-static void	parts_to_compare(char **old_env, char **new_env, int k)
+void	parts_to_compare(char **old_env, char **new_env, int k)
 {
 	char	*cmp;
 	char	*cmp_2;
@@ -116,6 +116,6 @@ char	**check_replace_env(char **old_env, char **new_env, int len)
 		if (new_env[i])
 			{len_after_check_replace++; printf("new_env[i] after replace = %s\n", new_env[i]);}
 	printf("len aftercheck replace = %d\n", len_after_check_replace);
-	result = join_ostatok(old_env, new_env, len_after_check_replace);
+	result = join_ostatok(old_env, new_env, len_after_check_replace, len);
 	return (result);
 }
