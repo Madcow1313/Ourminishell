@@ -21,7 +21,7 @@ int	define_redirect(t_command *command, int i)
 /*rignt now ENVIRONMENT_VAR == $, rename*/
 int	search_for_type(t_command *command, int i)
 {
-	if (ft_strchr("><$\'\"|;./", command->word[i]) >= 0)
+	if (ft_strchr_parser("><$\'\"|;./", command->word[i]) >= 0)
 	{
 		if (command->word[i] == '\'')
 			return (SINGLE_QM);
@@ -35,7 +35,7 @@ int	search_for_type(t_command *command, int i)
 		else if (command->word[i] == '$')
 			return (BUILT_IN);
 		if (command->word[i] == ';')
-			return (SEMICOLON);
+			return (BUILT_IN);
 		if (command->word[i] == '|')
 			return (PIPE);
 	}
@@ -128,9 +128,10 @@ t_list_commands	*start_parse(t_command *command, t_list_commands *list)
 		{
 			ret = handle_quotes(list, command, list->type[list->number], &i);
 			if (list->type[list->number - 1] == DOUBLE_QM)
-				while (ft_strchr(list->command[list->number - 1], '$') >= 0)
+			{
+				while (ft_strchr_for_dq(list->command[list->number - 1], '$') >= 0)
 				{
-					if (ft_strchr(list->command[list->number - 1], '$')
+					if (ft_strchr_parser(list->command[list->number - 1], '$')
 						== (int)ft_strlen(list->command[list->number - 1]) - 1)
 					{
 						list->command[list->number] = ft_strdup("");
@@ -144,7 +145,9 @@ t_list_commands	*start_parse(t_command *command, t_list_commands *list)
 						= get_prefix_for_env(
 							list->env_vars, list->command[list->number - 1]);
 					free (temp);
+					temp = temp;
 				}
+			}
 			i++;
 		}
 		else if (list->type[list->number] >= REDIRECT_RIGHT
@@ -161,8 +164,8 @@ t_list_commands	*start_parse(t_command *command, t_list_commands *list)
 				list->command[list->number - 1]
 					= get_env_var_value(
 						list->env_vars, list->command[list->number - 1] + 1);
-				// if (temp)
-				//free (temp);
+				if (temp)
+				free (temp);
 				// temp = list->command[list->number - 1];
 				// list->command[list->number - 1]
 				// 	= get_prefix_for_env(
@@ -175,7 +178,7 @@ t_list_commands	*start_parse(t_command *command, t_list_commands *list)
 			int	j;
 			int	*temp2;
 			char **split_string;
-			//char	*temp4;
+			char	*temp4;
 			char	**temp3;
 			int		counter;
 
@@ -192,7 +195,7 @@ t_list_commands	*start_parse(t_command *command, t_list_commands *list)
 			split_string = ft_split(list->command[0], ' ');
 			temp2 = list->type;
 			temp3 = list->command;
-			//temp4 = list->command[0];
+			temp4 = list->command[0];
 			list->command = malloc(sizeof(char *) * (command->len + 1) + sizeof(char *) * (counter * 2 + 1));
 			list->type = malloc(sizeof(int *) * (command->len + 1) + sizeof(int *) * (counter * 2 + 1));
 			if (!list->command || !list->type)
@@ -200,7 +203,6 @@ t_list_commands	*start_parse(t_command *command, t_list_commands *list)
 			while (split_string[j])
 			{
 				list->command[list->number] = ft_strdup(split_string[j]);
-				//printf("inside %s\n", list->command[list->number]);
 				list->type[list->number] = BUILT_IN;
 				list->number += 1;
 				list->command[list->number] = malloc(1);
@@ -210,7 +212,7 @@ t_list_commands	*start_parse(t_command *command, t_list_commands *list)
 				list->command[list->number] = NULL;
 				j++;
 			}
-			//free (temp4);
+			free (temp4);
 			free (temp2);
 			free (temp3);
 			j = 0;

@@ -64,7 +64,7 @@ int	handle_relative_path(t_list_commands *list, t_command *command, size_t *i)
 	size_t	size;
 
 	size = 0;
-	while (ft_strchr("><$\"\'|", command->word[*i]) < 0 && *i < command->len
+	while (ft_strchr_parser("><$\"\'|", command->word[*i]) < 0 && *i < command->len
 		&& command->word[*i] != '\0' && command->word[*i + size] != ' ')
 	{
 		size++;
@@ -86,7 +86,7 @@ int	handle_absolute_path(t_list_commands *list, t_command *command, size_t *i)
 	size_t	size;
 
 	size = 0;
-	while (ft_strchr("><$\"\'|\n", command->word[*i + size]) < 0
+	while (ft_strchr_parser("><$\"\'|\n", command->word[*i + size]) < 0
 		&& *i + size < command->len
 		&& command->word[*i + size] != '\0'
 		&& command->word[*i + size] != ' ')

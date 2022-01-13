@@ -63,9 +63,10 @@ void	print_shit();
 char	*ft_strnstr (const char *big, const char *little, size_t len);
 size_t ft_strlen(const char *string);
 size_t	ft_strlcpy (char *dst, const char *src, size_t size);
-int	ft_strchr(const char *string, int symbol);
+int	ft_strchr_parser(const char *string, int symbol);
 int	ft_strncmp(const char *string1, const char *string2, size_t num);
 char	*ft_strjoin(char const *s1, char const *s2);
+int	ft_strchr_for_dq(const char *string, int symbol);
 
 /*parser functions
 change abs and relative path, they are doing the same*/

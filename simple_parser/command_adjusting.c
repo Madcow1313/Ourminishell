@@ -104,14 +104,17 @@ char	*get_env_var_value(char **env_vars, char *string)
 			{
 				string = env_vars[i] + size + 1;
 				new_string = ft_strjoin(string, temp);
+				//free (string);
 				return (new_string);
 			}
 		}
 		i++;
 	}
+	temp = string;
 	string = malloc(1);
 	string[0] = '\0';
 	new_string = ft_strjoin(string, temp);
+	free (temp);
 	free (string);
 	return (new_string);
 }
@@ -126,20 +129,23 @@ char	*get_prefix_for_env(char **env_vars, char *string)
 
 	size = 0;
 	i = 0;
-	while (string[i] != '$' && string[i])
+	while (string[i])
 	{
+		if (string[i] == '$' && string[i + 1] != ' ')
+			break ;
 		i++;
 		size++;
 	}
-	if (size == 0)
-		return (NULL);
+	// if (size == 0)
+	// 	return (string);
 	temp = malloc(size + 1);
 	if (!temp)
-		return (NULL);
+		return (string);
 	i = 0;
 	ft_strlcpy(temp, string, size + 1);
 	temp2 = get_env_var_value(env_vars, (string + size + 1));
 	new_string = ft_strjoin(temp, temp2);
+	printf("new string is %s\n", new_string);
 	if (temp)
 		free (temp);
 	/*double free*/
