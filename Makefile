@@ -24,7 +24,8 @@ SOURCE = main.c ./parser_utils/ft_strlen.c ./simple_parser/lexic_part1.c \
 		./logic/builtins/utils/check_replace_envp.c ./logic/builtins/utils/check_valid_unset.c \
 		./logic/builtins/env.c ./logic/not_builtins/exec.c ./logic/not_builtins/exec_utils.c \
 		./logic/not_builtins/exec_add_func.c ./logic/pipe_case/cmd_with_pipes.c \
-		./logic/pipe_case/ft_strcmp.c ./logic/pipe_case/manage_pipes.c ./logic/pipe_case/our_builtin.c 
+		./logic/pipe_case/ft_strcmp.c ./logic/pipe_case/manage_pipes.c ./logic/pipe_case/our_builtin.c \
+		./logic/builtins/utils/compare_pwd.c ./logic/init_stdcopies_g_error.c
 
 OBJ = $(SOURCE:.c=.o)
 

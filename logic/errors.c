@@ -29,13 +29,15 @@ void	malloc_error(char **s)
 	if (s)
 		free_array(s);
 	g_error_code = 12;
-	errors();
+	//errors();
 	return ;
 }
 
-void	command_error()
+void	command_error(char *s)
 {
 	g_error_code = 127;
-	ft_putstr_fd("Error: bash: 127: command not found\n", STD_ERROR);
+	ft_putstr_fd("bash: ", STD_ERROR);
+	ft_putstr_fd(s, STD_ERROR);
+	ft_putstr_fd(": command not found\n", STD_ERROR);
 	return ;
 }

@@ -10,7 +10,7 @@ char	**fill_unset(char **old, int old_len, int final_len)
 	if (!result)
 	{
 		malloc_error(result);
-		return(old);
+		return(NULL);
 	}
 	i = -1;
 	j = 0;
@@ -22,8 +22,8 @@ char	**fill_unset(char **old, int old_len, int final_len)
 			j++;
 		}
 	}
+	result[j] = NULL; //or j + 1
 	printf("result[j] = %s\n", result[j]);
-	result[j] = NULL; //or j+1?
 	free(old);
 	old = NULL;
 	return(result);
@@ -104,17 +104,13 @@ static char **deleting_new_env_var(t_list_commands *cmd)
 	old_len = count_env_len(cmd->env_vars);
 	//while(1);
 	cmd->env_vars = unset_env(cmd->env_vars, new_env, unset_len, old_len);
-	free_array(new_env);
+	//free_array(new_env);
+	free(new_env);
 	return (cmd->env_vars);
 }
 
 void	process_unset(t_list_commands *cmd)
 {
-	// printf("no sega\n");
-	// printf("\n");
-	// for (int i = 0; cmd->env_vars[i]; i++)
-	// 	printf("%s\n", cmd->env_vars[i]);
-	// printf("\n");
 	g_error_code = 0;
 	if (cmd->command[1])
 		cmd->env_vars = deleting_new_env_var(cmd);

@@ -37,7 +37,7 @@ void	cmd_with_pipes(t_list_commands *cmd)
 	if(pipe(cmd->fd) == -1)
 	{
 		g_error_code = errno;
-		ft_putstr_fd("Pipe, failed, initializing undefined behavior", 2);
+		ft_putstr_fd("Pipe, failed, initializing undefined behavior", STD_ERROR);
 	}
 	open_redirections(cmd);
 	manage_out_pipe(cmd);

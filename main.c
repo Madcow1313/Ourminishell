@@ -70,6 +70,7 @@ int	main(int argc, char **argv, char **envp)
 	g_error_code = 0;
 	if (argc && argv)
 		duplicate_envp(envp, &list);
+	init_stdcopies_g_error(&list);
 	ft_s_h();
 	// string = "VSCODE_GIT_ASKPASS_EXTRA_ARGS";
 	// get_env_var_value(list.env_vars, string);
@@ -102,15 +103,15 @@ int	main(int argc, char **argv, char **envp)
 			write(1, "bash: syntax error near unexpected token `newline'\n", 52);
 		}
 		set_default_fd(&list);
-		int	i = 0;
-		while (i < list.number && list.command[i])
-		{
-			if (list.command[i])
-				free (list.command[i]);
-			i++;
-		}
-		free (list.command);
-		free (list.type);
+		// int	i = 0;
+		// while (i < list.number && list.command[i])
+		// {
+		// 	if (list.command[i])
+		// 		free (list.command[i]);
+		// 	i++;
+		// }
+		// free (list.command);
+		// free (list.type);
 	}
 		//print_commands_and_words(&list);
 	//}

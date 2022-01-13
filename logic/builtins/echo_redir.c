@@ -1,5 +1,7 @@
 #include "../logic/logic.h"
 
+//need to do smth with fd when pipes, maybe i should open redirs here???
+
 static void	redirect_with_nl(t_list_commands *cmd, int j)
 {
 		if (cmd->command[j] == NULL)

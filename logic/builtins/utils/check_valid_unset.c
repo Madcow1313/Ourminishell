@@ -1,6 +1,6 @@
 #include "../logic/logic.h"
 
-int	find_equal_sign(char *s)
+static int	find_equal_sign(char *s)
 {
 	int	i;
 
@@ -25,12 +25,12 @@ static char	**alloc_unset_arr(t_list_commands *cmd, char **new_env)
 		if (!check_first_symbol(cmd->command[i][0])
 			|| !find_equal_sign(cmd->command[i]) || !wrong_symbols(cmd->command[i]))
 			continue ;
-		new_env[id] = ft_strdup(cmd->command[i]);
-		if (!new_env[id])
-		{	
-			malloc_error(new_env);
-			return (new_env);
-		}
+		new_env[id] = cmd->command[i];
+		//if (!new_env[id])
+		// {	
+		// 	malloc_error(new_env);
+		// 	return (new_env);
+		// }
 		id++;
 	}
 	new_env[id] = NULL;
@@ -59,11 +59,8 @@ char	**check_valid_unset(t_list_commands *cmd)
 			i++;
 			continue;
 		}
-		if (cmd->command[i])
-		{
-			i++;
-			len++;
-		}
+		i++;
+		len++;
 	}
 	new_env = init_new_env(len);
 	if (!new_env)

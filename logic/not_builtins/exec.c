@@ -12,20 +12,20 @@ void	exec(t_list_commands *cmd, t_opendir *open_dir)
 		if (pid == 0)
 		{
 			if (execve(file_path, cmd->command, cmd->env_vars) == -1)
-				{
-					g_error_code = errno;
-					exec_error(cmd, file_path);
-					return ;
-				}
+			{
+				g_error_code = errno;
+				exec_error(cmd, file_path);
+				return ;
+			}
 			g_error_code = 0;
 		}
 		else if (pid > 0)
 			wait(&pid);
 		else
-			ft_putstr_fd("Can't execute command, fork failed\n", 2);
+			ft_putstr_fd("Can't execute command, fork failed\n", STD_ERROR);
 	}
 	else
-		command_error();
+		command_error(cmd->command[0]);
 	if (file_path)
 		free(file_path);
 }

@@ -14,7 +14,7 @@ static void	print_with_equal_char(char **env, int i, int j)
 	ft_putchar_fd('\n', 1);
 }
 
-static void print_export_no_args(t_list_commands *cmd)
+static void	print_export_no_args(t_list_commands *cmd)
 {
 	int i;
 	int j;
@@ -41,32 +41,27 @@ static char **adding_new_env_var(t_list_commands *cmd)
 {
 	char	**new_env;
 	int		new_len;
-	int		i;
+	//int		i;
 
-	i = -1;
+	//i = -1;
 	new_env = check_valid_envp(cmd);
 	if (new_env == NULL) 
 		return (cmd->env_vars);
-	// for (int j = 1; new_env[j]; j++)
-	// 	printf("new_env[j] = %s\n", new_env[j]);
 	new_len = count_env_len(new_env);
 	cmd->env_vars = check_replace_env(cmd->env_vars, new_env, new_len);
-	while(++i <= new_len) //maybe i could use free_array(new_env)
-		if (new_env[i])
-			free(new_env[i]);
+	//while(++i <= new_len) //maybe i could use free_array(new_env)
+		//if (new_env[i])
+			//free(new_env[i]);
+	//free_array(new_env);
 	free(new_env);
 	return (cmd->env_vars);
 }
 
-void process_export(t_list_commands *cmd)
+void	process_export(t_list_commands *cmd)
 {
-	// for (int i = 1; cmd->command[i]; i++)
-	// 	printf("%s\n", cmd->command[i]);
-	//printf("Hello\n");
 	g_error_code = 0;
-	if (cmd->command[1])
+	if (cmd->command[1]) //check cmd for duplicates, where i'll count len without duples and in filling new_env i'll skip same str???
 		cmd->env_vars = adding_new_env_var(cmd);
 	else
 		print_export_no_args(cmd);
-	//printf("No free error\n");
 }

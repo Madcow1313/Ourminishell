@@ -1,6 +1,6 @@
 #include "../logic/logic.h"
 
-static int	check_redir(t_list_commands *cmd, int nl)
+/* static int	check_redir(t_list_commands *cmd, int nl)
 {
 	size_t	i;
 
@@ -16,7 +16,7 @@ static int	check_redir(t_list_commands *cmd, int nl)
 		i++;
 	}
 	return (1);
-}
+} */
 
 static void	echo_without_newline(t_list_commands *cmd)
 {
@@ -24,18 +24,18 @@ static void	echo_without_newline(t_list_commands *cmd)
 	int	j;
 
 	i = 2;
-	if (!check_redir(cmd, 0))
-		return ;
+	//if (!check_redir(cmd, 0))
+		//return ;
 	while(cmd->command[i])
 	{
 		j = 0;
 		while (cmd->command[i][j])
 		{
-			write(STD_OUT, &(cmd->command[i][j]), STD_OUT);
+			write(cmd->fd[1], &(cmd->command[i][j]), 1);
 			j++;
 		}
 		if (cmd->command[i + 1])
-			write(STD_OUT, " ", STD_OUT);
+			write(cmd->fd[1], " ", 1);
 		i++;
 	}
 	return ;
@@ -47,21 +47,21 @@ static void	echo_with_newline(t_list_commands *cmd)
 	int	j;
 
 	i = 1;
-	if (!check_redir(cmd, STD_OUT))
-		return ;
+	//if (!check_redir(cmd, STD_OUT)
+		//return ;
 	while(cmd->command[i])
 	{
 		j = 0;
 		while (cmd->command[i][j])
 		{
-			write(STD_OUT, &(cmd->command[i][j]), STD_OUT);
+			write(cmd->fd[1], &(cmd->command[i][j]), 1);
 			j++;
 		}
-		if (cmd->command[i + STD_OUT])
-			write(STD_OUT, " ", STD_OUT);
+		if (cmd->command[i + 1])
+			write(cmd->fd[1], " ", 1);
 		i++;
 	}
-	write (STD_OUT, "\n", STD_OUT);
+	write (cmd->fd[1], "\n", 1);
 	return ;
 }
 
@@ -75,6 +75,6 @@ void	process_echo(t_list_commands *cmd)
 			echo_with_newline(cmd);
 	}
 	else
-		write(STD_OUT, "\n", STD_OUT);
+		write(cmd->fd[1], "\n", 1);
 	return ;
 }
