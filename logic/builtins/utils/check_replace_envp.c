@@ -71,7 +71,7 @@ void	parts_to_compare(char **old_env, char **new_env, int k)
 	while ((*old_env)[i] && (*old_env)[i] != '=')
 		i++;
 	cmp_2 = ft_substr(*old_env, 0, i);
-	if (!ft_strncmp(cmp, cmp_2, ft_strlen(cmp_2))) //i can change ot to ft_cmdcmpr or ft_strcmp
+	if (!ft_strcmp(cmp, cmp_2)) //i can change ot to ft_cmdcmpr or ft_strcmp
 	{
 		if ((*new_env)[k] == '\0' && *new_env)
 		{
