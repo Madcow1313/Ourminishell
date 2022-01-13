@@ -91,7 +91,13 @@ int	get_pipe(t_list_commands *list, int character)
 	{	
 		if (!list->command[list->number])
 			return (-1);
-		list->command[list->number] = "|";
+		list->command[list->number] = ft_strdup("|");
+		if (list->pipe_right == -1)
+		{
+			list->pipe_right = 0;
+			list->pipe_left = 0;
+		}
+		list->pipe_right += 1;
 	}
 	else if (character == SEMICOLON)
 	{

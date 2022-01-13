@@ -59,6 +59,46 @@ int	check_redirects(t_list_commands *list)
 	return (0);
 }
 
+int	start_pipe(t_list_commands *list, t_command *command)
+{
+	int	i;
+	int j;
+	t_list_commands *temp;
+	
+	i = 0;
+	j = 0;
+	temp = malloc(sizeof(list));
+	temp->type = list->type;
+	//temp->fd = list.fd;
+	temp->pipe_left = list->pipe_left;
+	temp->pipe_right = list->pipe_right;
+	if (!temp)
+		return (0);
+	while (list->command[i])
+	{
+		while (list->type[i] != PIPE && list->command[i])
+		{
+			temp->command[j] = list->command[i];
+			j++;
+			i++;
+		}
+		temp->command[j] = NULL;
+		if (list->pipe_right)
+		{
+			list->pipe_right--;
+			list->pipe_left++;
+		}
+		print_commands_and_words(temp);
+		start_cmd(temp, command);
+		write(1, "here\n", 5);
+		i++;
+		j = 0;
+	}
+	//free (temp);
+	return (0);
+}
+
+
 /*free and exit doesn't work, because no malloc*/
 int	main(int argc, char **argv, char **envp)
 {
@@ -93,7 +133,12 @@ int	main(int argc, char **argv, char **envp)
 			while (get_redirect_type(&list) > 0)
 				rid_of_redirect_right(&list);
 			//print_commands_and_words(&list);
-			start_cmd(&list, &command);
+			// if (list.pipe_right != -1)
+			// {
+			// 	start_pipe(&list, &command);
+			// }
+			// else
+				start_cmd(&list, &command);
 		}
 		else
 		{
