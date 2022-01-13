@@ -139,7 +139,12 @@ int	rid_of_redirect_right(t_list_commands *list)
 		while (i < list->number - 1 && list->command[i])
 		{
 			temp = list->command[i];
-			list->command[i] = ft_strdup(" ");
+			if (i == 0)
+				list->command[i] = ft_strdup("echo");
+			else if (i == 1)
+				list->command[i] = ft_strdup("-n");
+			else
+				list->command[i] = ft_strdup(" ");
 			list->type[i] = BUILT_IN;
 			//printf("here %d\n", list->number);
 			// if (temp)
