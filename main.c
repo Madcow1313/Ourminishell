@@ -66,8 +66,6 @@ int	main(int argc, char **argv, char **envp)
 	t_list_commands list;
 	const char 	*string;
 
-	/*should be a copy, for now is fine*/
-	g_error_code = 0;
 	if (argc && argv)
 		duplicate_envp(envp, &list);
 	init_stdcopies_g_error(&list);

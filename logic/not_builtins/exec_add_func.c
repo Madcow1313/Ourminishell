@@ -80,6 +80,5 @@ char	*get_binary_from_path(t_list_commands *cmd, t_opendir *o_dir)
 	if (closedir(o_dir->dir) == -1)
 		g_error_code = errno;
 	free_array(o_dir->path);
-	while (1);
 	return(o_dir->file_path);
 }

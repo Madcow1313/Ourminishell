@@ -95,4 +95,6 @@ int	ft_strcmp(const char *s1, const char *s2);
 void	manage_out_pipe(t_list_commands *cmd);
 void	manage_in_pipe(t_list_commands *cmd);
 
+void	process_only_redirects(t_list_commands * cmd);
+
 #endif
