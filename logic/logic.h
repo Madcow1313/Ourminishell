@@ -6,7 +6,7 @@
 /*   By: chudapak <chudapak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/13 18:49:58 by chudapak          #+#    #+#             */
-/*   Updated: 2022/01/13 18:50:00 by chudapak         ###   ########.fr       */
+/*   Updated: 2022/01/13 22:55:20 by chudapak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ char	**free_array(char **env);
 int		check_first_symbol(char c);
 int		wrong_symbols(char *str);
 bool	is_numeric(char *str);
-void	init_stdcopies_g_error(t_list_commands *cmd);
+void	init_stdcopies_g_error(t_list_commands *cmd, t_command *p);
 
 //errors func
 
@@ -59,7 +59,7 @@ void	exec_error(t_list_commands *cmd, char *file_path);
 
 //starting shell func
 
-void	start_cmd(t_list_commands *cmd, t_command *p);
+void	start_cmd(t_list_commands *cmd);
 void	single_command(t_list_commands *cmd);
 int		check_pipe_semicol(t_list_commands *cmd);
 

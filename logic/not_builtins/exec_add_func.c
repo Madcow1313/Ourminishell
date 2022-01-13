@@ -6,7 +6,7 @@
 /*   By: chudapak <chudapak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/13 18:42:07 by chudapak          #+#    #+#             */
-/*   Updated: 2022/01/13 18:42:07 by chudapak         ###   ########.fr       */
+/*   Updated: 2022/01/13 20:08:28 by chudapak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,8 @@ static char	*fill_path(t_opendir *o_dir)
 	o_dir->file_path = ft_strjoin(path, o_dir->name->d_name);
 	free(path);
 	//free_array(o_dir->path);
-	//if (closedir(o_dir->dir) == -1)
-	//	g_error_code = errno;
+	if (closedir(o_dir->dir) == -1)
+		g_error_code = errno;
 	return (o_dir->file_path);
 }
 
@@ -62,6 +62,8 @@ char	*reading_directories(t_list_commands *cmd, t_opendir *o_dir)
 	{
 		if (o_dir->name == NULL)
 		{
+			if (closedir(o_dir->dir) == -1)
+				g_error_code = errno;
 			if (!o_dir->path[o_dir->i])
 				break ;
 			o_dir->name = next_dir(o_dir);
@@ -89,8 +91,6 @@ char	*get_binary_from_path(t_list_commands *cmd, t_opendir *o_dir)
 	}
 	o_dir->name = readdir(o_dir->dir);
 	o_dir->file_path = reading_directories(cmd, o_dir);
-	if (closedir(o_dir->dir) == -1)
-		g_error_code = errno;
 	free_array(o_dir->path);
 	return (o_dir->file_path);
 }

@@ -145,7 +145,7 @@ char	*get_prefix_for_env(char **env_vars, char *string)
 	ft_strlcpy(temp, string, size + 1);
 	temp2 = get_env_var_value(env_vars, (string + size + 1));
 	new_string = ft_strjoin(temp, temp2);
-	printf("new string is %s\n", new_string);
+	// printf("new string is %s\n", new_string);
 	if (temp)
 		free (temp);
 	/*double free*/

@@ -6,7 +6,7 @@
 /*   By: chudapak <chudapak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/13 18:48:41 by chudapak          #+#    #+#             */
-/*   Updated: 2022/01/13 18:48:41 by chudapak         ###   ########.fr       */
+/*   Updated: 2022/01/13 23:36:57 by chudapak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,20 @@ static void	free_cmd(t_list_commands *cmd)
 {
 	size_t	i;
 
-	i = -1;
+	i = 0;
+	// printf("Start array\n");
+	// while (1) {
+	// 	i++;
+	// 	ft_putstr_fd(cmd->command[i], 1);
+	// }
+	// printf("End array\n");
+	// free_array(cmd->command);
 	if (cmd->command)
 	{
-		while (cmd->command[++i])
+		while (cmd->command[i]) {
 			free(cmd->command[i]);
+			i++;
+		}
 	}
 	free(cmd->command);
 	cmd->command = NULL;
@@ -50,6 +59,8 @@ int	count_pipes(t_list_commands *cmd)
 
 void	check_start_cmd(t_list_commands *cmd)
 {	
+	printf("%d\n", cmd->pipe_right);
+	print_commands_and_words(cmd);
 	if (cmd->command[0] == NULL || !cmd->command)
 		return ;
 	if (!check_pipe_semicol(cmd))
@@ -58,13 +69,13 @@ void	check_start_cmd(t_list_commands *cmd)
 			&& cmd->pipe_left == -1))
 		single_command(cmd);
 	else
-		cmd_with_pipes(cmd);
+		cmd_with_pipes(cmd);	
 	return ;
 }
 
-void	start_cmd(t_list_commands *cmd, t_command *p)
+void	start_cmd(t_list_commands *cmd)
 {	
-	cmd->p = p;
+	//cmd->p = p;
 	ft_s_h();
 	check_start_cmd(cmd);
 	free_cmd(cmd);

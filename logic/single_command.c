@@ -6,7 +6,7 @@
 /*   By: chudapak <chudapak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/13 18:47:14 by chudapak          #+#    #+#             */
-/*   Updated: 2022/01/13 18:47:14 by chudapak         ###   ########.fr       */
+/*   Updated: 2022/01/13 22:44:35 by chudapak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ void	single_command(t_list_commands *cmd)
 
 	//for(int i = 0; cmd->command[i]; i++)
 	//	printf("single command %s\n", cmd->command[i]);
+	
 	if (!ft_strcmp(cmd->command[0], "echo")
 		|| (!ft_strcmp(cmd->command[0], " ") && cmd->fd[1] != -1))
 		process_echo(cmd);
