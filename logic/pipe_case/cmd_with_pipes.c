@@ -6,7 +6,7 @@
 /*   By: chudapak <chudapak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/13 18:43:50 by chudapak          #+#    #+#             */
-/*   Updated: 2022/01/13 18:43:50 by chudapak         ###   ########.fr       */
+/*   Updated: 2022/01/14 21:48:03 by chudapak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 //not sure if i need redir func
 
-static void	open_redirections(t_list_commands *cmd)
+/* static void	open_redirections(t_list_commands *cmd)
 {
 	if (cmd->fd[0] != -1)
 	{
@@ -26,9 +26,9 @@ static void	open_redirections(t_list_commands *cmd)
 		close(STD_OUT);
 		dup2(cmd->fd[1], STD_OUT);
 	}
-}
+} */
 
-static void	close_redirections(t_list_commands *cmd)
+/* static void	close_redirections(t_list_commands *cmd)
 {
 	if (cmd->fd[0] != -1 || cmd->fd[1] != -1)
 	{
@@ -40,23 +40,25 @@ static void	close_redirections(t_list_commands *cmd)
 			dup2(cmd->stdin_copy, STD_IN);
 		}
 	}
-}
+} */
 
 void	cmd_with_pipes(t_list_commands *cmd)
 {
 	t_opendir	o_dir;
+	cmd->stdout_copy = dup(cmd->fd[1]);
+	cmd->stdin_copy = dup(cmd->fd[0]);
 
 	if (pipe(cmd->fd) == -1)
 	{
 		g_error_code = errno;
 		ft_putstr_fd("Pipe failed, initializing undefined behavior", STD_ERROR);
 	}
-	open_redirections(cmd);
+	//open_redirections(cmd);
 	manage_out_pipe(cmd);
 	if (our_builtin(cmd->command[0]))
 		single_command(cmd);
 	else
 		exec(cmd, &o_dir);
 	manage_in_pipe(cmd);
-	close_redirections(cmd);
+	//close_redirections(cmd);
 }

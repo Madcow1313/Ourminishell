@@ -163,7 +163,7 @@ int	main(int argc, char **argv, char **envp)
 		}
 
 		set_default_fd(&list);
-		free_cmd(&list);
+		//free_cmd(&list);
 		printf("All good here2\n");
 		// int	i = 0;
 		// while (i < list.number && list.command[i])

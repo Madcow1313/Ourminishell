@@ -10,7 +10,7 @@ void	free_cmd(t_list_commands *cmd)
 		while(cmd->command[++i])
 			free(cmd->command[i]);
 	}
-	free(cmd->command);
+	//free(cmd->command);
 	cmd->command = NULL;
 	i = -1;
 	if (cmd->type)

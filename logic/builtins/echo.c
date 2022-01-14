@@ -6,7 +6,7 @@
 /*   By: chudapak <chudapak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/13 17:37:58 by chudapak          #+#    #+#             */
-/*   Updated: 2022/01/14 20:17:46 by chudapak         ###   ########.fr       */
+/*   Updated: 2022/01/14 20:41:38 by chudapak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,9 +77,29 @@ static void	echo_with_newline(t_list_commands *cmd)
 	return ;
 }
 
+int	check_valid_fd(t_list_commands *cmd)
+{
+	struct stat	buf;
+	
+	if (cmd->fd[1] == -1)
+		return (g_error_code);
+	else
+	{
+		if (fstat(cmd->fd[1], &buf) == 0 && S_ISDIR(buf.st_mode))
+		{
+			g_error_code = 1;
+			return (g_error_code);
+		}
+	}
+	return (0);
+}
+
 void	process_echo(t_list_commands *cmd)
 {
 	//printf("%s\n", "All good");
+	g_error_code = check_valid_fd(cmd);
+	if (g_error_code == 1)
+		return ;
 	if (cmd->command[1] != NULL)
 	{
 		if (!ft_strcmp(cmd->command[1], "-n"))
@@ -89,6 +109,5 @@ void	process_echo(t_list_commands *cmd)
 	}
 	else
 		write(cmd->fd[1], "\n", 1);
-	g_error_code = 0;
 	return ;
 }
