@@ -6,7 +6,7 @@
 /*   By: chudapak <chudapak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/13 17:37:58 by chudapak          #+#    #+#             */
-/*   Updated: 2022/01/13 22:42:48 by chudapak         ###   ########.fr       */
+/*   Updated: 2022/01/14 20:17:46 by chudapak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,5 +89,6 @@ void	process_echo(t_list_commands *cmd)
 	}
 	else
 		write(cmd->fd[1], "\n", 1);
+	g_error_code = 0;
 	return ;
 }
