@@ -56,7 +56,7 @@ $(LIBA): $(LIBA_C) $(LIBA_H)
 			make clean
 
 $(NAME): $(LIBA) $(OBJ) $(HEADER)
-		$(CC) -fsanitize=address $(CFLAGS) $(INCLUDE) $(OBJ) $(LIBA) $(LFLAGS) -o $(NAME) -lreadline $(LIB_MAC)
+		$(CC) $(CFLAGS) $(INCLUDE) $(OBJ) $(LIBA) $(LFLAGS) -o $(NAME) -lreadline $(LIB_MAC)
 		stty -echoctl
 		
 #-fsanitize=address

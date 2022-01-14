@@ -17,7 +17,7 @@ void	manage_out_pipe(t_list_commands *cmd)
 	if (cmd->pipe_right)
 	{
 		if (cmd->fd[1] != -1)
-			write(cmd->fd[1], "\0", 1); //write to stdout_copy?
+			write(cmd->fd[1], "\0", 1); //write to stdout_copy? or STD_OUT??
 		else
 		{
 			close(STD_OUT);

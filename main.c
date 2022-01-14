@@ -72,7 +72,7 @@ int	start_pipe(t_list_commands *list/* , t_command *command */)
 	temp->pipe_left = list->pipe_left;
 	temp->pipe_right = list->pipe_right;
 	temp->command = malloc(sizeof(char *) * (list->number + 1));
-	temp->p = command;
+	temp->p = list->p;
 	if (!temp)
 		return (0);
 		//print_commands_and_words(list);
