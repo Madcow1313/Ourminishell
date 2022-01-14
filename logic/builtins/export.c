@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   export.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: chudapak <chudapak@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/01/13 17:41:05 by chudapak          #+#    #+#             */
+/*   Updated: 2022/01/13 17:41:26 by chudapak         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../logic/logic.h"
 
 static void	print_with_equal_char(char **env, int i, int j)
@@ -16,8 +28,8 @@ static void	print_with_equal_char(char **env, int i, int j)
 
 static void	print_export_no_args(t_list_commands *cmd)
 {
-	int i;
-	int j;
+	int	i;
+	int	j;
 
 	i = 0;
 	while (cmd->env_vars[i])
@@ -37,13 +49,13 @@ static void	print_export_no_args(t_list_commands *cmd)
 	}
 }
 
-static char **adding_new_env_var(t_list_commands *cmd)
+static char	**adding_new_env_var(t_list_commands *cmd)
 {
 	char	**new_env;
 	int		new_len;
 
 	new_env = check_valid_envp(cmd);
-	if (new_env == NULL) 
+	if (new_env == NULL)
 		return (cmd->env_vars);
 	new_len = count_env_len(new_env);
 	check_duplicates(new_env, new_len);

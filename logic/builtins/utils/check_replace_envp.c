@@ -1,24 +1,43 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   check_replace_envp.c                               :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: chudapak <chudapak@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/01/13 18:18:48 by chudapak          #+#    #+#             */
+/*   Updated: 2022/01/13 18:18:49 by chudapak         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../logic/logic.h"
 
-//counts double array's len(not str len)
-int	count_env_len(char **env)
+static char	**return_filled(char **old, char **new, int len_2, char **filled)
 {
-	int	i;
+	int		i;
+	int		j;
 
-	i = 0;
-	/*i changed to -1 . Bulat*/
-	/*changed back*/
-	while (env[i])
-		i++;
-	return (i); //wtf it works with - 1 on ubuntu but not on mac
+	i = -1;
+	while (old[++i])
+		filled[i] = old[i];
+	free(old);
+	j = -1;
+	while (++j <= len_2)
+	{
+		if (new[j])
+		{
+			filled[i] = ft_strdup(new[j]);
+			i++;
+		}
+	}
+	filled[i] = NULL;
+	return (filled);
 }
 
 static char	**join_ostatok(char **old, char **new, int len, int len_2)
 {
 	int		old_len;
 	char	**filled_env;
-	int		i;
-	int		j;
 
 	if (!len || new == NULL)
 		return (old);
@@ -29,33 +48,16 @@ static char	**join_ostatok(char **old, char **new, int len, int len_2)
 		malloc_error(filled_env);
 		return (old);
 	}
-	i = -1;
-	while(old[++i]) //i can move it to another func
-		filled_env[i] = old[i];
-	free(old);
-	//old = NULL;
-	j = -1;
-	while(++j <= len_2)
-	{
-		if (new[j])
-		{
-			filled_env[i] = ft_strdup(new[j]);
-			i++;
-		}
-	}
-	//printf("last str after join = %s\n", filled_env[i]);
-	filled_env[i] = NULL; //or i + 1 ?
-	return (filled_env);
+	return (return_filled(old, new, len_2, filled_env));
 }
 
 static void	do_replace(char **old, char **new)
 {
-	if(*old)
+	if (*old)
 		free(*old);
 	*old = ft_strdup(*new);
-	//free(*new);
 	*new = NULL;
-	return;
+	return ;
 }
 
 void	parts_to_compare(char **old_env, char **new_env, int k)
@@ -65,25 +67,22 @@ void	parts_to_compare(char **old_env, char **new_env, int k)
 	int		i;
 
 	i = 0;
-	if(!*new_env || !*old_env)
+	if (!*new_env || !*old_env)
 		return ;
 	cmp = ft_substr(*new_env, 0, k);
 	while ((*old_env)[i] && (*old_env)[i] != '=')
 		i++;
 	cmp_2 = ft_substr(*old_env, 0, i);
-	if (!ft_strncmp(cmp, cmp_2, ft_strlen(cmp_2))) //i can change ot to ft_cmdcmpr or ft_strcmp
+	if (!ft_strcmp(cmp, cmp_2))
 	{
 		if ((*new_env)[k] == '\0' && *new_env)
-		{
-			//free(*new_env);
 			*new_env = NULL;
-		}
 		else
 			do_replace(old_env, new_env);
 	}
 	free(cmp_2);
 	free(cmp);
-	return;
+	return ;
 }
 
 char	**check_replace_env(char **old_env, char **new_env, int len)
@@ -100,7 +99,7 @@ char	**check_replace_env(char **old_env, char **new_env, int len)
 		j = -1;
 		while (++j <= len)
 		{
-			if(new_env[j])
+			if (new_env[j])
 			{
 				k = 0;
 				while (new_env[j][k] && new_env[j][k] != '=')
@@ -110,12 +109,9 @@ char	**check_replace_env(char **old_env, char **new_env, int len)
 			}
 		}
 	}
-	i = -1;
-	len_after_check_replace = 0;
-	while(++i <= len) //delete printf after
-		if (new_env[i])
-			{len_after_check_replace++; printf("new_env[i] after replace = %s\n", new_env[i]);}
-	printf("len aftercheck replace = %d\n", len_after_check_replace);
+	len_after_check_replace = ft_len_after(new_env, len);
 	result = join_ostatok(old_env, new_env, len_after_check_replace, len);
 	return (result);
 }
+	// printf("new_env[i] after replace = %s\n", new_env[i]);
+	// printf("len aftercheck replace = %d\n", len_after_check_replace);

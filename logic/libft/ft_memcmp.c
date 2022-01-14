@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_memcmp.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: chudapak <chudapak@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/01/13 18:34:16 by chudapak          #+#    #+#             */
+/*   Updated: 2022/01/13 18:35:59 by chudapak         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "libft.h"
 
 int	ft_memcmp(const void *arr1, const void *arr2, size_t n)
@@ -10,7 +22,7 @@ int	ft_memcmp(const void *arr1, const void *arr2, size_t n)
 	str1 = (unsigned char *)arr1;
 	str2 = (unsigned char *)arr2;
 	if ((!arr1 && !arr2) || !n)
-		 return (0);
+		return (0);
 	while (i < n)
 	{
 		if (str1[i] != str2[i])

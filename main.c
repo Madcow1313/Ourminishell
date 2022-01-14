@@ -92,7 +92,7 @@ int	start_pipe(t_list_commands *list, t_command *command)
 		temp->command[j] = NULL;
 		print_commands_and_words(temp);
 		//write(1, "here1\n", 6);
-		start_cmd(temp, command);
+		start_cmd(temp);
 		write(1, "here2\n", 6);
 		if (list->pipe_right)
 		{
@@ -121,7 +121,7 @@ int	main(int argc, char **argv, char **envp)
 
 	if (argc && argv)
 		duplicate_envp(envp, &list);
-	init_stdcopies_g_error(&list);
+	init_stdcopies_g_error(&list, &command);
 	ft_s_h();
 	// string = "VSCODE_GIT_ASKPASS_EXTRA_ARGS";
 	// get_env_var_value(list.env_vars, string);
@@ -151,7 +151,7 @@ int	main(int argc, char **argv, char **envp)
 				start_pipe(&list, &command);
 			}
 			else
-				start_cmd(&list, &command);
+				start_cmd(&list);
 		}
 		else
 		{

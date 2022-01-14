@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   check_export_input.c                               :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: chudapak <chudapak@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/01/13 18:03:26 by chudapak          #+#    #+#             */
+/*   Updated: 2022/01/13 18:03:27 by chudapak         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../logic/logic.h"
 
 static void	find_duplicates(char **new_env, int j, int k, int i)
@@ -8,7 +20,7 @@ static void	find_duplicates(char **new_env, int j, int k, int i)
 
 	l = 0;
 	cmp = ft_substr(new_env[j], 0, k);
-	while(new_env[i][l] && new_env[i][l] != '=')
+	while (new_env[i][l] && new_env[i][l] != '=')
 		l++;
 	cmp_2 = ft_substr(new_env[i], 0, l);
 	if (!ft_strcmp(cmp, cmp_2))
@@ -29,17 +41,17 @@ void	check_duplicates(char **new_env, int new_len)
 	int	k;
 
 	i = -1;
-	while(++i <= new_len)
+	while (++i <= new_len)
 	{
 		if (new_env[i])
 		{
 			j = i + 1;
-			while(j <= new_len)
+			while (j <= new_len)
 			{
 				k = 0;
 				if (new_env[j])
 				{
-					while(new_env[j][k] && new_env[j][k] != '=')
+					while (new_env[j][k] && new_env[j][k] != '=')
 						k++;
 					if (new_env[i])
 						find_duplicates(new_env, j, k, i);
@@ -57,7 +69,7 @@ int	check_only_space(char *s)
 
 	i = -1;
 	count = 0;
-	while(s[++i])
+	while (s[++i])
 	{
 		if (s[i] != ' ')
 			count = 1;

@@ -62,7 +62,7 @@ int	get_fd_right_redirects(t_list_commands *list, char *path, int type)
 		fd_to_apply = open(path, O_RDWR | O_APPEND | O_CREAT, S_IRWXU);
 	if (fd_to_apply < 0)
 		return (0);
-	printf("fd of file %d\n", fd_to_apply);
+	// printf("fd of file %d\n", fd_to_apply);
 	dup2(fd_to_apply, list->fd[1]);
 	return (list->fd[1]);
 }

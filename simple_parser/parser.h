@@ -40,20 +40,20 @@ typedef struct s_command
 
 typedef struct s_list_commands
 {
-	char **command;
-	char **env_vars;
-	int	*type;
+	char		**command;
+	char		**env_vars;
+	int			*type;
 	t_command	*p;
-	int number;
-	int	fd[2];
-	int	stdin_copy;
-	int	stdout_copy;
-	int	pipe_right;
-	int	pipe_left;
-	int	semicol;
-	int	heredoc;
-	int	old_stdout;
-	int	old_stdin;
+	int			number;
+	int			fd[2];
+	int			stdin_copy;
+	int			stdout_copy;
+	int			pipe_right;
+	int			pipe_left;
+	int			semicol;
+	int			heredoc;
+	int			old_stdout;
+	int			old_stdin;
 } 			t_list_commands;
 
 int	ft_s_h();
