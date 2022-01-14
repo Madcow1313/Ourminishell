@@ -55,6 +55,7 @@ void	start_cmd(t_list_commands *cmd)
 	ft_s_h();
 
 	check_start_cmd(cmd);
+	printf("All good here\n");
 	//free_cmd(cmd);
 	return ;
 }

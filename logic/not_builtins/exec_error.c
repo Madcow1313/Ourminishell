@@ -6,7 +6,7 @@
 /*   By: chudapak <chudapak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/13 18:42:11 by chudapak          #+#    #+#             */
-/*   Updated: 2022/01/13 18:42:11 by chudapak         ###   ########.fr       */
+/*   Updated: 2022/01/14 18:36:54 by chudapak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,4 +20,14 @@ void	exec_error(t_list_commands *cmd/* , char *file_path */)
 	ft_putstr_fd(cmd->command[0], STD_ERROR);
 	ft_putstr_fd(" ", STD_ERROR);
 	errors();
+}
+
+int	puterror_exec(char *s1, char *s2, char *s3, int code)
+{
+	write(2, s1, ft_strlen(s1));
+	write(2, s2, ft_strlen(s2));
+	write(2, s3, ft_strlen(s3));
+	write(2, "\n", 1);
+	g_error_code = code;
+	return (code);
 }

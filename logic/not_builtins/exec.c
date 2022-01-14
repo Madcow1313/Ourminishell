@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wabathur <wabathur@student.42.fr>          +#+  +:+       +#+        */
+/*   By: chudapak <chudapak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/13 18:40:15 by chudapak          #+#    #+#             */
-/*   Updated: 2022/01/14 12:34:52 by wabathur         ###   ########.fr       */
+/*   Updated: 2022/01/14 19:53:21 by chudapak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,12 +23,17 @@ static void	call_exec(char *file_path, t_list_commands *cmd)
 	g_error_code = 0;
 }
 
+
 char	*check_binary(t_list_commands *cmd)
 {
 	char	*file_path;
 
 	if ((cmd->command[0][0]== '.' && cmd->command[0][1] == '/')
 		|| cmd->command[0][0] == '/')
+		file_path = ft_strdup(cmd->command[0]);
+	else if (cmd->command[0][0] == '.' 
+		&& cmd->command[0][1] == '.'
+		&& cmd->command[0][2] == '/')
 		file_path = ft_strdup(cmd->command[0]);
 	else
 		file_path = NULL;
@@ -41,9 +46,16 @@ void	exec(t_list_commands *cmd, t_opendir *open_dir)
 	char	*file_path;
 
 	file_path = check_binary(cmd);
-	//printf ("file_path = %s\n", file_path);
+	if (!file_path)
+	{
+		if (is_command_executable(cmd))
+			file_path = ft_strdup(cmd->command[0]);
+		else
+			file_path = NULL;
+	}
 	if (!file_path)
 		file_path = get_binary_from_path(cmd, open_dir);
+	printf("file_path = %s\n", file_path);
 	if (file_path)
 	{
 		pid = fork();
@@ -55,7 +67,7 @@ void	exec(t_list_commands *cmd, t_opendir *open_dir)
 			ft_putstr_fd("Can't execute command, fork failed\n", STD_ERROR);
 	}
 	else
-		command_error(cmd->command[0]);
+		puterror_exec("bash: ", cmd->command[0], ": command not found", 127); //command_error(cmd->command[0]);
 	if (file_path)
 		free(file_path);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   logic.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wabathur <wabathur@student.42.fr>          +#+  +:+       +#+        */
+/*   By: chudapak <chudapak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/13 18:49:58 by chudapak          #+#    #+#             */
-/*   Updated: 2022/01/14 10:21:32 by wabathur         ###   ########.fr       */
+/*   Updated: 2022/01/14 18:37:12 by chudapak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ void	export_errors(char *str);
 void	malloc_error(char **s);
 void	command_error(char *s);
 void	exec_error(t_list_commands *cmd/* , char *file_path */);
+int	puterror_exec(char *s1, char *s2, char *s3, int code);
 
 //starting shell func
 
@@ -76,9 +77,11 @@ int		cmpr_oldpwd(t_list_commands *cmd, int i);
 int		cmpr_pwd(t_list_commands *cmd, int i);
 
 //pwd
+
 void	process_pwd(t_list_commands *cmd);
 
 //export
+
 void	process_export(t_list_commands *cmd);
 char	**check_valid_envp(t_list_commands *cmd);
 int		check_only_space(char *s);
@@ -90,15 +93,18 @@ char	**check_replace_env(char **old_env, char **new_env, int len);
 void	parts_to_compare(char **old_env, char **new_env, int k);
 
 //exit
+
 void	process_exit(char **args);
 
 //unset
+
 void	process_unset(t_list_commands *cmd);
 char	**check_valid_unset(t_list_commands *cmd);
 int		ft_len_after(char **env, int old_len);
 char	**fill_unset(char **old, int old_len, int final_len);
 
 //env
+
 void	process_env(t_list_commands *cmd);
 
 void	exec(t_list_commands *cmd, t_opendir *open_dir);
@@ -106,6 +112,7 @@ char	*get_binary_from_path(t_list_commands *cmd, t_opendir *o_dir);
 int		ft_cmprcmd(const char *string1, const char *string2);
 
 //pipes
+
 void	cmd_with_pipes(t_list_commands *cmd);
 bool	our_builtin(char *command);
 int		ft_strcmp(const char *s1, const char *s2);
@@ -113,5 +120,10 @@ void	manage_out_pipe(t_list_commands *cmd);
 void	manage_in_pipe(t_list_commands *cmd);
 
 void	process_only_redirects(t_list_commands *cmd);
+
+//exec
+
+bool	is_command_executable(t_list_commands *cmd);
+
 
 #endif
