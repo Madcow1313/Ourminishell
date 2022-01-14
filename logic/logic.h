@@ -42,6 +42,7 @@ typedef struct s_opendir
 	char			*file_path;
 }				t_opendir;
 
+void	free_cmd(t_list_commands *cmd);
 char	**free_array(char **env);
 int		check_first_symbol(char c);
 int		wrong_symbols(char *str);
@@ -55,7 +56,7 @@ void	cd_errors(char *path);
 void	export_errors(char *str);
 void	malloc_error(char **s);
 void	command_error(char *s);
-void	exec_error(t_list_commands *cmd, char *file_path);
+void	exec_error(t_list_commands *cmd/* , char *file_path */);
 
 //starting shell func
 

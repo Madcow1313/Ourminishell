@@ -59,7 +59,7 @@ int	check_redirects(t_list_commands *list)
 	return (0);
 }
 
-int	start_pipe(t_list_commands *list, t_command *command)
+int	start_pipe(t_list_commands *list/* , t_command *command */)
 {
 	int	i;
 	int j;
@@ -90,7 +90,7 @@ int	start_pipe(t_list_commands *list, t_command *command)
 		temp->fd[0] = list->fd[0];
 		temp->fd[1] = list->fd[1];
 		temp->command[j] = NULL;
-		print_commands_and_words(temp);
+		//print_commands_and_words(temp);
 		//write(1, "here1\n", 6);
 		start_cmd(temp);
 		write(1, "here2\n", 6);
@@ -147,9 +147,7 @@ int	main(int argc, char **argv, char **envp)
 				rid_of_redirect_right(&list);
 			//print_commands_and_words(&list);
 			if (list.pipe_right != -1)
-			{
-				start_pipe(&list, &command);
-			}
+				start_pipe(&list/* , &command */);
 			else
 				start_cmd(&list);
 		}
@@ -159,6 +157,7 @@ int	main(int argc, char **argv, char **envp)
 			write(1, "bash: syntax error near unexpected token `newline'\n", 52);
 		}
 		set_default_fd(&list);
+		free_cmd(&list);
 		// int	i = 0;
 		// while (i < list.number && list.command[i])
 		// {

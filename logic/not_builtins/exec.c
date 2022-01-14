@@ -17,7 +17,7 @@ static void	call_exec(char *file_path, t_list_commands *cmd)
 	if (execve(file_path, cmd->command, cmd->env_vars) == -1)
 	{
 		g_error_code = errno;
-		exec_error(cmd, file_path);
+		exec_error(cmd/* , file_path */);
 		return ;
 	}
 	g_error_code = 0;
@@ -41,6 +41,7 @@ void	exec(t_list_commands *cmd, t_opendir *open_dir)
 	char	*file_path;
 
 	file_path = check_binary(cmd);
+	//printf ("file_path = %s\n", file_path);
 	if (!file_path)
 		file_path = get_binary_from_path(cmd, open_dir);
 	if (file_path)

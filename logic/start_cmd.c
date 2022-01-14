@@ -1,21 +1,21 @@
 #include "../logic/logic.h"
 
-// static void	free_cmd(t_list_commands *cmd)
-// {
-// 	size_t	i;
+void	free_cmd(t_list_commands *cmd)
+{
+	size_t	i;
 
-// 	i = -1;
-// 	if (cmd->command)
-// 	{
-// 		while(cmd->command[++i])
-// 			free(cmd->command[i]);
-// 	}
-// 	free(cmd->command);
-// 	cmd->command = NULL;
-// 	i = -1;
-// 	if (cmd->type)
-// 		free(cmd->type);
-// }
+	i = -1;
+	if (cmd->command)
+	{
+		while(cmd->command[++i])
+			free(cmd->command[i]);
+	}
+	free(cmd->command);
+	cmd->command = NULL;
+	i = -1;
+	if (cmd->type)
+		free(cmd->type);
+}
 
 int	count_pipes(t_list_commands *cmd)
 {
@@ -50,13 +50,13 @@ void	check_start_cmd(t_list_commands *cmd)
 	return ;
 }
 
-void	start_cmd(t_list_commands *cmd, t_command *p)
+void	start_cmd(t_list_commands *cmd/* , t_command *p */)
 {	
-	cmd->p = p;
+	//cmd->p = p;
 
 	ft_s_h();
 
 	check_start_cmd(cmd);
-	free_cmd(cmd);
+	//free_cmd(cmd);
 	return ;
 }
