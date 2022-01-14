@@ -18,7 +18,7 @@ char	**get_normal_array(t_list_commands *list)
 	{
 		while (list->type[i] == SEP_SPACE && i < list->number)
 			i++;
-		while ((list->type[i] == SEP_SPACE || (list->type[i] >= REDIRECT_RIGHT && list->type[i] < ENVIRONMENT_VAR))
+		while ((list->type[i] == SEP_SPACE || list->type[i] == PIPE || (list->type[i] >= REDIRECT_RIGHT && list->type[i] < ENVIRONMENT_VAR))
 			&& list->command[i])
 		{
 			while (list->type[i] == SEP_SPACE && i < list->number)
@@ -38,7 +38,7 @@ char	**get_normal_array(t_list_commands *list)
 		if (!new[j])
 			return (list->command);
 		new[j][0] = '\0';
-		while(list->type[i] != SEP_SPACE && ((list->type[i] < REDIRECT_RIGHT || list->type[i] > REDIRECT_AND_APPEND))
+		while(list->type[i] != SEP_SPACE && list->type[i] != PIPE && ((list->type[i] < REDIRECT_RIGHT || list->type[i] > REDIRECT_AND_APPEND))
 			&& list->command[i])
 		{
 			temp = new[j];
