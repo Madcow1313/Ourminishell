@@ -47,7 +47,7 @@ int	get_fd_left_redirects(t_list_commands *list, char *path, int type)
 		fd_to_apply = open(path, O_RDONLY);
 		dup2(fd_to_apply, STDIN_FILENO);
 	}
-	close(list->fd[0]);
+	//close(list->fd[0]);
 	return (list->fd[0]);
 }
 
@@ -133,7 +133,7 @@ int	rid_of_redirect_right(t_list_commands *list)
 		list->fd[0] = get_fd_left_redirects(list, list->command[i + 1], list->type[i]);
 	else if (list->type[i] == HERE_DOC)
 		get_here_doc(list->command[i + 1], list);
-	if (list->number <= 3)
+	if (list->number <= 3 && list->type[0] >= REDIRECT_RIGHT && list->type[0] <= REDIRECT_AND_APPEND)
 	{
 		i = 0;
 		while (i < list->number - 1 && list->command[i])

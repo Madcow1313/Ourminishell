@@ -50,10 +50,8 @@ void	check_start_cmd(t_list_commands *cmd)
 	return ;
 }
 
-void	start_cmd(t_list_commands *cmd/* , t_command *p */)
+void	start_cmd(t_list_commands *cmd)
 {	
-	//cmd->p = p;
-
 	ft_s_h();
 
 	check_start_cmd(cmd);

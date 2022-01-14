@@ -1,4 +1,5 @@
 #include "parser.h"
+#include "../logic/logic.h"
 
 /*delete this, if no use*/
 int	count_slashes(char *string, int i)
@@ -84,7 +85,10 @@ char	*get_env_var_value(char **env_vars, char *string)
 	if (string[i] == '\'' || string[i] == '\"')
 		return (string);
 	if (string[i] == '?')
-		return (ft_strjoin("?", string + 1));
+	{
+		temp = ft_strdup(ft_itoa(g_error_code));
+		return (temp);
+	}
 	while (string[i] && ((string[i] >= 'a' && string[i] <= 'z')
 			|| (string[i] >= '0' && string[i] <= '9')
 			|| (string[i] >= 'A' && string[i] <= 'Z') || string[i] == '_'))
@@ -114,8 +118,8 @@ char	*get_env_var_value(char **env_vars, char *string)
 	string = malloc(1);
 	string[0] = '\0';
 	new_string = ft_strjoin(string, temp);
-	free (temp);
-	free (string);
+	//free (temp);
+	//free (string);
 	return (new_string);
 }
 
