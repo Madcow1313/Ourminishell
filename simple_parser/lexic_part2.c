@@ -55,7 +55,8 @@ int get_built_in_cmd(t_command *command, t_list_commands *list, size_t *i)
 		&& command->word[*i + size] != '>'
 		&& command->word[*i + size] != '<'
 		&& command->word[*i + size] != '\"'
-		&& command->word[*i + size] != '\'')
+		&& command->word[*i + size] != '\''
+		&& command->word[*i + size] != '|')
 	{
 		if (command->word[*i + size] == '$' && size == 0
 			&& command->word[*i + size + 1] != '\"'
@@ -150,7 +151,7 @@ t_list_commands	*start_parse(t_command *command, t_list_commands *list)
 					list->command[list->number - 1]
 						= get_prefix_for_env(
 							list->env_vars, list->command[list->number - 1]);
-					free (temp);
+					//free (temp);
 					//temp = temp;
 				}
 			}

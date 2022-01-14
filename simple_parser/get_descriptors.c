@@ -30,11 +30,6 @@ void	get_here_doc(char *end, t_list_commands *list)
 	close(fd);
 }
 
-void	ft_putstr(int fd, char *str)
-{
-	write(fd, str, ft_strlen(str));
-}
-
 /*i have no idea what should i do
 still in progress*/
 int	get_fd_left_redirects(t_list_commands *list, char *path, int type)
@@ -85,13 +80,14 @@ int	get_redirect_type(t_list_commands *list)
 	i = 0;
 	while (i <= list->number && list->command[i])
 	{
-		if (list->type[i] == REDIRECT_RIGHT || list->type[i] == REDIRECT_AND_APPEND
+		if (list->type[i] == REDIRECT_RIGHT
+			|| list->type[i] == REDIRECT_AND_APPEND
 			|| list->type[i] == REDIRECT_LEFT || list->type[i] == HERE_DOC)
-			{
-				if (!list->command[i + 1])
-					return (-1);
-				return (1);
-			}
+		{
+			if (!list->command[i + 1])
+				return (-1);
+			return (1);
+		}
 		i++;
 	}
 	return (0);
@@ -99,13 +95,92 @@ int	get_redirect_type(t_list_commands *list)
 
 char	*repoint(char *string1, char *string2, int *type, int i)
 {
-	//char	*temp;
-
-	//temp = string1;
 	string1 = string2;
 	type[i] = type[i + 2];
-	//temp = temp;
 	return (string1);
+}
+
+int	procedure_first_red(t_list_commands *list)
+{
+	int		i;
+	char	*temp;
+
+	i = 0;
+	while (i < list->number - 1 && list->command[i])
+	{
+		temp = list->command[i];
+		if (i == 0)
+			list->command[i] = ft_strdup("echo");
+		else if (i == 1)
+			list->command[i] = ft_strdup("-n");
+		else
+			list->command[i] = ft_strdup(" ");
+		if (!list->command[i])
+			return (0);
+		list->type[i] = BUILT_IN;
+		// if (temp)
+		// 	free (temp);
+		i++;
+	}
+	return (1);
+}
+
+int	procedure_repoints_part_2(t_list_commands *list, int i, char *temp)
+{
+	if (list->command[i + 1])
+	{
+		i++;
+		while (i < list->number)
+		{
+			if (!list->command[i + 2])
+			{
+				temp = list->command[i];
+				list->command[i]
+					= ft_strdup(repoint(list->command[i + 1],
+							NULL, list->type, i));
+				if (!list->command[i])
+					return (0);
+				free (temp);
+				break ;
+			}
+			else
+			{
+				temp = list->command[i];
+				list->command[i]
+					= ft_strdup(repoint(list->command[i + 1],
+							list->command[i + 2], list->type, i));
+				if (!list->command[i])
+					return (0);
+				i++;
+				free (temp);
+			}
+		}
+	}
+	return (1);
+}
+
+int	procedure_repoints(t_list_commands *list, int i)
+{
+	char	*temp;
+
+	temp = NULL;
+	if (list->command[i])
+	{
+		if (list->command[i + 1])
+		{
+			temp = list->command[i];
+			list->command[i]
+				= ft_strdup(repoint(list->command[i + 1],
+						list->command[i + 2], list->type, i));
+			if (!list->command[i])
+				return (0);
+			free (temp);
+		}
+		else
+			return (-1);
+	}
+	procedure_repoints_part_2(list, i, temp);
+	return (1);
 }
 
 /*a lot of leaks, should be.
@@ -115,79 +190,29 @@ and set list->fd[1] to the last redirected file.
 it doesn't close files!!!!*/
 int	rid_of_redirect_right(t_list_commands *list)
 {
-	char *temp;
 	int	i;
 
 	i = 0;
 	list->old_stdin = dup(STDIN_FILENO);
 	list->old_stdout = dup(STDOUT_FILENO);
-	while ((list->type[i] != REDIRECT_RIGHT && list->type[i] != REDIRECT_LEFT && list->type[i] != REDIRECT_AND_APPEND
-		&& list->type[i] != HERE_DOC)
+	while ((list->type[i] != REDIRECT_RIGHT && list->type[i] != REDIRECT_LEFT
+			&& list->type[i] != REDIRECT_AND_APPEND
+			&& list->type[i] != HERE_DOC)
 		&& list->command[i] && i < list->number)
 		i++;
-	if (list->type[i + 1] == SEP_SPACE)
-		i++;
 	if (list->type[i] == REDIRECT_RIGHT || list->type[i] == REDIRECT_AND_APPEND)
-		list->fd[1] = get_fd_right_redirects(list, list->command[i + 1], list->type[i]);
+		list->fd[1]
+			= get_fd_right_redirects(list, list->command[i + 1], list->type[i]);
 	else if (list->type[i] == REDIRECT_LEFT)
-		list->fd[0] = get_fd_left_redirects(list, list->command[i + 1], list->type[i]);
+		list->fd[0]
+			= get_fd_left_redirects(list, list->command[i + 1], list->type[i]);
 	else if (list->type[i] == HERE_DOC)
 		get_here_doc(list->command[i + 1], list);
-	if (list->number <= 3 && list->type[0] >= REDIRECT_RIGHT && list->type[0] <= REDIRECT_AND_APPEND)
-	{
-		i = 0;
-		while (i < list->number - 1 && list->command[i])
-		{
-			temp = list->command[i];
-			if (i == 0)
-				list->command[i] = ft_strdup("echo");
-			else if (i == 1)
-				list->command[i] = ft_strdup("-n");
-			else
-				list->command[i] = ft_strdup(" ");
-			list->type[i] = BUILT_IN;
-			//printf("here %d\n", list->number);
-			// if (temp)
-			// 	free (temp);
-			i++;
-		}
-		return (0);
-	}
-	if (list->command[i])
-	{
-		if (list->command[i + 1])
-		{
-			temp = list->command[i];
-			list->command[i] = ft_strdup(repoint(list->command[i + 1], list->command[i + 2], list->type, i));
-			free (temp);
-		}
-		else
-			return (-1);
-		if (list->command[i + 1])
-		{
-			i++;
-			while (i < list->number)
-			{
-				if (!list->command[i + 2])
-				{
-					temp = list->command[i];
-					list->command[i] = ft_strdup(repoint(list->command[i + 1], NULL, list->type, i));
-					free (temp);
-					break;
-				}
-				else
-				{
-					temp = list->command[i];
-					list->command[i] = ft_strdup(repoint(list->command[i + 1], list->command[i + 2], list->type, i));
-					i++;
-					free (temp);
-				}
-			}
-		}
-	}
-	//temp = list->command[list->number - 2];
-	//list->command[list->number - 2] = NULL;
-	//temp = temp;
+	if (list->number <= 3 && list->type[0] >= REDIRECT_RIGHT
+		&& list->type[0] <= REDIRECT_AND_APPEND)
+		procedure_first_red(list);
+	else
+		procedure_repoints(list, i);
 	return (0);
 }
 
