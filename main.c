@@ -67,33 +67,38 @@ int	start_pipe(t_list_commands *list, t_command *command)
 	
 	i = 0;
 	j = 0;
-	temp = malloc(sizeof(list));
+	temp = malloc(sizeof(t_list_commands));
 	temp->type = list->type;
-	//temp->fd = list.fd;
 	temp->pipe_left = list->pipe_left;
 	temp->pipe_right = list->pipe_right;
-	temp->command = malloc(sizeof(char *) * list->number);
+	temp->command = malloc(sizeof(char *) * (list->number + 1));
+	temp->p = command;
 	if (!temp)
 		return (0);
-	while (list->command[i] && i < list->number)
+		//print_commands_and_words(list);
+	while (list->command[i] && i < list->number - 1)
 	{
 		while (list->command[i] && list->type[i] != PIPE && i < list->number)
 		{
-			//printf("%s\n", list->command[i]);
-			temp->command[j] = ft_strdup(list->command[i]);
-			//write(1, "here0.35\n", 9);
-			//printf("** %s\n", temp->command[j]);
-			j++;
+			// if (list->command[i])
+			// 	printf("__ %s\n", list->command[i]);
+			if (list->command[i])
+			{
+				temp->command[j] = ft_strdup(list->command[i]);
+				//write(1, "here0.35\n", 9);
+				//printf("** %s\n", temp->command[j]);
+				j++;
+			}
 			i++;
 		}
 		//write(1, "here0.5\n", 8);
 		temp->fd[0] = list->fd[0];
 		temp->fd[1] = list->fd[1];
 		temp->command[j] = NULL;
-		print_commands_and_words(temp);
+		//print_commands_and_words(temp);
 		//write(1, "here1\n", 6);
 		start_cmd(temp);
-		write(1, "here2\n", 6);
+		//write(1, "here2\n", 6);
 		if (list->pipe_right)
 		{
 			list->pipe_right--;

@@ -11,7 +11,7 @@ char	**get_normal_array(t_list_commands *list)
 
 	i = 0;
 	j = 0;
-	new = malloc(sizeof(char *) * list->number);
+	new = malloc(sizeof(char *) * (list->number));
 	if (!new)
 		return (list->command);
 	while (list->command[i] && i < list->number)
@@ -53,10 +53,16 @@ char	**get_normal_array(t_list_commands *list)
 	list->type[j] = BUILT_IN;
 	if (list->type[j - 1] >= REDIRECT_RIGHT && list->type[j - 1] < ENVIRONMENT_VAR)
 		list->type[j - 1] = BUILT_IN;
+	if (list->type[j - 1] == SEP_SPACE)
+		new[j - 1] = NULL;
 	// if (new[j])
 	// 	free (new[j]);
 	//free (new[j]);
-	new[j] = NULL;
+	while (j < i)
+	{
+		new[j] = NULL;
+		j++;
+	}
 	i = 0;
 	while (i < list->number && list->command[i])
 	{
