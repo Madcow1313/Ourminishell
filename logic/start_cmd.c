@@ -40,9 +40,9 @@ void	check_start_cmd(t_list_commands *cmd)
 {	
 	if (cmd->command[0] == NULL || !cmd->command)
 		return ;
-	if (!check_pipe_semicol(cmd))
+	else if (!check_pipe_semicol(cmd))
 		return ;
-	if (cmd->pipe_right == -1
+	else if (cmd->pipe_right == -1
 		&& cmd->pipe_left == -1)
 		single_command(cmd);
 	else
@@ -55,7 +55,7 @@ void	start_cmd(t_list_commands *cmd)
 	ft_s_h();
 
 	check_start_cmd(cmd);
-	printf("All good here\n");
+	//printf("All good here\n");
 	//free_cmd(cmd);
 	return ;
 }

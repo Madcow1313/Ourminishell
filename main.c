@@ -170,10 +170,10 @@ int	main(int argc, char **argv, char **envp)
 			g_error_code = 2;
 			write(1, "bash: syntax error near unexpected token `newline'\n", 52);
 		}
-		free (string);
+		printf("All good here3\n");
+		//free (string);
 		set_default_fd(&list);
 		//free_cmd(&list);
-		printf("All good here2\n");
 		// int	i = 0;
 		// while (i < list.number && list.command[i])
 		// {

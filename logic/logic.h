@@ -6,7 +6,7 @@
 /*   By: jmaryett <jmaryett@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/13 18:49:58 by chudapak          #+#    #+#             */
-/*   Updated: 2022/01/15 16:42:52 by jmaryett         ###   ########.fr       */
+/*   Updated: 2022/01/15 18:11:53 by jmaryett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,7 @@ void	process_pwd(t_list_commands *cmd);
 void	process_export(t_list_commands *cmd);
 char	**check_valid_envp(t_list_commands *cmd);
 int		check_only_space(char *s);
+int		check_multiple_spaces(char **s);
 char	**init_new_env(int len);
 char	**alloc_and_fill_new_env(t_list_commands *cmd, char **new_env);
 int		count_env_len(char **env);

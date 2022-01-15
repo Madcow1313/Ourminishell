@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_add_func.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: chudapak <chudapak@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jmaryett <jmaryett@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/13 18:42:07 by chudapak          #+#    #+#             */
-/*   Updated: 2022/01/13 20:08:28 by chudapak         ###   ########.fr       */
+/*   Updated: 2022/01/15 17:33:41 by jmaryett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,18 @@ char	**path_directories(void)
 static struct dirent	*next_dir(t_opendir *o_dir)
 {
 	o_dir->i++;
-	if (o_dir->path[o_dir->i])
+	if (!ft_strcmp(o_dir->path[o_dir->i], "~/.dotnet/tools"))
+	{
+		o_dir->i++;
+		o_dir->dir = opendir(o_dir->path[o_dir->i]);
+		if (o_dir->dir == NULL)
+		{
+			g_error_code = errno;
+			return (NULL);
+		}
+		o_dir->name = readdir(o_dir->dir);
+	}
+	else if (o_dir->path[o_dir->i])
 	{
 		o_dir->dir = opendir(o_dir->path[o_dir->i]);
 		if (o_dir->dir == NULL)
@@ -67,6 +78,7 @@ char	*reading_directories(t_list_commands *cmd, t_opendir *o_dir)
 			if (!o_dir->path[o_dir->i])
 				break ;
 			o_dir->name = next_dir(o_dir);
+			//printf("i = %d, path = %s\n", o_dir->i, o_dir->path[o_dir->i]);
 			continue ;
 		}
 		if (!ft_cmprcmd(cmd->command[0], o_dir->name->d_name))
@@ -82,6 +94,7 @@ char	*reading_directories(t_list_commands *cmd, t_opendir *o_dir)
 char	*get_binary_from_path(t_list_commands *cmd, t_opendir *o_dir)
 {
 	o_dir->i = 0;
+	o_dir->file_path = NULL;
 	o_dir->path = path_directories();
 	o_dir->dir = opendir(o_dir->path[o_dir->i]);
 	if (o_dir->dir == NULL)
