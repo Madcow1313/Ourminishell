@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: chudapak <chudapak@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jmaryett <jmaryett@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/13 17:40:03 by chudapak          #+#    #+#             */
-/*   Updated: 2022/01/13 17:40:04 by chudapak         ###   ########.fr       */
+/*   Updated: 2022/01/15 16:46:51 by jmaryett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../logic/logic.h"
 
-bool	is_numeric(char *str)
+int	is_numeric(char *str)
 {
 	if (!str)
 		return (false);

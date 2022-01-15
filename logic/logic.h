@@ -6,7 +6,7 @@
 /*   By: jmaryett <jmaryett@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/13 18:49:58 by chudapak          #+#    #+#             */
-/*   Updated: 2022/01/15 16:37:38 by jmaryett         ###   ########.fr       */
+/*   Updated: 2022/01/15 16:42:52 by jmaryett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void	free_cmd(t_list_commands *cmd);
 char	**free_array(char **env);
 int		check_first_symbol(char c);
 int		wrong_symbols(char *str);
-bool	is_numeric(char *str);
+int	is_numeric(char *str);
 void	init_stdcopies_g_error(t_list_commands *cmd, t_command *p);
 
 //errors func
@@ -116,7 +116,7 @@ int		ft_cmprcmd(const char *string1, const char *string2);
 //pipes
 
 void	cmd_with_pipes(t_list_commands *cmd);
-bool	our_builtin(char *command);
+int	our_builtin(char *command);
 //int		ft_strcmp(const char *s1, const char *s2);
 void	manage_out_pipe(t_list_commands *cmd);
 void	manage_in_pipe(t_list_commands *cmd);
@@ -125,7 +125,7 @@ void	process_only_redirects(t_list_commands *cmd);
 
 //exec
 
-bool	is_command_executable(t_list_commands *cmd);
+int	is_command_executable(t_list_commands *cmd);
 
 
 #endif
