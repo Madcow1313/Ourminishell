@@ -2,29 +2,24 @@
 #include "../logic/logic.h"
 
 /*can't handle slash '\' */
-int	handle_quotes(t_list_commands *list, t_command *command, int character, size_t *i)
+int	handle_quotes(
+		t_list_commands *list, t_command *command, int character, size_t *i)
 {
 	size_t	count;
 	size_t	start;
+	char	quoute;
 
 	count = 0;
 	*i += 1;
 	start = *i;
 	if (character == SINGLE_QM)
-	{
-		while (command->word[*i] != '\'' && command->word[*i] != '\0')
-		{
-			*i += 1;
-			count++;
-		}
-	}
+		quoute = '\'';
 	else
+		quoute = '\"';
+	while (command->word[*i] != quoute && command->word[*i] != '\0')
 	{
-		while (command->word[*i] != '\"' && command->word[*i] != '\0')
-		{
-			*i += 1;
-			count++;
-		}
+		*i += 1;
+		count++;
 	}
 	list->command[list->number] = malloc(count + 1);
 	ft_strlcpy(list->command[list->number], command->word + start, count + 1);
@@ -39,11 +34,9 @@ int	handle_redirects(t_list_commands *list, int character, size_t *i)
 	char	*temp;
 
 	list->command[list->number] = malloc(4);
-	if (!list->command[list->number])
-		return (-1);
 	temp = list->command[list->number];
 	if (!list->command[list->number])
-		return (-1);
+		return (0);
 	if (character == REDIRECT_RIGHT)
 		list->command[list->number] = ft_strdup(">");
 	else if (character == REDIRECT_LEFT)
@@ -56,7 +49,7 @@ int	handle_redirects(t_list_commands *list, int character, size_t *i)
 	list->number += 1;
 	list->command[list->number] = NULL;
 	free (temp);
-	return (0);
+	return (1);
 }
 
 int	handle_relative_path(t_list_commands *list, t_command *command, size_t *i)

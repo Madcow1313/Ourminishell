@@ -26,7 +26,8 @@ SOURCE = main.c ./parser_utils/ft_strlen.c ./simple_parser/lexic_part1.c \
 		./logic/not_builtins/exec_add_func.c ./logic/pipe_case/cmd_with_pipes.c \
 		./logic/pipe_case/ft_strcmp.c ./logic/pipe_case/manage_pipes.c ./logic/pipe_case/our_builtin.c \
 		./logic/builtins/utils/compare_pwd.c ./logic/init_stdcopies_g_error.c \
-		./logic/builtins/utils/count_len_free_array.c ./logic/builtins/utils/fill_unset.c
+		./logic/builtins/utils/count_len_free_array.c ./logic/builtins/utils/fill_unset.c \
+		./simple_parser/start_parse_part1.c
 
 OBJ = $(SOURCE:.c=.o)
 

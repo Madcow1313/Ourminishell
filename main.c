@@ -157,6 +157,7 @@ int	main(int argc, char **argv, char **envp)
 			}
 			dup2(list.fd[0], STDIN_FILENO);
 			dup2(list.fd[1], STDOUT_FILENO);
+			//print_commands_and_words(&list);
 			if (list.fd[0] != -1 && list.fd[1] != -1)
 			{
 				if (list.pipe_right != -1)
@@ -170,7 +171,6 @@ int	main(int argc, char **argv, char **envp)
 			g_error_code = 2;
 			write(1, "bash: syntax error near unexpected token `newline'\n", 52);
 		}
-		printf("All good here3\n");
 		//free (string);
 		set_default_fd(&list);
 		//free_cmd(&list);

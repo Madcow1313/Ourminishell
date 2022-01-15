@@ -96,23 +96,24 @@ char	*get_env_var_value(char **env_vars, char *string)
 		i++;
 		size++;
 	}
-	if (size == 0)
-		return (string - 1);
-	temp += i;
-	i = 0;
-	while (env_vars[i])
+	if (size != 0)
 	{
-		if (!ft_strncmp(env_vars[i], string, size))
+		temp += i;
+		i = 0;
+		while (env_vars[i])
 		{
-			if (env_vars[i][size] == '=')
+			if (!ft_strncmp(env_vars[i], string, size))
 			{
-				string = env_vars[i] + size + 1;
-				new_string = ft_strjoin(string, temp);
-				//free (string);
-				return (new_string);
+				if (env_vars[i][size] == '=')
+				{
+					string = env_vars[i] + size + 1;
+					new_string = ft_strjoin(string, temp);
+					//free (string);
+					return (new_string);
+				}
 			}
+			i++;
 		}
-		i++;
 	}
 	//string += size;
 	string[0] = '\0';

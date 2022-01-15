@@ -79,6 +79,9 @@ size_t	find_first_qm(const char *string);
 char	*get_env_var_value(char **env_vars, char *string);
 int	delete_quotes(t_list_commands *list);
 char *get_prefix_for_env(char **env_vars, char *string);
+int get_built_in_cmd(t_command *command, t_list_commands *list, size_t *i);
+int	search_for_type(t_command *command, int i);
+int	get_pipe(t_list_commands *list, int character);
 
 /*structure functions*/
 int	prepare_list(t_list_commands *list, t_command *command);
