@@ -9,12 +9,11 @@ LIBA = libft.a
 SOURCE = main.c ./parser_utils/ft_strlen.c ./simple_parser/lexic_part1.c \
 		./simple_parser/lexic_part2.c \
 		./simple_parser/prepare_list.c ./parser_utils/ft_strchr.c \
-		./simple_parser/empty_built_ins.c \
 		./parser_utils/ft_strlcpy.c ./simple_parser/lexic_part3.c \
 		./parser_utils/ft_strnstr.c ./simple_parser/command_adjusting.c \
 		./parser_utils/ft_strncmp.c ./parser_utils/ft_strjoin.c \
-		./simple_parser/get_descriptors.c ./simple_parser/get_normal.c ./simple_parser/no_space.c \
-		./signal_handler/get_signal.c ./simple_parser/shit.c \
+		./simple_parser/get_descriptors.c ./simple_parser/get_normal.c \
+		./signal_handler/get_signal.c \
 		./logic/not_builtins/exec_error.c ./logic/check_pipe_semicol.c ./logic/errors.c \
 		./logic/single_command.c ./logic/start_cmd.c ./logic/builtins/echo.c \
 		./logic/builtins/echo_redir.c ./logic/builtins/cd.c ./logic/builtins/pwd.c \
@@ -27,7 +26,9 @@ SOURCE = main.c ./parser_utils/ft_strlen.c ./simple_parser/lexic_part1.c \
 		./logic/pipe_case/ft_strcmp.c ./logic/pipe_case/manage_pipes.c ./logic/pipe_case/our_builtin.c \
 		./logic/builtins/utils/compare_pwd.c ./logic/init_stdcopies_g_error.c \
 		./logic/builtins/utils/count_len_free_array.c ./logic/builtins/utils/fill_unset.c \
-		./simple_parser/start_parse_part1.c
+		./simple_parser/start_parse_part1.c ./simple_parser/start_parse_part2.c \
+		./simple_parser/command_adjusting_2.c ./simple_parser/get_descriptors_2.c \
+		./simple_parser/get_descriptors3.c
 
 OBJ = $(SOURCE:.c=.o)
 
