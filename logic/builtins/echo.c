@@ -6,7 +6,7 @@
 /*   By: jmaryett <jmaryett@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/13 17:37:58 by chudapak          #+#    #+#             */
-/*   Updated: 2022/01/15 22:07:15 by jmaryett         ###   ########.fr       */
+/*   Updated: 2022/01/15 23:41:48 by jmaryett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ static void	echo_with_newline(t_list_commands *cmd)
 	return ;
 }
 
-int	check_valid_fd(t_list_commands *cmd)
+/* int	check_valid_fd(t_list_commands *cmd)
 {
 	struct stat	buf;
 	
@@ -96,14 +96,17 @@ int	check_valid_fd(t_list_commands *cmd)
 	}
 	printf("cmd = %s\n",  cmd->command[0]);
 	return (0);
-}
+} */
 
 void	process_echo(t_list_commands *cmd)
 {
 	//printf("%s\n", "All good");
-	g_error_code = check_valid_fd(cmd);
-	if (g_error_code == 1)
+	//g_error_code = check_valid_fd(cmd);
+	if (cmd->fd[1] == -1)
+	{
+		ft_putstr_fd("Wrong fd\n", STD_ERROR);
 		return ;
+	}
 	if (cmd->command[1] != NULL)
 	{
 		if (!ft_strcmp(cmd->command[1], "-n"))
@@ -113,6 +116,5 @@ void	process_echo(t_list_commands *cmd)
 	}
 	else
 		write(STDOUT_FILENO, "\n", 1);
-	return ;
-	printf("cmd = %s\n",  cmd->command[0]);
+	//printf("cmd = %s\n",  cmd->command[0]);
 }
