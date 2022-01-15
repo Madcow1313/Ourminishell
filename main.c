@@ -146,6 +146,7 @@ int	main(int argc, char **argv, char **envp)
 				exit (0);
 			if (start_parse(&command, &list) == NULL)
 				exit (0);
+					write(1, "here\n", 5);
 			if (!delete_quotes(&list))
 				exit(EXIT_FAILURE);
 			//print_commands_and_words(&list);
