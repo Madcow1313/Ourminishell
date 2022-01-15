@@ -6,7 +6,7 @@
 /*   By: jmaryett <jmaryett@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/13 18:40:15 by chudapak          #+#    #+#             */
-/*   Updated: 2022/01/15 21:00:44 by jmaryett         ###   ########.fr       */
+/*   Updated: 2022/01/16 00:22:15 by jmaryett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,4 +74,5 @@ void	exec(t_list_commands *cmd, t_opendir *open_dir)
 		puterror_exec("bash: ", cmd->command[0], ": command not found", 127);} //command_error(cmd->command[0]);
 	if (file_path)
 		free(file_path);
+	ft_putstr_fd("all good after exe\n", 1);
 }
