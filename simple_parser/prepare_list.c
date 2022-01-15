@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   prepare_list.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wabathur <wabathur@student.42.fr>          +#+  +:+       +#+        */
+/*   By: chudapak <chudapak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/16 01:08:32 by wabathur          #+#    #+#             */
-/*   Updated: 2022/01/16 01:11:00 by wabathur         ###   ########.fr       */
+/*   Updated: 2022/01/16 01:59:39 by chudapak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,8 @@ int	prepare_list(t_list_commands *list, t_command *command)
 		return (-1);
 	}
 	list->redirect = 0;
-	list->pipe_right = -1;
-	list->pipe_left = -1;
+	list->pipe_right = 0;
+	list->pipe_left = 0;
 	list->number = 0;
 	return (0);
 }
