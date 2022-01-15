@@ -18,6 +18,7 @@ int	prepare_list(t_list_commands *list, t_command *command)
 			free (list->type);
 		return (-1);
 	}
+	list->redirect = 0;
 	list->pipe_right = -1;
 	list->pipe_left = -1;
 	list->number = 0;

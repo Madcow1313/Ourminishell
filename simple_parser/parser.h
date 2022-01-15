@@ -54,6 +54,7 @@ typedef struct s_list_commands
 	int			heredoc;
 	int			old_stdout;
 	int			old_stdin;
+	int			redirect;
 } 			t_list_commands;
 
 int	ft_s_h(void);
@@ -93,7 +94,7 @@ void	print_commands_and_words(t_list_commands *list);
 int	get_here_doc(char *end, t_list_commands *list);
 int	get_redirect_type(t_list_commands *list);
 int	rid_of_redirect_right(t_list_commands *list);
-void	set_default_fd(t_list_commands *list);
+void	set_default_fd();
 
 void		rl_replace_line(const char *text, int clear_undo);
 

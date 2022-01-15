@@ -74,7 +74,7 @@ int	get_fd_right_redirects(t_list_commands *list, char *path, int type)
 	return (list->fd[1]);
 }
 
-void	set_default_fd(t_list_commands *list)
+void	set_default_fd()
 {
 	int	ttyfd;
 
@@ -82,7 +82,7 @@ void	set_default_fd(t_list_commands *list)
 	dup2(ttyfd, STDOUT_FILENO);
 	dup2(ttyfd, STDIN_FILENO);
 	close(ttyfd);
-	dup2(list->fd[1], list->old_stdout);
+	//dup2(list->fd[1], list->old_stdout);
 	//list->fd[1] = list->fd[1];
 }
 
@@ -91,7 +91,7 @@ int	get_redirect_type(t_list_commands *list)
 	int	i;
 
 	i = 0;
-	while (i <= list->number && list->command[i])
+	while (list->command[i] && i < list->number)
 	{
 		if (list->type[i] == REDIRECT_RIGHT
 			|| list->type[i] == REDIRECT_AND_APPEND
