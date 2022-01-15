@@ -6,7 +6,7 @@
 /*   By: jmaryett <jmaryett@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/13 17:41:05 by chudapak          #+#    #+#             */
-/*   Updated: 2022/01/15 19:10:59 by jmaryett         ###   ########.fr       */
+/*   Updated: 2022/01/15 22:15:02 by jmaryett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,16 @@
 
 static void	print_with_equal_char(char **env, int i, int j)
 {
-	ft_putchar_fd(env[i][j], 1);
-	ft_putchar_fd('\"', 1);
+	ft_putchar_fd(env[i][j], STDOUT_FILENO);
+	ft_putchar_fd('\"', STDOUT_FILENO);
 	j++;
 	while (env[i][j])
 	{
-		ft_putchar_fd(env[i][j], 1);
+		ft_putchar_fd(env[i][j], STDOUT_FILENO);
 		j++;
 	}
-	ft_putchar_fd('\"', 1);
-	ft_putchar_fd('\n', 1);
+	ft_putchar_fd('\"', STDOUT_FILENO);
+	ft_putchar_fd('\n', STDOUT_FILENO);
 }
 
 static void	print_export_no_args(t_list_commands *cmd)
@@ -32,20 +32,20 @@ static void	print_export_no_args(t_list_commands *cmd)
 	int	j;
 
 	i = 0;
-	printf("Sega here\n");
+	//printf("Sega here\n");
 	while (cmd->env_vars[i])
 	{
 		j = 0;
-		ft_putstr_fd("declare -x ", 1);
+		ft_putstr_fd("declare -x ", STDOUT_FILENO);
 		while (cmd->env_vars[i][j] && cmd->env_vars[i][j] != '=')
 		{
-			ft_putchar_fd(cmd->env_vars[i][j], 1);
+			ft_putchar_fd(cmd->env_vars[i][j], STDOUT_FILENO);
 			j++;
 		}
 		if (cmd->env_vars[i][j] == '=')
 			print_with_equal_char(cmd->env_vars, i, j);
 		else
-			ft_putchar_fd('\n', 1);
+			ft_putchar_fd('\n', STDOUT_FILENO);
 		i++;
 	}
 }
@@ -73,16 +73,16 @@ void	process_export(t_list_commands *cmd)
 	i = 1;
 	only_spaces = 0;
 	g_error_code = 0;
-	ft_putstr_fd("No sega 0\n", 1);
+	//ft_putstr_fd("No sega 0\n", 1);
 	if (cmd->command[1] != NULL && cmd->number > 1)
 	{
 		//ft_putstr_fd(cmd->command[1], 1);
-		ft_putstr_fd("No sega in spaces\n", 1);
+		//ft_putstr_fd("No sega in spaces\n", 1);
 		if (!check_multiple_spaces(cmd->command))
 			print_export_no_args(cmd);
 		else
 			cmd->env_vars = adding_new_env_var(cmd);
-		ft_putstr_fd("No sega in spaces2\n", 1);
+		//ft_putstr_fd("No sega in spaces2\n", 1);
 	}
 	else if (!cmd->command[1] || cmd->number >= 1) //was just ==
 		{ft_putstr_fd("No sega here\n", 1); print_export_no_args(cmd); ft_putstr_fd("No sega here2\n", 1);}

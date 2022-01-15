@@ -6,7 +6,7 @@
 /*   By: jmaryett <jmaryett@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/13 18:49:58 by chudapak          #+#    #+#             */
-/*   Updated: 2022/01/15 18:11:53 by jmaryett         ###   ########.fr       */
+/*   Updated: 2022/01/15 23:23:53 by jmaryett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ int		puterror_exec(char *s1, char *s2, char *s3, int code);
 //starting shell func
 
 void	start_cmd(t_list_commands *cmd);
-void	single_command(t_list_commands *cmd);
+void	single_command(t_list_commands *cmd, t_opendir *o_dir);
 int		check_pipe_semicol(t_list_commands *cmd);
 
 //echo with redirs
@@ -116,8 +116,9 @@ int		ft_cmprcmd(const char *string1, const char *string2);
 
 //pipes
 
-void	cmd_with_pipes(t_list_commands *cmd);
+void	cmd_with_pipes(t_list_commands *cmd, t_opendir *o_dir);
 int	our_builtin(char *command);
+
 //int		ft_strcmp(const char *s1, const char *s2);
 void	manage_out_pipe(t_list_commands *cmd);
 void	manage_in_pipe(t_list_commands *cmd);

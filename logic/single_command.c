@@ -3,22 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   single_command.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wabathur <wabathur@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jmaryett <jmaryett@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/13 18:47:14 by chudapak          #+#    #+#             */
-/*   Updated: 2022/01/15 13:05:16 by wabathur         ###   ########.fr       */
+/*   Updated: 2022/01/15 23:23:59 by jmaryett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../logic/logic.h"
 
-void	single_command(t_list_commands *cmd)
+void	single_command(t_list_commands *cmd, t_opendir *o_dir)
 {
-	t_opendir	open_dir;
-
-	//for(int i = 0; cmd->command[i]; i++)
-	//	printf("single command %s\n", cmd->command[i]);
-	
 	if (!ft_strcmp(cmd->command[0], "echo")
 		|| (!ft_strcmp(cmd->command[0], " ") && cmd->fd[1] != -1))
 		process_echo(cmd);
@@ -33,8 +28,8 @@ void	single_command(t_list_commands *cmd)
 	else if (!ft_strcmp(cmd->command[0], "env"))
 		process_env(cmd);
 	else if (!ft_strcmp(cmd->command[0], "exit"))
-		process_exit(cmd->command + 1);
+		process_exit(cmd->command);
 	else
-		exec(cmd, &open_dir);
+		exec(cmd, o_dir);
 	return ;
 }

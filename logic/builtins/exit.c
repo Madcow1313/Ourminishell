@@ -6,7 +6,7 @@
 /*   By: jmaryett <jmaryett@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/13 17:40:03 by chudapak          #+#    #+#             */
-/*   Updated: 2022/01/15 16:46:51 by jmaryett         ###   ########.fr       */
+/*   Updated: 2022/01/15 22:25:55 by jmaryett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,15 +28,15 @@ int	is_numeric(char *str)
 void	process_exit(char **args)
 {
 	ft_putstr_fd("exit\n", STD_ERROR);
-	if (!*args || !args)
+	if (!*args || !args || !args[1])
 		exit(g_error_code);
-	if (count_env_len(args) > 1)
+	if (count_env_len(&args[1]) > 1)
 	{
 		ft_putstr_fd("exit: too many arguments\n", STD_ERROR);
 		g_error_code = 1;
 		return ;
 	}
-	if (*args && !is_numeric(*args))
+	if (args[1] && !is_numeric(args[1]))
 	{
 		ft_putstr_fd("exit: ", STD_ERROR);
 		ft_putstr_fd(*args, STD_ERROR);
@@ -44,6 +44,6 @@ void	process_exit(char **args)
 		g_error_code = 1;
 		exit(225);
 	}
-	if (*args && is_numeric(*args))
-		exit(ft_atoi(*args));
+	if (*args && is_numeric(args[1]))
+		exit(ft_atoi(args[1]));
 }

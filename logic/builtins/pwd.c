@@ -6,7 +6,7 @@
 /*   By: jmaryett <jmaryett@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/13 17:41:53 by chudapak          #+#    #+#             */
-/*   Updated: 2022/01/15 22:10:35 by jmaryett         ###   ########.fr       */
+/*   Updated: 2022/01/15 22:16:26 by jmaryett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,5 +24,6 @@ void	process_pwd(t_list_commands *cmd)
 		g_error_code = 0;
 	ft_putendl_fd(pwd, STDOUT_FILENO);
 	free(pwd);
+	printf("cmd delete after %s\n", cmd->command[0]);
 	return ;
 }

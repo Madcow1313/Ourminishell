@@ -38,15 +38,23 @@ int	count_pipes(t_list_commands *cmd)
 
 void	check_start_cmd(t_list_commands *cmd)
 {	
+	cmd->redirect = 0;
+	t_opendir	open_dir;
+
+	
 	if (cmd->command[0] == NULL || !cmd->command)
 		return ;
 	else if (!check_pipe_semicol(cmd))
 		return ;
+	else if (!cmd->redirect)
+		cmd_with_pipes(cmd, &open_dir);
+	else if (cmd->redirect)
+		single_command(cmd, &open_dir);
 	else if (cmd->pipe_right == -1
 		&& cmd->pipe_left == -1)
-		single_command(cmd);
+		single_command(cmd, &open_dir);
 	else
-		cmd_with_pipes(cmd);
+		cmd_with_pipes(cmd, &open_dir);
 	return ;
 }
 
