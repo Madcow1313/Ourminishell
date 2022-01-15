@@ -66,8 +66,8 @@ t_list_commands	*get_pipe_fd(t_list_commands *list, t_list_commands *temp)
 	temp->type = list->type;
 	temp->pipe_left = list->pipe_left;
 	temp->pipe_right = list->pipe_right;
-	list->stdin_copy = dup(STD_IN);
-	list->stdout_copy = dup(STD_OUT);
+	// list->stdin_copy = dup(STD_IN);
+	// list->stdout_copy = dup(STD_OUT);
 	temp->fd[0] = list->fd[0];
 	temp->fd[1] = list->fd[1];
 	temp->stdin_copy = list->stdin_copy;
@@ -78,6 +78,8 @@ t_list_commands	*get_pipe_fd(t_list_commands *list, t_list_commands *temp)
 		list->pipe_right--;
 		list->pipe_left++;
 	//}
+	if (list->pipe_right == 0)
+		list->pipe_right = -1;
 	return (list);
 }
 
@@ -102,7 +104,7 @@ int	start_pipe(t_list_commands *list, char **envp)
 	temp->command = malloc(sizeof(char *) * (list->p->len + 1));
 	temp->type = malloc(sizeof(int *) * (list->p->len + 1));
 	duplicate_envp(envp, temp);
-	get_pipe_fd(list, temp);
+	//get_pipe_fd(list, temp);
 	if (!temp)
 		return (0);
 	while (list->command[i] && i < list->number)
@@ -117,6 +119,7 @@ int	start_pipe(t_list_commands *list, char **envp)
 			j++;
 			i++;
 		}
+		get_pipe_fd(list, temp);
 		temp->number = j;
 		while (j < list->number)
 			temp->command[j++] = NULL;
@@ -129,12 +132,15 @@ int	start_pipe(t_list_commands *list, char **envp)
 				break ;
 			}
 		}
-		dup2(temp->fd[0], STDIN_FILENO);
-		dup2(temp->fd[1], STDOUT_FILENO);
+		if (temp->redirect)
+		{
+			set_default_fd();
+			dup2(temp->fd[0], STDIN_FILENO);
+			dup2(temp->fd[1], STDOUT_FILENO);
+		}
 		start_cmd(temp);
 		i++;
 		j = 0;
-		set_default_fd();
 		temp->redirect = 0;
 	}
 	free (temp);
@@ -187,7 +193,7 @@ int	main(int argc, char **argv, char **envp)
 			}
 			//free (string);
 			set_default_fd();
-			free_cmd(&list);
+			//free_cmd(&list);
 			printf("All good here2\n");
 			// int	i = 0;
 			// while (i < list.number && list.command[i])
