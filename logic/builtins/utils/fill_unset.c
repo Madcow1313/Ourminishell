@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fill_unset.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: chudapak <chudapak@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jmaryett <jmaryett@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/13 17:56:10 by chudapak          #+#    #+#             */
-/*   Updated: 2022/01/13 17:59:36 by chudapak         ###   ########.fr       */
+/*   Updated: 2022/01/16 01:26:05 by jmaryett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,6 @@ char	**fill_unset(char **old, int old_len, int final_len)
 		}
 	}
 	result[j] = NULL;
-	//printf("result[j] = %s\n", result[j]);
 	free(old);
 	old = NULL;
 	return (result);

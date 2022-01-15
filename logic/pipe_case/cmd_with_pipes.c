@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_with_pipes.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: chudapak <chudapak@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jmaryett <jmaryett@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/15 22:43:59 by jmaryett          #+#    #+#             */
-/*   Updated: 2022/01/16 01:52:08 by chudapak         ###   ########.fr       */
+/*   Updated: 2022/01/16 02:27:49 by jmaryett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,8 @@ void	open_pipes(t_list_commands *cmd)
 		if (pipe(cmd->fd) == -1)
 		{
 			g_error_code = errno;
-			ft_putstr_fd("Pipe, failed, initializing undefined behavior\n", STD_ERROR);
+			ft_putstr_fd("Pipe, failed,	", STD_ERROR);
+			ft_putstr_fd("initializing undefined behavior\n", STD_ERROR);
 		}
 	}
 }

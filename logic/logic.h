@@ -6,7 +6,7 @@
 /*   By: jmaryett <jmaryett@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/13 18:49:58 by chudapak          #+#    #+#             */
-/*   Updated: 2022/01/15 23:23:53 by jmaryett         ###   ########.fr       */
+/*   Updated: 2022/01/16 02:24:24 by jmaryett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@
 # define FALSE 0
 
 /*structure for finding binaries in PATH*/
+
 typedef struct s_opendir
 {
 	char			**path;
@@ -48,7 +49,7 @@ void	free_cmd(t_list_commands *cmd);
 char	**free_array(char **env);
 int		check_first_symbol(char c);
 int		wrong_symbols(char *str);
-int	is_numeric(char *str);
+int		is_numeric(char *str);
 void	init_stdcopies_g_error(t_list_commands *cmd, t_command *p);
 
 //errors func
@@ -58,7 +59,7 @@ void	cd_errors(char *path);
 void	export_errors(char *str);
 void	malloc_error(char **s);
 void	command_error(char *s);
-void	exec_error(t_list_commands *cmd/* , char *file_path */);
+void	exec_error(t_list_commands *cmd);
 int		puterror_exec(char *s1, char *s2, char *s3, int code);
 
 //starting shell func
@@ -68,10 +69,12 @@ void	single_command(t_list_commands *cmd, t_opendir *o_dir);
 int		check_pipe_semicol(t_list_commands *cmd);
 
 //echo with redirs
+
 void	process_echo(t_list_commands *cmd);
 void	redirects(t_list_commands *cmd, int nl);
 
 //cd's
+
 void	process_cd(t_list_commands *cmd);
 void	set_pwd(t_list_commands *cmd);
 char	**find_old_pwd(t_list_commands *cmd);
@@ -117,9 +120,9 @@ int		ft_cmprcmd(const char *string1, const char *string2);
 //pipes
 
 void	cmd_with_pipes(t_list_commands *cmd, t_opendir *o_dir);
-int	our_builtin(char *command);
+int		our_builtin(char *command);
 
-//int		ft_strcmp(const char *s1, const char *s2);
+//int	
 void	manage_out_pipe(t_list_commands *cmd);
 void	manage_in_pipe(t_list_commands *cmd);
 
@@ -127,7 +130,6 @@ void	process_only_redirects(t_list_commands *cmd);
 
 //exec
 
-int	is_command_executable(t_list_commands *cmd);
-
+int		is_command_executable(t_list_commands *cmd);
 
 #endif

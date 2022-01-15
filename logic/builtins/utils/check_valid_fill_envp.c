@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_valid_fill_envp.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: chudapak <chudapak@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jmaryett <jmaryett@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/13 18:26:17 by chudapak          #+#    #+#             */
-/*   Updated: 2022/01/13 18:27:22 by chudapak         ###   ########.fr       */
+/*   Updated: 2022/01/16 01:25:39 by jmaryett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,12 +37,7 @@ char	**alloc_and_fill_new_env(t_list_commands *cmd, char **new_env)
 			|| !wrong_symbols(cmd->command[i])
 			|| !check_only_space(cmd->command[i]))
 			continue ;
-		new_env[id] = cmd->command[i]; //i can just point to cmd_command[i] instead of strdup it
-/* 		if (!new_env[id])
-		{	
-			malloc_error(new_env);
-			return (NULL);
-		} */
+		new_env[id] = cmd->command[i];
 		id++;
 	}
 	new_env[id] = NULL;

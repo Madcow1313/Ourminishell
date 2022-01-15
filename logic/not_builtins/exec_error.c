@@ -3,22 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   exec_error.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: chudapak <chudapak@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jmaryett <jmaryett@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/13 18:42:11 by chudapak          #+#    #+#             */
-/*   Updated: 2022/01/14 20:16:33 by chudapak         ###   ########.fr       */
+/*   Updated: 2022/01/16 02:06:53 by jmaryett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../logic/logic.h"
 
-void	exec_error(t_list_commands *cmd/* , char *file_path */)
+void	exec_error(t_list_commands *cmd)
 {
-	//if (file_path)
-		//free(file_path);
 	ft_putstr_fd("Error: ", STD_ERROR);
 	ft_putstr_fd(cmd->command[0], STD_ERROR);
-	ft_putstr_fd(" ", STD_ERROR);
+	ft_putstr_fd(": ", STD_ERROR);
 	errors();
 }
 
