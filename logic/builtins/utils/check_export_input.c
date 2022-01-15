@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_export_input.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: chudapak <chudapak@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jmaryett <jmaryett@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/13 18:03:26 by chudapak          #+#    #+#             */
-/*   Updated: 2022/01/13 18:03:27 by chudapak         ###   ########.fr       */
+/*   Updated: 2022/01/15 18:22:37 by jmaryett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,27 @@ void	check_duplicates(char **new_env, int new_len)
 			}
 		}
 	}
+}
+
+int	check_multiple_spaces(char **s)
+{
+	int	i;
+	int	not_empty_s;
+	int	j;
+
+	i = 0;
+	not_empty_s = 0; //0 means all str's are empty
+	while (s[++i])
+	{
+		j = 0;
+		while (s[i][j])
+		{
+			if (s[i][j] != ' ')
+				not_empty_s = 1;
+			j++;
+		}
+	}
+	return (not_empty_s);
 }
 
 int	check_only_space(char *s)

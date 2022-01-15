@@ -6,7 +6,7 @@
 /*   By: jmaryett <jmaryett@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/13 18:43:50 by chudapak          #+#    #+#             */
-/*   Updated: 2022/01/15 16:00:21 by jmaryett         ###   ########.fr       */
+/*   Updated: 2022/01/15 20:06:57 by jmaryett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,9 @@
 		close(STD_OUT);
 		dup2(cmd->fd[1], STD_OUT);
 	}
-} */
+}
 
-/* static void	close_redirections(t_list_commands *cmd)
+static void	close_redirections(t_list_commands *cmd)
 {
 	if (cmd->fd[0] != -1 || cmd->fd[1] != -1)
 	{
@@ -45,8 +45,6 @@
 void	cmd_with_pipes(t_list_commands *cmd)
 {
 	t_opendir	o_dir;
-	cmd->stdout_copy = dup(STD_OUT);
-	cmd->stdin_copy = dup(STD_IN);
 
 	if (pipe(cmd->fd) == -1)
 	{

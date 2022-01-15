@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: chudapak <chudapak@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jmaryett <jmaryett@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/13 17:35:03 by chudapak          #+#    #+#             */
-/*   Updated: 2022/01/13 22:33:33 by chudapak         ###   ########.fr       */
+/*   Updated: 2022/01/15 19:10:31 by jmaryett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,8 +80,13 @@ void	process_cd(t_list_commands *cmd)
 	int	error_sign;
 
 	error_sign = 0;
-	if (cmd->command[1] != NULL)
-		error_sign = cd_has_path(cmd, error_sign);
+	if (cmd->command[1] != NULL && cmd->number > 1)
+	{
+		if (!check_multiple_spaces(cmd->command))
+			error_sign = cd_to_home_dir(cmd, error_sign);
+		else
+			error_sign = cd_has_path(cmd, error_sign);
+	}
 	else
 		error_sign = cd_to_home_dir(cmd, error_sign);
 	set_pwd(cmd);

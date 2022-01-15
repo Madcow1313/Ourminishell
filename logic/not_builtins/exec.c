@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: chudapak <chudapak@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jmaryett <jmaryett@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/13 18:40:15 by chudapak          #+#    #+#             */
-/*   Updated: 2022/01/14 19:53:21 by chudapak         ###   ########.fr       */
+/*   Updated: 2022/01/15 17:05:57 by jmaryett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,8 @@ void	exec(t_list_commands *cmd, t_opendir *open_dir)
 			ft_putstr_fd("Can't execute command, fork failed\n", STD_ERROR);
 	}
 	else
-		puterror_exec("bash: ", cmd->command[0], ": command not found", 127); //command_error(cmd->command[0]);
+		{printf("file_path = %s\n", file_path);
+		puterror_exec("bash: ", cmd->command[0], ": command not found", 127);} //command_error(cmd->command[0]);
 	if (file_path)
 		free(file_path);
 }

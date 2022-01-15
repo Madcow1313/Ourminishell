@@ -4,14 +4,28 @@
             "name": "Linux",
             "includePath": [
                 "${workspaceFolder}/**",
-                "${workspaceFolder}/logic"
+                "${workspaceFolder}/logic/"
             ],
             "defines": [],
             "compilerPath": "/usr/bin/gcc",
             "cStandard": "gnu17",
             "cppStandard": "gnu++14",
-            "intelliSenseMode": "linux-gcc-x64",
+            "intelliSenseMode": "${default}",
             "configurationProvider": "ms-vscode.makefile-tools"
+        },
+        {
+            "name": "MacOS",
+            "includePath": [
+                "${workspaceFolder}/logic/"
+            ],
+            "defines": [],
+            "macFrameworkPath": [
+                "/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/System/Library/Frameworks"
+            ],
+            "compilerPath": "/usr/bin/gcc",
+            "cStandard": "c11",
+            "cppStandard": "c++98",
+            "intelliSenseMode": "macos-gcc-x64"
         }
     ],
     "version": 4
