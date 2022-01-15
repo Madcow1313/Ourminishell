@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: chudapak <chudapak@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jmaryett <jmaryett@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/13 18:42:21 by chudapak          #+#    #+#             */
-/*   Updated: 2022/01/14 18:57:54 by chudapak         ###   ########.fr       */
+/*   Updated: 2022/01/15 16:40:13 by jmaryett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,51 +38,51 @@ int	ft_cmprcmd(const char *string1, const char *string2)
 	return (0);
 }
 
-bool	is_file_exists(char *path)
+int	is_file_exists(char *path)
 {
 	struct stat		stats;
 
 	if (stat(path, &stats) == -1)
-		return (false);
-	return (true);
+		return (FALSE);
+	return (TRUE);
 }
 
-bool	is_directory(char *path)
+int	is_directory(char *path)
 {
 	struct stat		stats;
 
 	if (stat(path, &stats) == 0 && S_ISDIR(stats.st_mode))
-		return (true);
-	return (false);
+		return (TRUE);
+	return (FALSE);
 }
 
-bool	has_execute_permission(char *path)
+int	has_execute_permission(char *path)
 {
 	struct stat		stats;
 
 	if (stat(path, &stats) == 0 && stats.st_mode & S_IXUSR)
-		return (true);
-	return (false);
+		return (TRUE);
+	return (FALSE);
 }
 
-bool	is_command_executable(t_list_commands *cmd)
+int	is_command_executable(t_list_commands *cmd)
 {
 	if (is_directory(cmd->command[0]))
 	{
 		g_error_code = 126;//puterror_exec(NULL, cmd->command[0], ": is a directory", 126);
-		return (false);
+		return (FALSE);
 	}
 	else if (!is_file_exists(cmd->command[0]))
 	{
 		//puterror_exec(NULL, cmd->command[0],
 		//	": No such file or directory", 127);
 		g_error_code = 127;
-		return (false);
+		return (FALSE);
 	}
 	else if (!has_execute_permission(cmd->command[0]))
 	{
 		g_error_code = 126; //puterror_exec(NULL, cmd->command[0], ": Permission denied", 126);
-		return (false);
+		return (FALSE);
 	}
-	return (true);
+	return (TRUE);
 }
