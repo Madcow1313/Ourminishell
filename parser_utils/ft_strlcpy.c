@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_strlcpy.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: wabathur <wabathur@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/01/16 01:17:51 by wabathur          #+#    #+#             */
+/*   Updated: 2022/01/16 01:18:25 by wabathur         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../simple_parser/parser.h"
 
-size_t	ft_strlcpy (char *dst, const char *src, size_t size)
+size_t	ft_strlcpy(char *dst, const char *src, size_t size)
 {
 	size_t	i;
 

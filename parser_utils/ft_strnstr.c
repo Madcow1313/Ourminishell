@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_strnstr.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: wabathur <wabathur@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/01/16 01:17:59 by wabathur          #+#    #+#             */
+/*   Updated: 2022/01/16 01:17:59 by wabathur         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../simple_parser/parser.h"
 
 /*search for first occurence of little string in big string,
@@ -13,7 +25,6 @@ char	*ft_strnstr(const char *big, const char *little, size_t len)
 		return ((char *)big);
 	if (!*little)
 		return ((char *)big);
-	// printf("big is %s\n", big);
 	while (big[i] != '\0' && i < len)
 	{
 		if (big[i] == little[j])
