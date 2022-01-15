@@ -73,11 +73,11 @@ t_list_commands	*get_pipe_fd(t_list_commands *list, t_list_commands *temp)
 	temp->stdin_copy = list->stdin_copy;
 	temp->stdout_copy = list->stdout_copy;
 	temp->redirect = list->redirect;
-	if (list->pipe_right)
-	{
+	// if (list->pipe_right)
+	// {
 		list->pipe_right--;
 		list->pipe_left++;
-	}
+	//}
 	return (list);
 }
 
