@@ -6,7 +6,7 @@
 /*   By: jmaryett <jmaryett@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/13 18:44:17 by chudapak          #+#    #+#             */
-/*   Updated: 2022/01/15 20:03:36 by jmaryett         ###   ########.fr       */
+/*   Updated: 2022/01/15 21:11:24 by jmaryett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	manage_out_pipe(t_list_commands *cmd)
 	else if (cmd->pipe_left)
 	{
 		close(cmd->stdout_copy);
-		dup2(STDOUT_FILENO, cmd->stdout_copy); //maybe dup
+		dup2(cmd->stdout_copy, STDOUT_FILENO); //maybe dup
 	}
 }
 

@@ -68,8 +68,8 @@ void	get_pipe_fd(t_list_commands *list, t_list_commands *temp)
 	temp->pipe_right = list->pipe_right;
 	dup2(list->fd[0], STDIN_FILENO);
 	dup2(list->fd[1], STDOUT_FILENO);
-	list->stdin_copy = dup(list->fd[0]);
-	list->stdout_copy = dup(list->fd[1]);
+	list->stdin_copy = dup(STD_IN);
+	list->stdout_copy = dup(STD_OUT);
 	temp->fd[0] = list->fd[0];
 	temp->fd[1] = list->fd[1];
 	temp->stdin_copy = list->stdin_copy;

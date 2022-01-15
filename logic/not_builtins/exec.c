@@ -6,7 +6,7 @@
 /*   By: jmaryett <jmaryett@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/13 18:40:15 by chudapak          #+#    #+#             */
-/*   Updated: 2022/01/15 17:05:57 by jmaryett         ###   ########.fr       */
+/*   Updated: 2022/01/15 21:00:44 by jmaryett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,10 @@ void	exec(t_list_commands *cmd, t_opendir *open_dir)
 	{
 		pid = fork();
 		if (pid == 0)
+		{
 			call_exec(file_path, cmd);
+			process_exit(0);
+		}
 		else if (pid > 0)
 			wait(&pid);
 		else

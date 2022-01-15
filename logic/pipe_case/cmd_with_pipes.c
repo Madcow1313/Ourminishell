@@ -6,7 +6,7 @@
 /*   By: jmaryett <jmaryett@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/13 18:43:50 by chudapak          #+#    #+#             */
-/*   Updated: 2022/01/15 20:06:57 by jmaryett         ###   ########.fr       */
+/*   Updated: 2022/01/15 20:26:55 by jmaryett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ void	cmd_with_pipes(t_list_commands *cmd)
 {
 	t_opendir	o_dir;
 
+	ft_putstr_fd("Hello\n", 1);
 	if (pipe(cmd->fd) == -1)
 	{
 		g_error_code = errno;
