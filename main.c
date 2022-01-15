@@ -60,26 +60,25 @@ int	check_redirects(t_list_commands *list)
 	return (0);
 }
 
-void	get_pipe_fd(t_list_commands *list, t_list_commands *temp)
+t_list_commands	*get_pipe_fd(t_list_commands *list, t_list_commands *temp)
 {
 	temp->p = list->p;
 	temp->type = list->type;
 	temp->pipe_left = list->pipe_left;
 	temp->pipe_right = list->pipe_right;
-	dup2(list->fd[0], STDIN_FILENO);
-	dup2(list->fd[1], STDOUT_FILENO);
 	list->stdin_copy = dup(STD_IN);
 	list->stdout_copy = dup(STD_OUT);
 	temp->fd[0] = list->fd[0];
 	temp->fd[1] = list->fd[1];
 	temp->stdin_copy = list->stdin_copy;
 	temp->stdout_copy = list->stdout_copy;
-	start_cmd(temp);
+	temp->redirect = list->redirect;
 	if (list->pipe_right)
 	{
 		list->pipe_right--;
 		list->pipe_left++;
 	}
+	return (list);
 }
 
 void	free_temp(t_list_commands *temp, int j)
@@ -91,7 +90,7 @@ void	free_temp(t_list_commands *temp, int j)
 	}
 }
 
-int	start_pipe(t_list_commands *list)
+int	start_pipe(t_list_commands *list, char **envp)
 {
 	int					i;
 	int					j;
@@ -100,21 +99,43 @@ int	start_pipe(t_list_commands *list)
 	i = 0;
 	j = 0;
 	temp = malloc(sizeof(t_list_commands));
-	temp->command = malloc(sizeof(char *) * (list->number + 1));
+	temp->command = malloc(sizeof(char *) * (list->p->len + 1));
+	temp->type = malloc(sizeof(int *) * (list->p->len + 1));
+	duplicate_envp(envp, temp);
+	get_pipe_fd(list, temp);
 	if (!temp)
 		return (0);
-	while (list->command[i] && i < list->number - 1)
+	while (list->command[i] && i < list->number)
 	{
 		while (list->command[i] && list->type[i] != PIPE && i < list->number)
 		{
-			if (list->command[i])
-				temp->command[j++] = ft_strdup(list->command[i]);
+			temp->command[j] = ft_strdup(list->command[i]);
+			temp->type[j] = list->type[i];
+			if (list->type[i] >= REDIRECT_RIGHT
+				&& list->type[i] <= REDIRECT_AND_APPEND)
+				temp->redirect = 1;
+			j++;
 			i++;
 		}
-		temp->command[j] = NULL;
-		get_pipe_fd(list, temp);
+		temp->number = j;
+		while (j < list->number)
+			temp->command[j++] = NULL;
+		 //here is a double free error
+		while (get_redirect_type(temp) > 0)
+		{
+			if (rid_of_redirect_right(temp) == -1)
+			{
+				g_error_code = 1;
+				break ;
+			}
+		}
+		dup2(temp->fd[0], STDIN_FILENO);
+		dup2(temp->fd[1], STDOUT_FILENO);
+		start_cmd(temp);
 		i++;
 		j = 0;
+		set_default_fd();
+		temp->redirect = 0;
 	}
 	free (temp);
 	return (0);
@@ -146,33 +167,18 @@ int	main(int argc, char **argv, char **envp)
 				exit (0);
 			if (start_parse(&command, &list) == NULL)
 				exit (0);
-					write(1, "here\n", 5);
 			if (!delete_quotes(&list))
 				exit(EXIT_FAILURE);
 			//print_commands_and_words(&list);
 			if (!check_redirects(&list))
 			{
 				//print_commands_and_words(&list);
-				get_normal_array(&list); //here is a double free error
-				while (get_redirect_type(&list) > 0)
-				{
-					if (rid_of_redirect_right(&list) == -1)
-					{
-						g_error_code = 1;
-						break ;
-					}
-				}
-				dup2(list.fd[0], STDIN_FILENO);
-				dup2(list.fd[1], STDOUT_FILENO);
 				//print_commands_and_words(&list);
-				if (list.fd[0] != -1 && list.fd[1] != -1
-					&& ft_strlen(list.command[0]))
-				{
-					if (list.pipe_right != -1)
-						start_pipe(&list/* , &command */);
-					else
-						start_cmd(&list);
-				}
+				// if (list.fd[0] != -1 && list.fd[1] != -1
+				// 	&& ft_strlen(list.command[0]))
+				get_normal_array(&list);
+				//print_commands_and_words(&list);
+				start_pipe(&list, envp);
 			}
 			else
 			{
@@ -180,7 +186,7 @@ int	main(int argc, char **argv, char **envp)
 				write(1, "bash: syntax error near unexpected token `newline'\n", 52);
 			}
 			//free (string);
-			set_default_fd(&list);
+			set_default_fd();
 			free_cmd(&list);
 			printf("All good here2\n");
 			// int	i = 0;
