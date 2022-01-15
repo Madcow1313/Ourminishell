@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   start_cmd.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jmaryett <jmaryett@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/01/16 02:23:22 by jmaryett          #+#    #+#             */
+/*   Updated: 2022/01/16 02:25:12 by jmaryett         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../logic/logic.h"
 
 void	free_cmd(t_list_commands *cmd)
@@ -7,10 +19,9 @@ void	free_cmd(t_list_commands *cmd)
 	i = -1;
 	if (cmd->command)
 	{
-		while(cmd->command[++i])
+		while (cmd->command[++i])
 			free(cmd->command[i]);
 	}
-	//free(cmd->command);
 	cmd->command = NULL;
 	i = -1;
 	if (cmd->type)
@@ -24,7 +35,7 @@ int	count_pipes(t_list_commands *cmd)
 
 	count = 0;
 	i = 1;
-	while(cmd->command[i])
+	while (cmd->command[i])
 	{
 		if (cmd->command[i] && !ft_strcmp(cmd->command[i], "|"))
 			count++;
@@ -38,10 +49,9 @@ int	count_pipes(t_list_commands *cmd)
 
 void	check_start_cmd(t_list_commands *cmd)
 {	
-	cmd->redirect = 0;
 	t_opendir	open_dir;
 
-	
+	cmd->redirect = 0;
 	if (cmd->command[0] == NULL || !cmd->command)
 		return ;
 	else if (!check_pipe_semicol(cmd))
@@ -59,12 +69,9 @@ void	check_start_cmd(t_list_commands *cmd)
 }
 
 void	start_cmd(t_list_commands *cmd)
-{	
+{
 	ft_s_h();
-
 	check_start_cmd(cmd);
 	ft_putstr_fd("all good after exec2\n", 1);
-	//printf("All good here\n");
-	//free_cmd(cmd);
 	return ;
 }

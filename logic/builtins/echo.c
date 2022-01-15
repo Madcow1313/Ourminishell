@@ -6,7 +6,7 @@
 /*   By: jmaryett <jmaryett@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/13 17:37:58 by chudapak          #+#    #+#             */
-/*   Updated: 2022/01/16 00:29:32 by jmaryett         ###   ########.fr       */
+/*   Updated: 2022/01/16 01:12:38 by jmaryett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ static void	echo_without_newline(t_list_commands *cmd)
 			write(STDOUT_FILENO, " ", 1);
 		i++;
 	}
-	printf("cmd = %s\n",  cmd->command[0]);
 	return ;
 }
 
@@ -40,14 +39,12 @@ static void	echo_with_newline(t_list_commands *cmd)
 	int	j;
 
 	i = 1;
-	//if (!check_redir(cmd, STD_OUT)
-		//return ;
 	while (cmd->command[i])
 	{
 		j = 0;
 		while (cmd->command[i][j])
 		{
-			write(STDOUT_FILENO, &(cmd->command[i][j]), 1);//write(cmd->fd[1], &(cmd->command[i][j]), 1);
+			write(STDOUT_FILENO, &(cmd->command[i][j]), 1);
 			j++;
 		}
 		if (cmd->command[i + 1])
@@ -55,7 +52,6 @@ static void	echo_with_newline(t_list_commands *cmd)
 		i++;
 	}
 	write (STDOUT_FILENO, "\n", 1);
-	printf("cmd = %s\n",  cmd->command[0]);
 	return ;
 }
 

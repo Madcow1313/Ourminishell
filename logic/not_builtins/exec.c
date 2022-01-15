@@ -6,7 +6,7 @@
 /*   By: jmaryett <jmaryett@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/13 18:40:15 by chudapak          #+#    #+#             */
-/*   Updated: 2022/01/16 00:22:15 by jmaryett         ###   ########.fr       */
+/*   Updated: 2022/01/16 01:46:19 by jmaryett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,23 +17,31 @@ static void	call_exec(char *file_path, t_list_commands *cmd)
 	if (execve(file_path, cmd->command, cmd->env_vars) == -1)
 	{
 		g_error_code = errno;
-		exec_error(cmd/* , file_path */);
+		exec_error(cmd);
 		return ;
 	}
 	g_error_code = 0;
 }
 
-
 char	*check_binary(t_list_commands *cmd)
 {
 	char	*file_path;
 
-	if ((cmd->command[0][0]== '.' && cmd->command[0][1] == '/')
+	if ((cmd->command[0][0] == '.' && cmd->command[0][1] == '/')
 		|| cmd->command[0][0] == '/')
 		file_path = ft_strdup(cmd->command[0]);
-	else if (cmd->command[0][0] == '.' 
+	else if (cmd->command[0][0] == '.'
 		&& cmd->command[0][1] == '.'
 		&& cmd->command[0][2] == '/')
+		file_path = ft_strdup(cmd->command[0]);
+	else
+		file_path = NULL;
+	return (file_path);
+}
+
+char	*keep_searching_path(char *file_path, t_list_commands *cmd)
+{
+	if (is_command_executable(cmd))
 		file_path = ft_strdup(cmd->command[0]);
 	else
 		file_path = NULL;
@@ -47,15 +55,9 @@ void	exec(t_list_commands *cmd, t_opendir *open_dir)
 
 	file_path = check_binary(cmd);
 	if (!file_path)
-	{
-		if (is_command_executable(cmd))
-			file_path = ft_strdup(cmd->command[0]);
-		else
-			file_path = NULL;
-	}
+		file_path = keep_searching_path(file_path, cmd);
 	if (!file_path)
 		file_path = get_binary_from_path(cmd, open_dir);
-	printf("file_path = %s\n", file_path);
 	if (file_path)
 	{
 		pid = fork();
@@ -70,9 +72,7 @@ void	exec(t_list_commands *cmd, t_opendir *open_dir)
 			ft_putstr_fd("Can't execute command, fork failed\n", STD_ERROR);
 	}
 	else
-		{printf("file_path = %s\n", file_path);
-		puterror_exec("bash: ", cmd->command[0], ": command not found", 127);} //command_error(cmd->command[0]);
+		puterror_exec("bash: ", cmd->command[0], ": command not found", 127);
 	if (file_path)
 		free(file_path);
-	ft_putstr_fd("all good after exe\n", 1);
 }

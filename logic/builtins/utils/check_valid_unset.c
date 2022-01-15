@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_valid_unset.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: chudapak <chudapak@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jmaryett <jmaryett@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/13 18:30:14 by chudapak          #+#    #+#             */
-/*   Updated: 2022/01/13 18:30:14 by chudapak         ###   ########.fr       */
+/*   Updated: 2022/01/16 01:25:52 by jmaryett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,11 +39,6 @@ static char	**alloc_unset_arr(t_list_commands *cmd, char **new_env)
 			|| !wrong_symbols(cmd->command[i]))
 			continue ;
 		new_env[id] = cmd->command[i];
-		//if (!new_env[id])
-		// {	
-		// 	malloc_error(new_env);
-		// 	return (new_env);
-		// }
 		id++;
 	}
 	new_env[id] = NULL;

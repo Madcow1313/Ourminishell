@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_replace_envp.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: chudapak <chudapak@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jmaryett <jmaryett@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/13 18:18:48 by chudapak          #+#    #+#             */
-/*   Updated: 2022/01/13 18:18:49 by chudapak         ###   ########.fr       */
+/*   Updated: 2022/01/16 01:26:28 by jmaryett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,5 +113,3 @@ char	**check_replace_env(char **old_env, char **new_env, int len)
 	result = join_ostatok(old_env, new_env, len_after_check_replace, len);
 	return (result);
 }
-	// printf("new_env[i] after replace = %s\n", new_env[i]);
-	// printf("len aftercheck replace = %d\n", len_after_check_replace);

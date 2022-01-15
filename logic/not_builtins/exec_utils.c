@@ -6,7 +6,7 @@
 /*   By: jmaryett <jmaryett@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/13 18:42:21 by chudapak          #+#    #+#             */
-/*   Updated: 2022/01/15 16:40:13 by jmaryett         ###   ########.fr       */
+/*   Updated: 2022/01/16 02:08:06 by jmaryett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,19 +69,17 @@ int	is_command_executable(t_list_commands *cmd)
 {
 	if (is_directory(cmd->command[0]))
 	{
-		g_error_code = 126;//puterror_exec(NULL, cmd->command[0], ": is a directory", 126);
+		g_error_code = 126;
 		return (FALSE);
 	}
 	else if (!is_file_exists(cmd->command[0]))
 	{
-		//puterror_exec(NULL, cmd->command[0],
-		//	": No such file or directory", 127);
 		g_error_code = 127;
 		return (FALSE);
 	}
 	else if (!has_execute_permission(cmd->command[0]))
 	{
-		g_error_code = 126; //puterror_exec(NULL, cmd->command[0], ": Permission denied", 126);
+		g_error_code = 126;
 		return (FALSE);
 	}
 	return (TRUE);
