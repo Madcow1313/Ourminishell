@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: chudapak <chudapak@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jmaryett <jmaryett@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/13 17:41:53 by chudapak          #+#    #+#             */
-/*   Updated: 2022/01/13 17:41:54 by chudapak         ###   ########.fr       */
+/*   Updated: 2022/01/15 22:10:35 by jmaryett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	process_pwd(t_list_commands *cmd)
 		ft_putstr_fd(strerror(g_error_code), STD_ERROR);
 	else
 		g_error_code = 0;
-	ft_putendl_fd(pwd, cmd->fd[1]);
+	ft_putendl_fd(pwd, STDOUT_FILENO);
 	free(pwd);
 	return ;
 }
