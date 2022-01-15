@@ -63,6 +63,7 @@ void	start_cmd(t_list_commands *cmd)
 	ft_s_h();
 
 	check_start_cmd(cmd);
+	ft_putstr_fd("all good after exec2\n", 1);
 	//printf("All good here\n");
 	//free_cmd(cmd);
 	return ;

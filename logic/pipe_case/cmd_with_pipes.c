@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_with_pipes.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmaryett <jmaryett@student.42.fr>          +#+  +:+       +#+        */
+/*   By: chudapak <chudapak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/15 22:43:59 by jmaryett          #+#    #+#             */
-/*   Updated: 2022/01/15 23:48:40 by jmaryett         ###   ########.fr       */
+/*   Updated: 2022/01/16 00:43:03 by chudapak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,10 +40,10 @@ void	check_left_pipe(t_list_commands *cmd)
 	{
 		dup2(cmd->fd[0], STDIN_FILENO);
 		close(cmd->fd[0]);
-		dup2(STD_OUT, STDOUT_FILENO);
+		dup2(cmd->stdout_copy, STDOUT_FILENO);
 	}
 	if (cmd->pipe_right == -1)
-		dup2(STD_IN, STDIN_FILENO);
+		dup2(cmd->stdin_copy, STDIN_FILENO);
 }
 
 void	cmd_with_pipes(t_list_commands *cmd, t_opendir *o_dir)
