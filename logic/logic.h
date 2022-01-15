@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   logic.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: chudapak <chudapak@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jmaryett <jmaryett@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/13 18:49:58 by chudapak          #+#    #+#             */
-/*   Updated: 2022/01/14 18:37:12 by chudapak         ###   ########.fr       */
+/*   Updated: 2022/01/15 16:34:03 by jmaryett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ void	export_errors(char *str);
 void	malloc_error(char **s);
 void	command_error(char *s);
 void	exec_error(t_list_commands *cmd/* , char *file_path */);
-int	puterror_exec(char *s1, char *s2, char *s3, int code);
+int		puterror_exec(char *s1, char *s2, char *s3, int code);
 
 //starting shell func
 
@@ -115,7 +115,7 @@ int		ft_cmprcmd(const char *string1, const char *string2);
 
 void	cmd_with_pipes(t_list_commands *cmd);
 bool	our_builtin(char *command);
-int		ft_strcmp(const char *s1, const char *s2);
+//int		ft_strcmp(const char *s1, const char *s2);
 void	manage_out_pipe(t_list_commands *cmd);
 void	manage_in_pipe(t_list_commands *cmd);
 

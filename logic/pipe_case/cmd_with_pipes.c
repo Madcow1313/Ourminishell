@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_with_pipes.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: chudapak <chudapak@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jmaryett <jmaryett@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/13 18:43:50 by chudapak          #+#    #+#             */
-/*   Updated: 2022/01/14 21:48:03 by chudapak         ###   ########.fr       */
+/*   Updated: 2022/01/15 16:00:21 by jmaryett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,8 @@
 void	cmd_with_pipes(t_list_commands *cmd)
 {
 	t_opendir	o_dir;
-	cmd->stdout_copy = dup(cmd->fd[1]);
-	cmd->stdin_copy = dup(cmd->fd[0]);
+	cmd->stdout_copy = dup(STD_OUT);
+	cmd->stdin_copy = dup(STD_IN);
 
 	if (pipe(cmd->fd) == -1)
 	{

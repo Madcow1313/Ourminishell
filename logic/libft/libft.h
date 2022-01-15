@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: chudapak <chudapak@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jmaryett <jmaryett@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/13 18:36:44 by chudapak          #+#    #+#             */
-/*   Updated: 2022/01/13 18:36:44 by chudapak         ###   ########.fr       */
+/*   Updated: 2022/01/15 16:27:55 by jmaryett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ char	**ft_split(char const *s, char c);
 char	*ft_strdup(const char *str);
 //char	*ft_strjoin(char *s1, char *s2);
 char	*ft_strmapi(char const *s, char (*f)(unsigned int, char));
+int		ft_strcmp(const char *s1, const char *s2);
 char	*ft_strnstr(const char *haystak, const char *needle, size_t len);
 char	*ft_strrchr(const char *str, int ch);
 char	*ft_strtrim(char *s1, char *set);

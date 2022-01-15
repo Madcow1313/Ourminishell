@@ -41,7 +41,9 @@ HEADER = ./simple_parser/parser.h \
 
 INCLUDE = -I./simple_parser/  -I/usr/local/opt/readline/include
 
-LIB_MAC = -L/Users/$(USER)/.brew/Cellar/readline/8.1.1/lib/
+#LIB_MAC = -L/Users/$(USER)/.brew/Cellar/readline/8.1.1/lib/
+
+LIB_MAC = -L/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/readline/
 
 #LIB_MAC = -L/usr/local/opt/readline/include -I./source/
 
@@ -57,13 +59,13 @@ $(LIBA): $(LIBA_C) $(LIBA_H)
 			cd ./logic/libft; \
 			make clean
 
-#$(NAME): $(LIBA) $(OBJ) $(HEADER)
-#		$(CC) $(CFLAGS) $(INCLUDE) $(OBJ) $(LIBA) $(LFLAGS) -o $(NAME) -lreadline $(LIB_MAC)
+$(NAME): $(LIBA) $(OBJ) $(HEADER)
+		$(CC) $(CFLAGS) $(INCLUDE) $(OBJ) $(LIBA) $(LFLAGS) -o $(NAME) -lreadline $(LIB_MAC)
 #		stty -echoctl
 
-$(NAME): $(LIBA) $(OBJ) $(HEADER)
-		$(CC) $(CFLAGS) $(INCLUDE) $(OBJ) $(LIBA) $(LFLAGS) -o $(NAME) -lreadline $(LIB_MAC)	
-		stty -echoctl
+#$(NAME): $(LIBA) $(OBJ) $(HEADER)
+#		$(CC) $(CFLAGS) $(INCLUDE) $(OBJ) $(LIBA) $(LFLAGS) -o $(NAME) -lreadline $(LIB_MAC)-ltermcap
+#		stty -echoctl
 		
 #-fsanitize=address
 
