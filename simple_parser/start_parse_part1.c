@@ -149,14 +149,14 @@ int	start_all(t_list_commands *list, t_command *command, size_t *i, int ret)
 		|| list->type[list->number] == SEMICOLON)
 	{
 		ret = get_pipe(list, list->type[list->number]);
-		i += 1;
+		*i += 1;
 	}
 	else if (list->type[list->number] == SINGLE_QM
 		|| list->type[list->number] == DOUBLE_QM)
 	{
 		ret = handle_quotes(list, command, list->type[list->number], i);
 		ret = proc_quotes(list);
-		i += 1;
+		*i += 1;
 	}
 	else if (list->type[list->number] >= REDIRECT_RIGHT
 		&& list->type[list->number] <= REDIRECT_AND_APPEND)
