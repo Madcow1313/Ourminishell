@@ -109,6 +109,7 @@ char	*get_env_var_value(char **env_vars, char *string)
 					string = env_vars[i] + size + 1;
 					new_string = ft_strjoin(string, temp);
 					//free (string);
+					//free (temp);
 					return (new_string);
 				}
 			}
@@ -152,7 +153,7 @@ char	*get_prefix_for_env(char **env_vars, char *string)
 	if (temp)
 		free (temp);
 	/*double free*/
-	// if (temp2 && ft_strlen(temp2) > 0)
-	// 	free (temp2);
+	if (temp2 && ft_strlen(temp2) > 0)
+		free (temp2);
 	return (new_string);
 }

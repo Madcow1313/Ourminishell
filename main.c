@@ -134,56 +134,60 @@ int	main(int argc, char **argv, char **envp)
 		string = (readline("minishell$>"));
 		if (!string)
 			exit(0);//free_and_exit(&command, &list, -1);
-		add_history(string);
-		get_full_command(string, &command);
-		if (prepare_list(&list, &command) == -1)
-			exit (0);
-		if (start_parse(&command, &list) == NULL)
-			exit (0);
-		if (!delete_quotes(&list))
-			exit(EXIT_FAILURE);
-		//print_commands_and_words(&list);
-		if (!check_redirects(&list))
+		if (ft_strlen(string))
 		{
+			add_history(string);
+			get_full_command(string, &command);
+			if (prepare_list(&list, &command) == -1)
+				exit (0);
+			if (start_parse(&command, &list) == NULL)
+				exit (0);
+			if (!delete_quotes(&list))
+				exit(EXIT_FAILURE);
 			//print_commands_and_words(&list);
-			get_normal_array(&list); //here is a double free error
-			while (get_redirect_type(&list) > 0)
+			if (!check_redirects(&list))
 			{
-				if (rid_of_redirect_right(&list) == -1)
+				//print_commands_and_words(&list);
+				get_normal_array(&list); //here is a double free error
+				while (get_redirect_type(&list) > 0)
 				{
-					g_error_code = 1;
-					break ;
+					if (rid_of_redirect_right(&list) == -1)
+					{
+						g_error_code = 1;
+						break ;
+					}
+				}
+				dup2(list.fd[0], STDIN_FILENO);
+				dup2(list.fd[1], STDOUT_FILENO);
+				//print_commands_and_words(&list);
+				if (list.fd[0] != -1 && list.fd[1] != -1
+					&& ft_strlen(list.command[0]))
+				{
+					if (list.pipe_right != -1)
+						start_pipe(&list/* , &command */);
+					else
+						start_cmd(&list);
 				}
 			}
-			dup2(list.fd[0], STDIN_FILENO);
-			dup2(list.fd[1], STDOUT_FILENO);
-			//print_commands_and_words(&list);
-			if (list.fd[0] != -1 && list.fd[1] != -1)
+			else
 			{
-				if (list.pipe_right != -1)
-					start_pipe(&list/* , &command */);
-				else
-					start_cmd(&list);
+				g_error_code = 2;
+				write(1, "bash: syntax error near unexpected token `newline'\n", 52);
 			}
+			//free (string);
+			set_default_fd(&list);
+			free_cmd(&list);
+			printf("All good here2\n");
+			// int	i = 0;
+			// while (i < list.number && list.command[i])
+			// {
+			// 	if (list.command[i])
+			// 		free (list.command[i]);
+			// 	i++;
+			// }
+			// free (list.command);
+			// free (list.type);
 		}
-		else
-		{
-			g_error_code = 2;
-			write(1, "bash: syntax error near unexpected token `newline'\n", 52);
-		}
-		//free (string);
-		set_default_fd(&list);
-		//free_cmd(&list);
-		printf("All good here2\n");
-		// int	i = 0;
-		// while (i < list.number && list.command[i])
-		// {
-		// 	if (list.command[i])
-		// 		free (list.command[i]);
-		// 	i++;
-		// }
-		// free (list.command);
-		// free (list.type);
 	}
 		//print_commands_and_words(&list);
 	//}

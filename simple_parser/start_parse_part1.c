@@ -140,6 +140,35 @@ int	check_first_cmd(t_list_commands *list, t_command *command)
 	return (1);
 }
 
+int	start_all(t_list_commands *list, t_command *command, size_t *i, int ret)
+{
+	list->type[list->number] = search_for_type(command, *i);
+	if (list->type[list->number] == BUILT_IN)
+		ret = get_built_in_cmd(command, list, i);
+	else if (list->type[list->number] == PIPE
+		|| list->type[list->number] == SEMICOLON)
+	{
+		ret = get_pipe(list, list->type[list->number]);
+		i += 1;
+	}
+	else if (list->type[list->number] == SINGLE_QM
+		|| list->type[list->number] == DOUBLE_QM)
+	{
+		ret = handle_quotes(list, command, list->type[list->number], i);
+		ret = proc_quotes(list);
+		i += 1;
+	}
+	else if (list->type[list->number] >= REDIRECT_RIGHT
+		&& list->type[list->number] <= REDIRECT_AND_APPEND)
+			ret = handle_redirects(list, list->type[list->number], i);
+	else if (list->type[list->number] == ENVIRONMENT_VAR)
+	{
+		get_built_in_cmd(command, list, i);
+		proc_envp(list);
+	}
+	return (ret);
+}
+
 t_list_commands	*start_parse(t_command *command, t_list_commands *list)
 {
 	size_t	i;
@@ -148,30 +177,7 @@ t_list_commands	*start_parse(t_command *command, t_list_commands *list)
 	i = 0;
 	while (i < command->len && command->word[i] != '\0')
 	{
-		list->type[list->number] = search_for_type(command, i);
-		if (list->type[list->number] == BUILT_IN)
-			ret = get_built_in_cmd(command, list, &i);
-		else if (list->type[list->number] == PIPE
-			|| list->type[list->number] == SEMICOLON)
-		{
-			ret = get_pipe(list, list->type[list->number]);
-			i++;
-		}
-		else if (list->type[list->number] == SINGLE_QM
-			|| list->type[list->number] == DOUBLE_QM)
-		{
-			ret = handle_quotes(list, command, list->type[list->number], &i);
-			ret = proc_quotes(list);
-			i++;
-		}
-		else if (list->type[list->number] >= REDIRECT_RIGHT
-			&& list->type[list->number] <= REDIRECT_AND_APPEND)
-				ret = handle_redirects(list, list->type[list->number], &i);
-		else if (list->type[list->number] == ENVIRONMENT_VAR)
-		{
-			get_built_in_cmd(command, list, &i);
-			proc_envp(list);
-		}
+		ret = start_all(list, command, &i, ret);
 		if (list->number == 1 && list->type[0] == ENVIRONMENT_VAR && ret)
 			ret = check_first_cmd(list, command);
 		if (command->word[i] == ' ' && ret)

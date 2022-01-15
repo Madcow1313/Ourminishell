@@ -83,6 +83,7 @@ void	set_default_fd(t_list_commands *list)
 	dup2(ttyfd, STDIN_FILENO);
 	close(ttyfd);
 	dup2(list->fd[1], list->old_stdout);
+	//list->fd[1] = list->fd[1];
 }
 
 int	get_redirect_type(t_list_commands *list)
@@ -130,8 +131,7 @@ int	procedure_first_red(t_list_commands *list)
 		if (!list->command[i])
 			return (0);
 		list->type[i] = BUILT_IN;
-		// if (temp)
-		// 	free (temp);
+		free (temp);
 		i++;
 	}
 	return (1);
@@ -164,8 +164,6 @@ int	procedure_repoints_part_2(t_list_commands *list, int i, char *temp)
 			free (temp);
 		}
 	}
-	while (i <= list->number)
-		free (list->command[i++]);
 	return (1);
 }
 
@@ -173,7 +171,7 @@ int	procedure_repoints(t_list_commands *list, int i)
 {
 	char	*temp;
 
-	temp = NULL;
+	//temp = NULL;
 	if (list->command[i])
 	{
 		if (list->command[i + 1])

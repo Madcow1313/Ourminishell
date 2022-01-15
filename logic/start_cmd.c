@@ -41,7 +41,10 @@ void	check_start_cmd(t_list_commands *cmd)
 	if (cmd->command[0] == NULL || !cmd->command)
 		return ;
 	if (!check_pipe_semicol(cmd))
+	{
+		write(1, "here\n", 5);
 		return ;
+	}
 	if (cmd->pipe_right == -1
 		&& cmd->pipe_left == -1)
 		single_command(cmd);
