@@ -1,7 +1,9 @@
 #include "parser.h"
 #include "../logic/logic.h"
 
-void	get_here_doc(char *end, t_list_commands *list)
+int	get_fd_left_redirects(t_list_commands *list, char *path, int type);
+
+int	get_here_doc(char *end, t_list_commands *list)
 {
 	char	*line;
 	char	*temp;
@@ -11,7 +13,9 @@ void	get_here_doc(char *end, t_list_commands *list)
 	fd = open(".here_doc_minishell", O_RDWR | O_TRUNC | O_CREAT, S_IRWXU);
 	while (1)
 	{
-		line = readline(">");
+		line = readline("heredoc>");
+		if (!line)
+			break ;
 		temp = line;
 		new_line = get_prefix_for_env(list->env_vars, line);
 		line = ft_strdup(new_line);
@@ -27,7 +31,9 @@ void	get_here_doc(char *end, t_list_commands *list)
 		free(line);
 		free (new_line);
 	}
-	close(fd);
+	close (fd);
+	get_fd_left_redirects(list, ".here_doc_minishell", REDIRECT_LEFT);
+	return (list->fd[0]);
 }
 
 /*i have no idea what should i do
@@ -36,13 +42,17 @@ int	get_fd_left_redirects(t_list_commands *list, char *path, int type)
 {
 	int	fd_to_apply;
 
+	list->old_stdin = dup(STDIN_FILENO);
+	list->old_stdout = dup(STDOUT_FILENO);
 	fd_to_apply = 0;
 	if (type == REDIRECT_LEFT)
 	{
 		fd_to_apply = open(path, O_RDONLY);
-		dup2(fd_to_apply, STDIN_FILENO);
+		if (fd_to_apply < 0)
+			return (-1);
+		//dup2(fd_to_apply, STDIN_FILENO);
 	}
-	//close(list->fd[0]);
+	list->fd[0] = fd_to_apply;
 	return (list->fd[0]);
 }
 
@@ -50,15 +60,17 @@ int	get_fd_right_redirects(t_list_commands *list, char *path, int type)
 {
 	int	fd_to_apply;
 
+	list->old_stdin = dup(STDIN_FILENO);
+	list->old_stdout = dup(STDOUT_FILENO);
 	fd_to_apply = 1;
 	if (type == REDIRECT_RIGHT)
 		fd_to_apply = open(path, O_RDWR | O_TRUNC | O_CREAT, S_IRWXU);
 	else if (type == REDIRECT_AND_APPEND)
 		fd_to_apply = open(path, O_RDWR | O_APPEND | O_CREAT, S_IRWXU);
 	if (fd_to_apply < 0)
-		return (0);
-	// printf("fd of file %d\n", fd_to_apply);
-	dup2(fd_to_apply, list->fd[1]);
+		return (-1);
+	//dup2(fd_to_apply, list->fd[1]);
+	list->fd[1] = fd_to_apply;
 	return (list->fd[1]);
 }
 
@@ -127,35 +139,33 @@ int	procedure_first_red(t_list_commands *list)
 
 int	procedure_repoints_part_2(t_list_commands *list, int i, char *temp)
 {
-	if (list->command[i + 1])
+	while (i < list->number)
 	{
-		i++;
-		while (i < list->number)
+		if (!list->command[i + 2])
 		{
-			if (!list->command[i + 2])
-			{
-				temp = list->command[i];
-				list->command[i]
-					= ft_strdup(repoint(list->command[i + 1],
-							NULL, list->type, i));
-				if (!list->command[i])
-					return (0);
-				free (temp);
-				break ;
-			}
-			else
-			{
-				temp = list->command[i];
-				list->command[i]
-					= ft_strdup(repoint(list->command[i + 1],
-							list->command[i + 2], list->type, i));
-				if (!list->command[i])
-					return (0);
-				i++;
-				free (temp);
-			}
+			temp = list->command[i];
+			list->command[i]
+				= ft_strdup(repoint(list->command[i + 1],
+						NULL, list->type, i));
+			if (!list->command[i])
+				return (0);
+			free (temp);
+			break ;
+		}
+		else
+		{
+			temp = list->command[i];
+			list->command[i]
+				= ft_strdup(repoint(list->command[i + 1],
+						list->command[i + 2], list->type, i));
+			if (!list->command[i])
+				return (0);
+			i++;
+			free (temp);
 		}
 	}
+	while (i <= list->number)
+		free (list->command[i++]);
 	return (1);
 }
 
@@ -179,8 +189,16 @@ int	procedure_repoints(t_list_commands *list, int i)
 		else
 			return (-1);
 	}
-	procedure_repoints_part_2(list, i, temp);
+	if (list->command[i + 1])
+		procedure_repoints_part_2(list, i + 1, temp);
 	return (1);
+}
+
+int	throw_fd_error(t_list_commands *list, int i)
+{
+	write(1, "bash :", 7);
+	perror(list->command[i + 1]);
+	return (-1);
 }
 
 /*a lot of leaks, should be.
@@ -193,8 +211,6 @@ int	rid_of_redirect_right(t_list_commands *list)
 	int	i;
 
 	i = 0;
-	list->old_stdin = dup(STDIN_FILENO);
-	list->old_stdout = dup(STDOUT_FILENO);
 	while ((list->type[i] != REDIRECT_RIGHT && list->type[i] != REDIRECT_LEFT
 			&& list->type[i] != REDIRECT_AND_APPEND
 			&& list->type[i] != HERE_DOC)
@@ -207,7 +223,9 @@ int	rid_of_redirect_right(t_list_commands *list)
 		list->fd[0]
 			= get_fd_left_redirects(list, list->command[i + 1], list->type[i]);
 	else if (list->type[i] == HERE_DOC)
-		get_here_doc(list->command[i + 1], list);
+		list->fd[0] = get_here_doc(list->command[i + 1], list);
+	if (list->fd[0] == -1 || list->fd[1] == -1)
+		return (throw_fd_error(list, i));
 	if (list->number <= 3 && list->type[0] >= REDIRECT_RIGHT
 		&& list->type[0] <= REDIRECT_AND_APPEND)
 		procedure_first_red(list);

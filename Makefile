@@ -41,9 +41,9 @@ HEADER = ./simple_parser/parser.h \
 
 INCLUDE = -I./simple_parser/  -I/usr/local/opt/readline/include
 
-#LIB_MAC = -L/Users/$(USER)/.brew/Cellar/readline/8.1.1/lib/
+LIB_MAC = -L/Users/$(USER)/.brew/Cellar/readline/8.1.1/lib/
 
-LIB_MAC = -L/usr/local/opt/readline/include -I./source/
+#LIB_MAC = -L/usr/local/opt/readline/include -I./source/
 
 .c.o: ${HEADER}
 		${CC} ${INCLUDE} ${CFLAGS} -c $< -o ${<:.c=.o}
@@ -62,7 +62,7 @@ $(LIBA): $(LIBA_C) $(LIBA_H)
 #		stty -echoctl
 
 $(NAME): $(LIBA) $(OBJ) $(HEADER)
-		$(CC) $(CFLAGS) $(INCLUDE) $(OBJ) $(LIBA) $(LFLAGS) -o $(NAME) -lreadline $(LIB_MAC)
+		$(CC) $(CFLAGS) $(INCLUDE) $(OBJ) $(LIBA) $(LFLAGS) -o $(NAME) -lreadline $(LIB_MAC)	
 		stty -echoctl
 		
 #-fsanitize=address

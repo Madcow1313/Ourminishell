@@ -3,15 +3,16 @@
 
 int	free_and_exit(t_command *command, t_list_commands *list, int ret)
 {
-	(void)command;
 	int	i;
 
+	(void)command;
 	i = -1;
 	if (list->env_vars[++i])
 	{
 		while (list->env_vars[i++])
-			free(list->env_vars);
+			free(list->env_vars[i]);
 	}
+	free (list->env_vars);
 	if (list->type)
 		free(list->type);
 	i = 0;
@@ -53,76 +54,74 @@ int	check_redirects(t_list_commands *list)
 			&& list->type[i - 1] <= REDIRECT_AND_APPEND
 			&& list->command[i] && !ft_strlen(list->command[i]))
 			return (1);
-		else 
+		else
 			return (0);
 	}
 	return (0);
 }
 
-int	start_pipe(t_list_commands *list/* , t_command *command */)
+void	get_pipe_fd(t_list_commands *list, t_list_commands *temp)
 {
-	int	i;
-	int j;
-	t_list_commands *temp;
-	
-	i = 0;
-	j = 0;
-	temp = malloc(sizeof(t_list_commands));
+	temp->p = list->p;
 	temp->type = list->type;
 	temp->pipe_left = list->pipe_left;
 	temp->pipe_right = list->pipe_right;
+	dup2(list->fd[0], STDIN_FILENO);
+	dup2(list->fd[1], STDOUT_FILENO);
+	temp->fd[0] = list->fd[0];
+	temp->fd[1] = list->fd[1];
+	start_cmd(temp);
+	if (list->pipe_right)
+	{
+		list->pipe_right--;
+		list->pipe_left++;
+	}
+}
+
+void	free_temp(t_list_commands *temp, int j)
+{
+	while (j)
+	{
+		free (temp->command[j]);
+		j--;
+	}
+}
+
+int	start_pipe(t_list_commands *list)
+{
+	int					i;
+	int					j;
+	t_list_commands		*temp;
+
+	i = 0;
+	j = 0;
+	temp = malloc(sizeof(t_list_commands));
 	temp->command = malloc(sizeof(char *) * (list->number + 1));
-	temp->p = list->p;
 	if (!temp)
 		return (0);
-		//print_commands_and_words(list);
 	while (list->command[i] && i < list->number - 1)
 	{
 		while (list->command[i] && list->type[i] != PIPE && i < list->number)
 		{
-			// if (list->command[i])
-			// 	printf("__ %s\n", list->command[i]);
 			if (list->command[i])
-			{
-				temp->command[j] = ft_strdup(list->command[i]);
-				//write(1, "here0.35\n", 9);
-				//printf("** %s\n", temp->command[j]);
-				j++;
-			}
+				temp->command[j++] = ft_strdup(list->command[i]);
 			i++;
 		}
-		//write(1, "here0.5\n", 8);
-		temp->fd[0] = list->fd[0];
-		temp->fd[1] = list->fd[1];
 		temp->command[j] = NULL;
-		//print_commands_and_words(temp);
-		//write(1, "here1\n", 6);
-		start_cmd(temp);
-		//write(1, "here2\n", 6);
-		if (list->pipe_right)
-		{
-			list->pipe_right--;
-			list->pipe_left++;
-		}
+		get_pipe_fd(list, temp);
 		i++;
-		// while (j)
-		// {
-		// 	free (temp->command[j]);
-		// 	j--;
-		// }
 		j = 0;
 	}
-	//free (temp);
+	free (temp);
 	return (0);
 }
-
 
 /*free and exit doesn't work, because no malloc*/
 int	main(int argc, char **argv, char **envp)
 {
-	t_command	command;
-	t_list_commands list;
-	const char 	*string;
+	t_command		command;
+	t_list_commands	list;
+	char			*string;
 
 	if (argc && argv)
 		duplicate_envp(envp, &list);
@@ -149,19 +148,29 @@ int	main(int argc, char **argv, char **envp)
 			//print_commands_and_words(&list);
 			get_normal_array(&list); //here is a double free error
 			while (get_redirect_type(&list) > 0)
-				rid_of_redirect_right(&list);
-			//print_commands_and_words(&list);
-			if (list.pipe_right != -1)
-				start_pipe(&list/* , &command */);
-			else
-				start_cmd(&list);
+			{
+				if (rid_of_redirect_right(&list) == -1)
+				{
+					g_error_code = 1;
+					break ;
+				}
+			}
+			dup2(list.fd[0], STDIN_FILENO);
+			dup2(list.fd[1], STDOUT_FILENO);
+			if (list.fd[0] != -1 && list.fd[1] != -1)
+			{
+				if (list.pipe_right != -1)
+					start_pipe(&list/* , &command */);
+				else
+					start_cmd(&list);
+			}
 		}
 		else
 		{
 			g_error_code = 2;
 			write(1, "bash: syntax error near unexpected token `newline'\n", 52);
 		}
-
+		free (string);
 		set_default_fd(&list);
 		//free_cmd(&list);
 		printf("All good here2\n");

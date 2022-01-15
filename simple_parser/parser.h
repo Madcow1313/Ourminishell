@@ -56,7 +56,8 @@ typedef struct s_list_commands
 	int			old_stdin;
 } 			t_list_commands;
 
-int	ft_s_h();
+int	ft_s_h(void);
+void	ft_s_h_heredoc(void);
 
 void	print_shit();
 /*some libft utils*/
@@ -86,10 +87,12 @@ int	prepare_list(t_list_commands *list, t_command *command);
 void	print_commands_and_words(t_list_commands *list);
 
 /*some redirect functions*/
-void	get_here_doc(char *end, t_list_commands *list);
+int	get_here_doc(char *end, t_list_commands *list);
 int	get_redirect_type(t_list_commands *list);
 int	rid_of_redirect_right(t_list_commands *list);
 void	set_default_fd(t_list_commands *list);
+
+void		rl_replace_line(const char *text, int clear_undo);
 
 /*shitty fucntion to make it more good loking*/
 char	**get_normal_array(t_list_commands *list);
