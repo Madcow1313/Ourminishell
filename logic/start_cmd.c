@@ -50,8 +50,8 @@ void	check_start_cmd(t_list_commands *cmd)
 		cmd_with_pipes(cmd, &open_dir);
 	else if (cmd->redirect)
 		single_command(cmd, &open_dir);
-	else if (cmd->pipe_right == -1
-		&& cmd->pipe_left == -1)
+	else if (cmd->pipe_right <= 0
+		&& cmd->pipe_left <= 0)
 		single_command(cmd, &open_dir);
 	else
 		cmd_with_pipes(cmd, &open_dir);

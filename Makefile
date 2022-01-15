@@ -44,9 +44,9 @@ INCLUDE = -I./simple_parser/  -I/usr/local/opt/readline/include -I./logic/
 
 #LIB_MAC = -L/Users/$(USER)/.brew/Cellar/readline/8.1.1/lib/
 
-LIB_MAC = -L/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/readline/
+# LIB_MAC = -L/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/readline/
 
-# LIB_MAC = -L/usr/local/opt/readline/include -I./source/
+LIB_MAC = -L/usr/local/opt/readline/include -I./source/
 
 .c.o: ${HEADER}
 		${CC} ${INCLUDE} ${CFLAGS} -c $< -o ${<:.c=.o}

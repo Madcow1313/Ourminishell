@@ -6,7 +6,7 @@
 /*   By: chudapak <chudapak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/15 22:43:59 by jmaryett          #+#    #+#             */
-/*   Updated: 2022/01/16 00:43:03 by chudapak         ###   ########.fr       */
+/*   Updated: 2022/01/16 01:16:43 by chudapak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	open_pipes(t_list_commands *cmd)
 
 void	check_right_pipe(t_list_commands *cmd)
 {
-	if (cmd->pipe_right != -1)
+	if (cmd->pipe_right != 0)
 	{
 		open_pipes(cmd);
 		dup2(cmd->fd[1], STDOUT_FILENO);
@@ -36,13 +36,13 @@ void	check_right_pipe(t_list_commands *cmd)
 
 void	check_left_pipe(t_list_commands *cmd)
 {
-	if (cmd->pipe_right != -1)
+	if (cmd->pipe_right != 0)
 	{
 		dup2(cmd->fd[0], STDIN_FILENO);
 		close(cmd->fd[0]);
 		dup2(cmd->stdout_copy, STDOUT_FILENO);
 	}
-	if (cmd->pipe_right == -1)
+	if (cmd->pipe_right == 0)
 		dup2(cmd->stdin_copy, STDIN_FILENO);
 }
 
