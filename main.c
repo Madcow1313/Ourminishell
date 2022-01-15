@@ -105,6 +105,7 @@ int	start_pipe(t_list_commands *list, char **envp)
 	temp->type = malloc(sizeof(int *) * (list->p->len + 1));
 	duplicate_envp(envp, temp);
 	get_pipe_fd(list, temp);
+	temp->redirect = 0;
 	if (!temp)
 		return (0);
 	while (list->command[i] && i < list->number)
@@ -129,13 +130,18 @@ int	start_pipe(t_list_commands *list, char **envp)
 			temp->command[j++] = NULL;
 		 //here is a double free error
 		// get_pipe_fd(list, temp);
-		while (get_redirect_type(temp) > 0)
+		if (temp->redirect)
 		{
-			if (rid_of_redirect_right(temp) == -1)
+			while (get_redirect_type(temp) > 0)
 			{
-				g_error_code = 1;
-				break ;
+				if (rid_of_redirect_right(temp) == -1)
+				{
+					g_error_code = 1;
+					break ;
+				}
 			}
+			dup2(temp->fd[0], STDIN_FILENO);
+			dup2(temp->fd[1], STDOUT_FILENO);
 		}
 		// dup2(temp->fd[0], STDIN_FILENO);
 		// dup2(temp->fd[1], STDOUT_FILENO);
