@@ -6,7 +6,7 @@
 /*   By: jmaryett <jmaryett@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/13 18:49:58 by chudapak          #+#    #+#             */
-/*   Updated: 2022/01/15 16:34:03 by jmaryett         ###   ########.fr       */
+/*   Updated: 2022/01/15 16:37:38 by jmaryett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@
 # define STD_IN 0
 # define STD_OUT 1
 # define STD_ERROR 2
+# define TRUE 1
+# define FALSE 0
 
 /*structure for finding binaries in PATH*/
 typedef struct s_opendir
