@@ -6,7 +6,7 @@
 /*   By: jmaryett <jmaryett@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/13 17:41:05 by chudapak          #+#    #+#             */
-/*   Updated: 2022/01/15 18:43:14 by jmaryett         ###   ########.fr       */
+/*   Updated: 2022/01/15 19:10:59 by jmaryett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ void	process_export(t_list_commands *cmd)
 			cmd->env_vars = adding_new_env_var(cmd);
 		ft_putstr_fd("No sega in spaces2\n", 1);
 	}
-	else if (!cmd->command[1] || cmd->number == 1)
+	else if (!cmd->command[1] || cmd->number >= 1) //was just ==
 		{ft_putstr_fd("No sega here\n", 1); print_export_no_args(cmd); ft_putstr_fd("No sega here2\n", 1);}
 	return ;
 	// if (!cmd->command[1])

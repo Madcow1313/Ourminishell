@@ -68,8 +68,12 @@ void	get_pipe_fd(t_list_commands *list, t_list_commands *temp)
 	temp->pipe_right = list->pipe_right;
 	dup2(list->fd[0], STDIN_FILENO);
 	dup2(list->fd[1], STDOUT_FILENO);
+	list->stdin_copy = dup(list->fd[0]);
+	list->stdout_copy = dup(list->fd[1]);
 	temp->fd[0] = list->fd[0];
 	temp->fd[1] = list->fd[1];
+	temp->stdin_copy = list->stdin_copy;
+	temp->stdout_copy = list->stdout_copy;
 	start_cmd(temp);
 	if (list->pipe_right)
 	{
@@ -157,6 +161,8 @@ int	main(int argc, char **argv, char **envp)
 			}
 			dup2(list.fd[0], STDIN_FILENO);
 			dup2(list.fd[1], STDOUT_FILENO);
+			list.stdin_copy = dup(list.fd[0]);
+			list.stdout_copy = dup(list.fd[1]);
 			//print_commands_and_words(&list);
 			if (list.fd[0] != -1 && list.fd[1] != -1)
 			{
