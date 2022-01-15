@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   lexic_part2.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: wabathur <wabathur@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/01/16 01:10:06 by wabathur          #+#    #+#             */
+/*   Updated: 2022/01/16 01:10:06 by wabathur         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "parser.h"
 #include "../logic/logic.h"
 
@@ -44,14 +56,11 @@ int	search_for_type(t_command *command, int i)
 	return (BUILT_IN);
 }
 
-/*special symbols in first cycle are not working correctly*/
-int get_built_in_cmd(t_command *command, t_list_commands *list, size_t *i)
+size_t	count_size_built(t_command *command, size_t *i, int size)
 {
-	size_t size;
-
-	size = 0;
 	while (command->word[*i + size] != ' ' && command->word[*i + size] != '\0'
-		&& size <= command->len - *i && command->word[*i + size]
+		&& (unsigned long)size <= (command->len - *i)
+		&& command->word[*i + size]
 		&& command->word[*i + size] != '>' && command->word[*i + size] != '<'
 		&& command->word[*i + size] != '\"' && command->word[*i + size] != '\''
 		&& command->word[*i + size] != '|')
@@ -65,6 +74,16 @@ int get_built_in_cmd(t_command *command, t_list_commands *list, size_t *i)
 		else
 			size++;
 	}
+	return (size);
+}
+
+/*special symbols in first cycle are not working correctly*/
+int	get_built_in_cmd(t_command *command, t_list_commands *list, size_t *i)
+{
+	size_t	size;
+
+	size = 0;
+	size = count_size_built(command, i, size);
 	if (size == 0)
 	{
 		*i += 1;

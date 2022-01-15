@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   lexic_part3.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: wabathur <wabathur@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/01/16 01:11:15 by wabathur          #+#    #+#             */
+/*   Updated: 2022/01/16 01:11:16 by wabathur         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "parser.h"
 #include "../logic/logic.h"
 
@@ -50,46 +62,4 @@ int	handle_redirects(t_list_commands *list, int character, size_t *i)
 	list->command[list->number] = NULL;
 	free (temp);
 	return (1);
-}
-
-int	handle_relative_path(t_list_commands *list, t_command *command, size_t *i)
-{
-	size_t	size;
-
-	size = 0;
-	while (ft_strchr_parser("><$\"\'|", command->word[*i]) < 0 && *i < command->len
-		&& command->word[*i] != '\0' && command->word[*i + size] != ' ')
-	{
-		size++;
-		*i += 1;
-	}
-	list->command[list->number] = malloc(size + 1);
-	if (!list->command[list->number])
-		return (-1);
-	ft_strlcpy(list->command[list->number],
-		command->word + *i - size, size + 1);
-	list->type[list->number] = RELATIVE_PATH;
-	list->number += 1;
-	list->command[list->number] = NULL;
-	return (0);
-}
-
-int	handle_absolute_path(t_list_commands *list, t_command *command, size_t *i)
-{
-	size_t	size;
-
-	size = 0;
-	while (ft_strchr_parser("><$\"\'|\n", command->word[*i + size]) < 0
-		&& *i + size < command->len
-		&& command->word[*i + size] != '\0'
-		&& command->word[*i + size] != ' ')
-		size++;
-	list->command[list->number] = malloc(size + 1);
-	if (!list->command[list->number])
-		return (-1);
-	ft_strlcpy(list->command[list->number], command->word + *i, size + 1);
-	list->number += 1;
-	list->command[list->number] = NULL;
-	*i += size;
-	return (0);
 }

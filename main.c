@@ -128,6 +128,7 @@ int	start_pipe(t_list_commands *list, char **envp)
 		while (j < list->number)
 			temp->command[j++] = NULL;
 		 //here is a double free error
+		get_pipe_fd(list, temp);
 		while (get_redirect_type(temp) > 0)
 		{
 			if (rid_of_redirect_right(temp) == -1)
