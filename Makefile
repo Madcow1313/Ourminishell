@@ -26,8 +26,8 @@ SOURCE = main.c ./parser_utils/ft_strlen.c ./simple_parser/lexic_part1.c \
 		./logic/pipe_case/ft_strcmp.c ./logic/pipe_case/manage_pipes.c ./logic/pipe_case/our_builtin.c \
 		./logic/builtins/utils/compare_pwd.c ./logic/init_stdcopies_g_error.c \
 		./logic/builtins/utils/count_len_free_array.c ./logic/builtins/utils/fill_unset.c \
-		./simple_parser/start_parse_part1.c ./logic/builtins/utils/check_multiple_spaces.c
-		./simple_parser/start_parse_part1.c ./simple_parser/start_parse_part2.c \
+		./simple_parser/start_parse_part1.c ./logic/builtins/utils/check_multiple_spaces.c \
+		./simple_parser/start_parse_part2.c \
 		./simple_parser/command_adjusting_2.c ./simple_parser/get_descriptors_2.c \
 		./simple_parser/get_descriptors3.c
 

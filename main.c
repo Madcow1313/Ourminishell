@@ -16,8 +16,8 @@ int	free_and_exit(t_command *command, t_list_commands *list, int ret)
 	if (list->type)
 		free(list->type);
 	i = 0;
-	while (i++ < 2)
-		close(list->fd[i]);
+	// while (i++ < 2)
+	// 	close(list->fd[i]);
 	return (ret);
 }
 
@@ -160,6 +160,7 @@ int	start_pipe(t_list_commands *list, char **envp)
 		temp->redirect = 0;
 		temp->pipe_right--;
 	}
+	free_and_exit(temp->p, temp, 0);
 	free (temp);
 	return (0);
 }
@@ -225,7 +226,7 @@ int	main(int argc, char **argv, char **envp)
 	}
 		//print_commands_and_words(&list);
 	//}
-	//free_and_exit(&command, &list, 0);
+	free_and_exit(&command, &list, 0);
 	exit(0);
 	//return (0);
 }	
