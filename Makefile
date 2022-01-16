@@ -26,8 +26,8 @@ SOURCE = main.c ./parser_utils/ft_strlen.c ./simple_parser/lexic_part1.c \
 		./logic/pipe_case/ft_strcmp.c ./logic/pipe_case/manage_pipes.c ./logic/pipe_case/our_builtin.c \
 		./logic/builtins/utils/compare_pwd.c ./logic/init_stdcopies_g_error.c \
 		./logic/builtins/utils/count_len_free_array.c ./logic/builtins/utils/fill_unset.c \
-		./simple_parser/start_parse_part1.c ./logic/builtins/utils/check_multiple_spaces.c
-		./simple_parser/start_parse_part1.c ./simple_parser/start_parse_part2.c \
+		./simple_parser/start_parse_part1.c ./logic/builtins/utils/check_multiple_spaces.c \
+		./simple_parser/start_parse_part2.c \
 		./simple_parser/command_adjusting_2.c ./simple_parser/get_descriptors_2.c \
 		./simple_parser/get_descriptors3.c
 
@@ -46,9 +46,9 @@ INCLUDE = -I./simple_parser/  -I/usr/local/opt/readline/include -I./logic/
 
 #LIB_MAC = -L/Users/$(USER)/.brew/Cellar/readline/8.1.1/lib/
 
-# LIB_MAC = -L/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/readline/
+LIB_MAC = -L/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/readline/
 
-LIB_MAC = -L/usr/local/opt/readline/include -I./source/
+#LIB_MAC = -L/usr/local/opt/readline/include -I./source/
 
 .c.o: ${HEADER}
 		${CC} ${INCLUDE} ${CFLAGS} -c $< -o ${<:.c=.o}
@@ -64,7 +64,7 @@ $(LIBA): $(LIBA_C) $(LIBA_H)
 
 $(NAME): $(LIBA) $(OBJ) $(HEADER)
 		$(CC) $(CFLAGS) $(INCLUDE) $(OBJ) $(LIBA) $(LFLAGS) -o $(NAME) -lreadline $(LIB_MAC)
-#		stty -echoctl
+		stty -echoctl
 
 #$(NAME): $(LIBA) $(OBJ) $(HEADER)
 #		$(CC) $(CFLAGS) $(INCLUDE) $(OBJ) $(LIBA) $(LFLAGS) -o $(NAME) -lreadline $(LIB_MAC)-ltermcap

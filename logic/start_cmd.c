@@ -6,7 +6,7 @@
 /*   By: jmaryett <jmaryett@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/16 02:23:22 by jmaryett          #+#    #+#             */
-/*   Updated: 2022/01/16 02:25:12 by jmaryett         ###   ########.fr       */
+/*   Updated: 2022/01/16 02:31:28 by jmaryett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,5 @@ void	start_cmd(t_list_commands *cmd)
 {
 	ft_s_h();
 	check_start_cmd(cmd);
-	ft_putstr_fd("all good after exec2\n", 1);
 	return ;
 }
