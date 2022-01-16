@@ -6,7 +6,7 @@
 /*   By: jmaryett <jmaryett@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/13 17:37:58 by chudapak          #+#    #+#             */
-/*   Updated: 2022/01/16 01:12:38 by jmaryett         ###   ########.fr       */
+/*   Updated: 2022/01/16 03:13:17 by jmaryett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,4 +71,5 @@ void	process_echo(t_list_commands *cmd)
 	}
 	else
 		write(STDOUT_FILENO, "\n", 1);
+	g_error_code = 0;
 }

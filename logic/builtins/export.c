@@ -6,7 +6,7 @@
 /*   By: jmaryett <jmaryett@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/13 17:41:05 by chudapak          #+#    #+#             */
-/*   Updated: 2022/01/16 01:17:55 by jmaryett         ###   ########.fr       */
+/*   Updated: 2022/01/16 04:08:28 by jmaryett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,6 @@ void	process_export(t_list_commands *cmd)
 
 	i = 1;
 	only_spaces = 0;
-	g_error_code = 0;
 	if (cmd->command[1] != NULL && cmd->number > 1)
 	{
 		if (!check_multiple_spaces(cmd->command))
@@ -79,7 +78,8 @@ void	process_export(t_list_commands *cmd)
 		else
 			cmd->env_vars = adding_new_env_var(cmd);
 	}
-	else if (!cmd->command[1] || cmd->number >= 1)
+	else if (!cmd->command[1] || cmd->number == 1)
 		print_export_no_args(cmd);
+	g_error_code = 0;
 	return ;
 }

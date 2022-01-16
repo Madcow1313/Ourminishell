@@ -100,10 +100,11 @@ int	start_pipe(t_list_commands *list, char **envp)
 
 	i = 0;
 	j = 0;
+	(void)envp;
 	temp = malloc(sizeof(t_list_commands));
 	temp->command = malloc(sizeof(char *) * (list->p->len + 1));
 	temp->type = malloc(sizeof(int *) * (list->p->len + 1));
-	duplicate_envp(envp, temp);
+	duplicate_envp(list->env_vars, temp);
 	get_pipe_fd(list, temp);
 	temp->redirect = 0;
 	if (!temp)
@@ -159,6 +160,8 @@ int	start_pipe(t_list_commands *list, char **envp)
 		j = 0;
 		temp->redirect = 0;
 		temp->pipe_right--;
+		free_array(list->env_vars);
+		duplicate_envp(temp->env_vars, list);
 	}
 	free_and_exit(temp->p, temp, 0);
 	free (temp);
