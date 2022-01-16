@@ -16,8 +16,8 @@ int	free_and_exit(t_command *command, t_list_commands *list, int ret)
 	if (list->type)
 		free(list->type);
 	i = 0;
-	while (i++ < 2)
-		close(list->fd[i]);
+	// while (i++ < 2)
+	// 	close(list->fd[i]);
 	return (ret);
 }
 
@@ -105,6 +105,7 @@ int	start_pipe(t_list_commands *list, char **envp)
 	temp->type = malloc(sizeof(int *) * (list->p->len + 1));
 	duplicate_envp(envp, temp);
 	get_pipe_fd(list, temp);
+	temp->redirect = 0;
 	if (!temp)
 		return (0);
 	while (list->command[i] && i < list->number)
@@ -129,13 +130,18 @@ int	start_pipe(t_list_commands *list, char **envp)
 			temp->command[j++] = NULL;
 		 //here is a double free error
 		// get_pipe_fd(list, temp);
-		while (get_redirect_type(temp) > 0)
+		if (temp->redirect)
 		{
-			if (rid_of_redirect_right(temp) == -1)
+			while (get_redirect_type(temp) > 0)
 			{
-				g_error_code = 1;
-				break ;
+				if (rid_of_redirect_right(temp) == -1)
+				{
+					g_error_code = 1;
+					break ;
+				}
 			}
+			dup2(temp->fd[0], STDIN_FILENO);
+			dup2(temp->fd[1], STDOUT_FILENO);
 		}
 		// dup2(temp->fd[0], STDIN_FILENO);
 		// dup2(temp->fd[1], STDOUT_FILENO);
@@ -154,6 +160,7 @@ int	start_pipe(t_list_commands *list, char **envp)
 		temp->redirect = 0;
 		temp->pipe_right--;
 	}
+	free_and_exit(temp->p, temp, 0);
 	free (temp);
 	return (0);
 }
@@ -219,7 +226,7 @@ int	main(int argc, char **argv, char **envp)
 	}
 		//print_commands_and_words(&list);
 	//}
-	//free_and_exit(&command, &list, 0);
+	free_and_exit(&command, &list, 0);
 	exit(0);
 	//return (0);
 }	
